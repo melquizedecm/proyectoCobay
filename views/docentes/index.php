@@ -3,7 +3,7 @@
 Author: Carlos Castro 
 Program:  Alta de Docentes 
 description: 
-1. Formulario pra subir docentes 
+1. Formulario para subir docentes 
 2. Lista de Docentes.
 -->
 
