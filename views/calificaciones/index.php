@@ -201,7 +201,7 @@
                         
                     </div>
 
-                    <div class="dropdown" >
+                    <div class="dropdown">
                         
                             <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Materias
                                 <span class="caret"></span></button>
