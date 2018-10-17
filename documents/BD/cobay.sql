@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2018 at 03:37 PM
+-- Generation Time: Oct 17, 2018 at 04:07 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.10
 
@@ -125,8 +125,6 @@ INSERT INTO `calificaciones` (`id_calificaciones`, `parcial_uno`, `parcial_dos`,
 CREATE TABLE `excel` (
   `id_excel` int(11) NOT NULL,
   `id_plantel` int(11) NOT NULL,
-  `id_periodo` int(11) NOT NULL,
-  `id_plan` int(11) NOT NULL,
   `id_semestre` int(11) NOT NULL,
   `id_grupo` int(11) NOT NULL,
   `matricula` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
@@ -136,13 +134,13 @@ CREATE TABLE `excel` (
 -- Dumping data for table `excel`
 --
 
-INSERT INTO `excel` (`id_excel`, `id_plantel`, `id_periodo`, `id_plan`, `id_semestre`, `id_grupo`, `matricula`) VALUES
-(1, 1, 6, 6, 2, 10, '17B003000004'),
-(6, 1, 6, 6, 2, 10, '17B003000037'),
-(4, 1, 7, 5, 5, 3, '17B003000027'),
-(3, 1, 7, 6, 3, 1, '15B003000462'),
-(7, 2, 7, 5, 3, 12, '17B003000056'),
-(5, 8, 6, 4, 6, 4, '17B003000061');
+INSERT INTO `excel` (`id_excel`, `id_plantel`, `id_semestre`, `id_grupo`, `matricula`) VALUES
+(1, 1, 2, 10, '17B003000004'),
+(6, 1, 2, 10, '17B003000037'),
+(3, 1, 3, 1, '15B003000462'),
+(4, 1, 5, 3, '17B003000027'),
+(7, 2, 3, 12, '17B003000056'),
+(5, 8, 6, 4, '17B003000061');
 
 -- --------------------------------------------------------
 
@@ -155,20 +153,22 @@ CREATE TABLE `excel_asignatura` (
   `id_asignatura` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `id_calificaciones` int(25) NOT NULL,
   `matricula_maestro` bigint(20) NOT NULL,
-  `id_excel` int(11) NOT NULL
+  `id_excel` int(11) NOT NULL,
+  `id_plan` int(11) NOT NULL,
+  `id_periodo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Dumping data for table `excel_asignatura`
 --
 
-INSERT INTO `excel_asignatura` (`id_excel_asignatura`, `id_asignatura`, `id_calificaciones`, `matricula_maestro`, `id_excel`) VALUES
-(1, '17-B211010721U', 0, 11003000080, 1),
-(3, '17-B211010721C', 0, 11003000080, 3),
-(4, '17-B211010721E', 0, 11003000085, 4),
-(5, '17-B211010721A', 0, 11003000080, 5),
-(6, '17-B211010721H', 0, 11003000080, 6),
-(7, '17-B211010721I', 0, 11003000080, 7);
+INSERT INTO `excel_asignatura` (`id_excel_asignatura`, `id_asignatura`, `id_calificaciones`, `matricula_maestro`, `id_excel`, `id_plan`, `id_periodo`) VALUES
+(1, '17-B211010721U', 0, 11003000080, 1, 7, 6),
+(3, '17-B211010721C', 0, 11003000080, 3, 7, 6),
+(4, '17-B211010721E', 0, 11003000085, 4, 7, 6),
+(5, '17-B211010721A', 0, 11003000080, 5, 7, 6),
+(6, '17-B211010721H', 0, 11003000080, 6, 7, 6),
+(7, '17-B211010721I', 0, 11003000080, 7, 7, 6);
 
 -- --------------------------------------------------------
 
@@ -428,10 +428,8 @@ ALTER TABLE `calificaciones`
 --
 ALTER TABLE `excel`
   ADD PRIMARY KEY (`id_excel`),
-  ADD KEY `id_plantel` (`id_plantel`,`id_periodo`,`id_plan`,`id_semestre`,`id_grupo`,`matricula`),
-  ADD KEY `id_periodo` (`id_periodo`),
+  ADD KEY `id_plantel` (`id_plantel`,`id_semestre`,`id_grupo`,`matricula`),
   ADD KEY `id_grupo` (`id_grupo`),
-  ADD KEY `id_plan` (`id_plan`),
   ADD KEY `id_semestre` (`id_semestre`),
   ADD KEY `matricula` (`matricula`);
 
@@ -443,7 +441,9 @@ ALTER TABLE `excel_asignatura`
   ADD KEY `id_asig` (`id_asignatura`,`id_excel`),
   ADD KEY `id_calificaciones` (`id_calificaciones`),
   ADD KEY `id_excel` (`id_excel`),
-  ADD KEY `matricula_d` (`matricula_maestro`);
+  ADD KEY `matricula_d` (`matricula_maestro`),
+  ADD KEY `id_plan` (`id_plan`),
+  ADD KEY `id_periodo` (`id_periodo`);
 
 --
 -- Indexes for table `grupos`
@@ -598,10 +598,8 @@ ALTER TABLE `alumnos`
 -- Constraints for table `excel`
 --
 ALTER TABLE `excel`
-  ADD CONSTRAINT `excel_ibfk_1` FOREIGN KEY (`id_periodo`) REFERENCES `periodos` (`id_periodo`),
   ADD CONSTRAINT `excel_ibfk_2` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`),
   ADD CONSTRAINT `excel_ibfk_4` FOREIGN KEY (`id_plantel`) REFERENCES `planteles` (`id_plantel`),
-  ADD CONSTRAINT `excel_ibfk_5` FOREIGN KEY (`id_plan`) REFERENCES `planes` (`id_plan`),
   ADD CONSTRAINT `excel_ibfk_7` FOREIGN KEY (`id_semestre`) REFERENCES `semestres` (`id_semestre`),
   ADD CONSTRAINT `excel_ibfk_9` FOREIGN KEY (`matricula`) REFERENCES `alumnos` (`matricula`);
 
@@ -612,7 +610,9 @@ ALTER TABLE `excel_asignatura`
   ADD CONSTRAINT `excel_asignatura_ibfk_1` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
   ADD CONSTRAINT `excel_asignatura_ibfk_2` FOREIGN KEY (`id_calificaciones`) REFERENCES `calificaciones` (`id_calificaciones`),
   ADD CONSTRAINT `excel_asignatura_ibfk_3` FOREIGN KEY (`id_excel`) REFERENCES `excel` (`id_excel`),
-  ADD CONSTRAINT `excel_asignatura_ibfk_4` FOREIGN KEY (`matricula_maestro`) REFERENCES `maestros` (`matricula_maestro`);
+  ADD CONSTRAINT `excel_asignatura_ibfk_4` FOREIGN KEY (`matricula_maestro`) REFERENCES `maestros` (`matricula_maestro`),
+  ADD CONSTRAINT `excel_asignatura_ibfk_5` FOREIGN KEY (`id_periodo`) REFERENCES `periodos` (`id_periodo`),
+  ADD CONSTRAINT `excel_asignatura_ibfk_6` FOREIGN KEY (`id_plan`) REFERENCES `planes` (`id_plan`);
 
 --
 -- Constraints for table `maestros`
