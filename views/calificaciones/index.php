@@ -269,7 +269,7 @@
                     <td>30</td>
                     <td>100</td>
                    
-                </tr>
+                </tr> 
             </tbody>
         </table>
     </div>
