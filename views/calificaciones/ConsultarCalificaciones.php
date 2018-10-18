@@ -236,7 +236,7 @@ $(document).ready(function(){
                         <td>35</td>
                         <td>35</td>
                         <td>30</td>
-						<td>100</td>
+			<td>100</td>
                     </tr>
                 </tbody>
 					
