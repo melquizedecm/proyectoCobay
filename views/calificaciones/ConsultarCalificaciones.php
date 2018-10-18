@@ -1,5 +1,4 @@
 <?php
-
 /* 
  * Author: José Luis Rivera
  * Program: Consultar Calificaciones
@@ -189,8 +188,8 @@ $(document).ready(function(){
                 </div>
                 </div>
 				<h4>Alumno: José Luis Rivera Avelino</h4>
-				<h4>Semestre: 1</b></h4>
-				<h4>Grupo: A</b></h4>
+				<h4>Semestre: 1</h4>
+				<h4>Grupo: A</h4>
 				
             </div>
             <table class="table table-bordered">
