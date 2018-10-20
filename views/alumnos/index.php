@@ -216,7 +216,7 @@
                     <tbody>
                         <tr>
                             <td>04160029</td>
-                            <td><a> Juan Rodriguez</a></td>
+                            <td><a>Juan Rodriguez</a></td>
                             <td>O</td>                        
                             <td>Quinto</td>
                             <td>2018B</td>
