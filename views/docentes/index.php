@@ -3,7 +3,7 @@
 Author: Carlos Castro 
 Program:  Alta de Docentes 
 description: 
-1. Formulario para subir docentes 
+1. Formulario pra subir docentes 
 2. Lista de Docentes.
 -->
 
@@ -65,6 +65,7 @@ description:
     }
     table.table th:last-child {
         width: 100px;
+        //height: 50px;
     }
     table.table td a {
 		cursor: pointer;
@@ -163,7 +164,7 @@ $(document).ready(function(){
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2><center>Alta De <b>Docentes</b></h2></div></center>
+                    <div class="col-sm-8"><h2><center>Administración De <b>Docentes</b></h2></div></center>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Nuevo Docente</button>
                     </div>
@@ -214,4 +215,4 @@ $(document).ready(function(){
         </div>
     </div>     
 </body>
-</html>
+</html>   
