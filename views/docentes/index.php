@@ -65,7 +65,7 @@ description:
     }
     table.table th:last-child {
         width: 100px;
-        //height: 50px;
+
     }
     table.table td a {
 		cursor: pointer;
