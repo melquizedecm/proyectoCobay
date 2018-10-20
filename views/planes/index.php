@@ -1,122 +1,289 @@
 <?php
-/*
+/* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
-
-/**
- * Description of agregarplan
- *
- * @author melqui
- */
-require_once("../../lib/links.php");
-libnivel3();
-?>
-
-<?php
-//$link=conectar();
-//$banco= new OperacionesBanco();
-//if ($_POST){
-//$id_plan=$_POST['id_plan'];
-//$banco->setConcepto($link,$id_plan);
-//}
-//$data=index();
-?>
-<html>
-    <head>     
-        <?php
-        $encabezado = new Meta();
-        $encabezado->getMeta();
-        ?>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-        <title>AGREGAR PLAN</title>
-        <?php
-//estilo(); 
-//header('Content-Type: text/html; charset=utf-8');
-        ?>
-    </head>
-
-    <body>
-    <center>
-
-        <?php //encabezado3("AAGREGAR PLANES");  ?>
-        <br />
-        <div class="container center-block" >
-            <div>
-                <form class="form-horizontal"  name="formPlan" method="post" action="../../controllers/Plan.php">
-                    <table class="table-responsive">
-                        <tr>
-                            <td scope="row" align="right">Escribe el nuevo Plan</td>
-                            <td>
-                                <div class="col-xs-12 wow animated slideInLeft" data-wow-delay=".5s">
-                                    <input  REQUIRED id="inputPlan" name="inputPlan" type="text" size="5" class="form-control" placeholder="2017B" value="">
-                                </div>
-                            </td>
-
-                        </tr>	
-                        <th colspan="4" scope="row"><center><input type="submit" name="btnCreate" id="btnCreate"  value="Guardar"></center></th>
-                    </table>
-                </form>
+ */?>
+<!DOCTYPE html>
+<!--
+Author: Aurora Basto
+Program:  Crear Plan 
+description: 
+1. Formulario para crear plan 
+2. vusualizacion de planes.
+-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap User Management Data Table</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+        }
+        .table-wrapper {
+            background: #fff;
+            padding: 20px 25px;
+            margin: 30px 0;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .table-title {
+            padding-bottom: 15px;
+            background: #2EB177;
+            color: #fff;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+        .table-title .btn {
+            color: #566787;
+            float: right;
+            font-size: 13px;
+            background: #fff;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+        .table-title .btn:hover, .table-title .btn:focus {
+            color: #566787;
+            background: #f2f2f2;
+        }
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+        .table-title .btn span {
+            float: left;
+            margin-top: 2px;
+        }
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+        table.table tr th:first-child {
+            width: 60px;
+        }
+        table.table tr th:last-child {
+            width: 100px;
+        }
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }	
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+        }
+        table.table td a:hover {
+            color: #2196F3;
+        }
+        table.table td a.settings {
+            color: #2196F3;
+        }
+        table.table td a.delete {
+            color: #F44336;
+        }
+        table.table td i {
+            font-size: 19px;
+        }
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .status {
+            font-size: 30px;
+            margin: 2px 2px 0 0;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 10px;
+        }
+        .text-success {
+            color: #10c469;
+        }
+        .text-info {
+            color: #62c9e8;
+        }
+        .text-warning {
+            color: #FFC107;
+        }
+        .text-danger {
+            color: #ff5b5b;
+        }
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+        .pagination li a {
+            border: none;
+            font-size: 13px;
+            min-width: 30px;
+            min-height: 30px;
+            color: #999;
+            margin: 0 2px;
+            line-height: 30px;
+            border-radius: 2px !important;
+            text-align: center;
+            padding: 0 6px;
+        }
+        .pagination li a:hover {
+            color: #666;
+        }	
+        .pagination li.active a, .pagination li.active a.page-link {
+            background: #03A9F4;
+        }
+        .pagination li.active a:hover {        
+            background: #0397d6;
+        }
+        .pagination li.disabled i {
+            color: #ccc;
+        }
+        .pagination li i {
+            font-size: 16px;
+            padding-top: 6px
+        }
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>Crear<b> Plan</b></h2>
+                    </div>
+                    <div class="col-sm-7">
+                        <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir Plan</span></a>
+                    </div>
+                </div>
             </div>
-
-            <H4>LISTA DE PLANES INGRESADOS </H4>
-            <br>
-            <table width="50">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th align="center"> id_plan </th>
                         <th align="center"> plan </th>
                         <th align="center"> id_periodo </th>
+                        <th align="center"> Estatus </th>
+                        <th align="center"> Modificar </th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td align="center"> 1 </td>
+                        <td align="center"> 2017B </td>
+                        <td align="center"> 17B </td>
+                        <td><span class="status text-success">&bull;</span> Activo</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
                         <td align="center"> 2 </td>
                         <td align="center"> 2017B </td>
                         <td align="center"> 17B </td>
+                        <td><span class="status text-success">&bull;</span> Activo</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center"> 3 </td>
                         <td align="center"> 2017B </td>
                         <td align="center"> 17B </td>
+                        <td><span class="status text-danger">&bull;</span> Desactivado </td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center"> 4 </td>
                         <td align="center"> 2017B </td>
                         <td align="center"> 17B </td>
+                        <td><span class="status text-success">&bull;</span> Activo</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
                     </tr>
                     <tr>
                         <td align="center"> 5 </td>
                         <td align="center"> 2017B </td>
                         <td align="center"> 17B </td>
+                        <td><span class="status text-success">&bull;</span> Activo</td>
+                        <td>
+                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                        </td>
                     </tr>
                 </tbody>
-
-                <?php
-                //          echo $data;
-//$concepto=$banco->getBanco_Concepto($link);
-//while($fila=$concepto->fetch_array(MYSQLI_BOTH)){
-//	echo "<tr>";
-//	echo "<td align='center'> ".$fila['concepto']."</td>";
-//	echo "<tr>";
-//	}
-                ?>              
-<!-- <td>
-<a class = "add" title = "Add" data-toggle = "tooltip"><i class = "material-icons">&#xE03B;</i></a>
-<a class = "edit" title = "Edit" data-toggle = "tooltip"><i class = "material-icons">&#xE254;</i></a>
-<a class = "delete" title = "Delete" data-toggle = "tooltip"><i class = "material-icons">&#xE872;</i></a>
-</td>
-                -->
             </table>
-          <!--  <h2><a href='../../form_principal.php'> Ir a Menu</a></H2>-->
+            
+            
+            
+            
+           
         </div>
+        <div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
         <div id="footer">
-            <?php
-//pie3();
-            ?>
+
         </div>
     </center>
 </body>
