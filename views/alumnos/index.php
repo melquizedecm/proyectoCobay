@@ -242,7 +242,7 @@
                         </tr>
                         <tr>
                             <td>04160029</td>
-                            <td><a> Juan Rodriguez</a></td>
+                            <td><a> Brayan Cetina</a></td>
                             <td>O</td>                        
                             <td>Quinto</td>
                             <td>2018B</td>
@@ -255,7 +255,7 @@
                         </tr>
                         <tr>
                             <td>04160029</td>
-                            <td><a> Juan Rodriguez</a></td>
+                            <td><a> Christian Garcia</a></td>
                             <td>O</td>                                                    <td>Quinto</td>
                             <td>2018B</td>
                             <td>Todas</td>
@@ -267,7 +267,7 @@
                         </tr>
                         <tr>
                             <td>04160029</td>
-                            <td><a> Juan Rodriguez</a></td>
+                            <td><a> Aaron Pech</a></td>
                             <td>O</td>                        
                             <td>Quinto</td>
                             <td>2018B</td>
