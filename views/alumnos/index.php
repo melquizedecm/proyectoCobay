@@ -196,7 +196,7 @@
                         </div>
                         <div class="col-sm-7">
                             <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Agreagar Nuevo</span></a>
-                            <a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Exportar Excel</span></a>						
+                            <a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Importar Excel</span></a>						
                         </div>
                     </div>
                 </div>
@@ -223,8 +223,8 @@
                             <td>Todas</td>
                             <td><span class="status text-success">&bull;</span> Activo</td>
                             <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                                <a href="#" class="settings" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                             </td>
                         </tr>
                         <tr>
@@ -236,8 +236,8 @@
                             <td>Todas</td>
                             <td><span class="status text-success">&bull;</span> Activo</td>
                             <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                                <a href="#" class="settings" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                             </td>
                         </tr>
                         <tr>
@@ -249,8 +249,8 @@
                             <td>Todas</td>
                             <td><span class="status text-danger">&bull;</span> Baja</td>                        
                             <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                                <a href="#" class="settings" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                             </td>                        
                         </tr>
                         <tr>
@@ -261,8 +261,8 @@
                             <td>Todas</td>
                             <td><span class="status text-success">&bull;</span> Activo</td>
                             <td>
-                                <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                                <a href="#" class="settings" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                             </td>
                         </tr>
                         <tr>
@@ -274,7 +274,8 @@
                             <td>Todas</td>
                             <td><span class="status text-success">&bull;</span> Activo</td>
                             <td>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                                <a href="#" class="settings" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                             </td>
                         </tr>
                     </tbody>
