@@ -19,7 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <style type="text/css">
-    
+
     body {
         color: #404E67;
         background: #F5F7FA;
@@ -104,21 +104,21 @@
         display: none;
     }
 </style>
-            <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
-            // Append table with add row form on add new button click
-    $(".add-new").click(function () {
+    // Append table with add row form on add new button click
+            $(".add-new").click(function () {
     $(this).attr("disabled", "disabled");
-            var index = $("table tbody tr:last-child").index();
+    var index = $("table tbody tr:last-child").index();
             var row = '<tr>' +
             '<td><input type="text" class="form-control" name="name" id="name"></td>' +
             '<td><input type="text" class="form-control" name="matricula" id="matricula"></td>' +
             '<td><input type="text" class="form-control" name="parcial 1" id="parcial 1"></td>' +
             '<td><input type="text" class="form-control" name="parcial 2" id="parcial 2"></td>' +
             '<td><input type="text" class="form-control" name="ordinario" id="ordinario"></td>' +
-            '<td><input type="text" class="form-control" name="promedio" id="promedio"></td>' + <!--'<td>' + actions + '</td>' +-->
+            '<td><input type="text" class="form-control" name="promedio" id="promedio"></td>' +<!--'<td>' + actions + '</td>' +-->
         '</tr>';
                         $("table").append(row);
                         $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
@@ -133,33 +133,33 @@
                         $(this).addClass("error");
                                 empty = true;
                         } else {
-                        $(this).removeClass("error");
-                        }
-                        });
-  $(this).parents("tr").find(".error").first().focus();
-            if (!empty) {
-                input.each(function () {
-                    $(this).parent("td").html($(this).val());
-                });
-               
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").removeAttr("disabled");
+            $(this).removeClass("error");
             }
-        });
-        // Edit row on edit button click
-        $(document).on("click", ".edit", function () {
-            $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
             });
-            $(this).parents("tr").find(".add, .edit").toggle();
-            $(".add-new").attr("disabled", "disabled");
-        });
-        // Delete row on delete button click
-        $(document).on("click", ".delete", function () {
-            $(this).parents("tr").remove();
-            $(".add-new").removeAttr("disabled");
-        });
+$(this).parents("tr").find(".error").first().focus();
+if (!empty) {
+    input.each(function () {
+        $(this).parent("td").html($(this).val());
     });
+               
+    $(this).parents("tr").find(".add, .edit").toggle();
+    $(".add-new").removeAttr("disabled");
+}
+});
+// Edit row on edit button click
+$(document).on("click", ".edit", function () {
+$(this).parents("tr").find("td:not(:last-child)").each(function () {
+    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+});
+$(this).parents("tr").find(".add, .edit").toggle();
+$(".add-new").attr("disabled", "disabled");
+});
+// Delete row on delete button click
+$(document).on("click", ".delete", function () {
+$(this).parents("tr").remove();
+$(".add-new").removeAttr("disabled");
+});
+});
 </script>
 </head>
 <body>
@@ -173,56 +173,70 @@
                     <div class="col-sm-8"><center><h2>Calificaciones de alumnos <b></b></h2></center></div>
 
                 </div>
-                <div class="col-sm-4" style="float:rigth;">
-                    <form class="md-form">
-                        <div class="file-field">
+                <div class="row">
+                    <div class="col-sm-6" >
+                        <form class="md-form">
+                            <div class="file-field">
 
-                            <div class="btn btn-primary btn-sm float-left">
-                                <span>Choose file</span>
-                                <input type="file">
+                                <div class="btn btn-primary btn-sm float-left">
+                                    <span>Choose file</span>
+                                    <input type="file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Upload your file">
+                                </div>
                             </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Upload your file">
-                            </div>
+                        </form>
+                    </div>     
+
+                    <div >
+                        <div class="dropdown">
+
+                            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Grupos
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1A</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1B</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1C</a></li>
+
+
+                            </ul>
+
                         </div>
-                    </form>
-                </div>     
 
-                <div style="position:absolute; top:80px; left:300px; right:0;">
-                <div class="dropdown" weigth="120px">
+                        <div class="dropdown">
 
-                    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Grupos
-                        <span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1A</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1B</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1C</a></li>
+                            <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Materias
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Informatica</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Matematicas</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Ingles 1</a></li>
+                            </ul>
 
+                        </div>
+                         <div class="dropdown">
 
-                    </ul>
+                            <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Semestre
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Primero</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tercero</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Quinto</a></li>
+                            </ul>
 
+                        </div>
+                    </div>
+                    <div class="col-sm-2" >
+                        <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar</button>
+                    </div>
                 </div>
-
-                <div class="dropdown">
-
-                    <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Materias
-                        <span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Informatica</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Matematicas</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Ingles 1</a></li>
-                    </ul>
-
-                </div>
-                </div>
-                <div class="button" style="position:absolute; top:90; left:500;">
-                    <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar</button>
-                </div>
-
 
 
             </div>
