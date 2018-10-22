@@ -182,8 +182,8 @@ $(document).ready(function(){
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2> <b>Lista de calificaciones</b></h2></div>
-                <div class="col-sm-4">
+                    <div class="col-sm-9"><h2> <b>Lista de calificaciones</b></h2></div>
+                <div class="col-sm-3">
                    <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button>
                 </div>
                 </div>
