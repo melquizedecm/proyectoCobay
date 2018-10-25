@@ -10,6 +10,8 @@
  * 2. Lista de alumnos con su calificación
  * 
  */
+
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -105,61 +107,76 @@
     }
 </style>
 <script type="text/javascript">
+
+    function cargarHojaExcel()
+    {
+        if (document.frmcargararchivo.excel.value == "")
+        {
+            alert("Suba un archivo");
+            document.frmcargararchivo.excel.focus();
+            return false;
+        }
+
+        document.frmcargararchivo.action = "..//..//controllers//calificacionController.php";
+        document.frmcargararchivo.submit();
+    }
+
     $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-            var actions = $("table td:last-child").html();
-    // Append table with add row form on add new button click
-            $(".add-new").click(function () {
-    $(this).attr("disabled", "disabled");
-    var index = $("table tbody tr:last-child").index();
+        $('[data-toggle="tooltip"]').tooltip();
+        var actions = $("table td:last-child").html();
+        // Append table with add row form on add new button click
+        $(".add-new").click(function () {
+            $(this).attr("disabled", "disabled");
+            var index = $("table tbody tr:last-child").index();
             var row = '<tr>' +
-            '<td><input type="text" class="form-control" name="name" id="name"></td>' +
-            '<td><input type="text" class="form-control" name="matricula" id="matricula"></td>' +
-            '<td><input type="text" class="form-control" name="parcial 1" id="parcial 1"></td>' +
-            '<td><input type="text" class="form-control" name="parcial 2" id="parcial 2"></td>' +
-            '<td><input type="text" class="form-control" name="ordinario" id="ordinario"></td>' +
-            '<td><input type="text" class="form-control" name="promedio" id="promedio"></td>' +<!--'<td>' + actions + '</td>' +-->
-        '</tr>';
-                        $("table").append(row);
-                        $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-                        $('[data-toggle="tooltip"]').tooltip();
-                });
-                        // Add row on add button click
-                        $(document).on("click", ".add", function () {
-                var empty = false;
-                        var input = $(this).parents("tr").find('input[type="text"]');
-                        input.each(function () {
-                        if (!$(this).val()) {
-                        $(this).addClass("error");
-                                empty = true;
-                        } else {
-            $(this).removeClass("error");
-            }
+                    '<td></td>' +
+                    '<td><input type="text" class="form-control" name="inputname" id="inputname"></td>' +
+                    '<td><input type="text" class="form-control" name="inputmatricula" id="inputmatricula"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial 1" id="inputparcial 1"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial 2" id="inputparcial 2"></td>' +
+                    '<td><input type="text" class="form-control" name="inputordinario" id="inputordinario"></td>' +
+                    '<td><input type="text" class="form-control" name="inputpromedio" id="inputpromedio"></td>' +
+                    '</tr>';
+            $("table").append(row);
+            $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        // Add row on add button click
+        $(document).on("click", ".add", function () {
+            var empty = false;
+            var input = $(this).parents("tr").find('input[type="text"]');
+            input.each(function () {
+                if (!$(this).val()) {
+                    $(this).addClass("error");
+                    empty = true;
+                } else {
+                    $(this).removeClass("error");
+                }
             });
-$(this).parents("tr").find(".error").first().focus();
-if (!empty) {
-    input.each(function () {
-        $(this).parent("td").html($(this).val());
-    });
-               
-    $(this).parents("tr").find(".add, .edit").toggle();
-    $(".add-new").removeAttr("disabled");
-}
-});
+            $(this).parents("tr").find(".error").first().focus();
+            if (!empty) {
+                input.each(function () {
+                    $(this).parent("td").html($(this).val());
+                });
+
+                $(this).parents("tr").find(".add, .edit").toggle();
+                $(".add-new").removeAttr("disabled");
+            }
+        });
 // Edit row on edit button click
-$(document).on("click", ".edit", function () {
-$(this).parents("tr").find("td:not(:last-child)").each(function () {
-    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-});
-$(this).parents("tr").find(".add, .edit").toggle();
-$(".add-new").attr("disabled", "disabled");
-});
+        $(document).on("click", ".edit", function () {
+            $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+            });
+            $(this).parents("tr").find(".add, .edit").toggle();
+            $(".add-new").attr("disabled", "disabled");
+        });
 // Delete row on delete button click
-$(document).on("click", ".delete", function () {
-$(this).parents("tr").remove();
-$(".add-new").removeAttr("disabled");
-});
-});
+        $(document).on("click", ".delete", function () {
+            $(this).parents("tr").remove();
+            $(".add-new").removeAttr("disabled");
+        });
+    });
 </script>
 </head>
 <body>
@@ -175,21 +192,22 @@ $(".add-new").removeAttr("disabled");
                 </div>
                 <div class="row">
                     <div class="col-sm-6" >
-                        <form class="md-form">
+                        <form name="frmcargararchivo" method="post" enctype="multipart/form-data" class="md-form">
                             <div class="file-field">
 
                                 <div class="btn btn-primary btn-sm float-left">
-                                    <span>Choose file</span>
-                                    <input type="file">
+                                    <span>Elije tu archivo</span>
+                                    <input type="file" name="excel">
                                 </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Upload your file">
-                                </div>
+
+                            </div>
+                            <div>
+                                <input type="button" value="subir" class="btn btn-info" onclick="cargarHojaExcel();" />
                             </div>
                         </form>
                     </div>     
 
-                    <div >
+                    <!--<div >
                         <div class="dropdown">
 
                             <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Grupos
@@ -221,9 +239,9 @@ $(".add-new").removeAttr("disabled");
                         </div>
                          <div class="dropdown">
 
-                            <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Semestre
+                            <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown">Semestre
                                 <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu3">
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Primero</a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tercero</a></li>
@@ -232,9 +250,9 @@ $(".add-new").removeAttr("disabled");
                             </ul>
 
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-sm-2" >
-                        <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar</button>
+                        <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>
                     </div>
                 </div>
 
@@ -245,6 +263,7 @@ $(".add-new").removeAttr("disabled");
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Nombre</th>
                         <th>Matricula</th>
                         <th>Parcial 1</th>
@@ -255,7 +274,10 @@ $(".add-new").removeAttr("disabled");
                     </tr>
                 </thead>
                 <tbody>
+                    
+                    
                     <tr>
+                        <td>1</td>
                         <td>Juan Carlos Rodriguez</td>
                         <td>4160020B</td>
                         <td>35</td>
@@ -265,6 +287,7 @@ $(".add-new").removeAttr("disabled");
 
                     </tr>
                     <tr>
+                        <td>2</td>
                         <td>Carlos Castro</td>
                         <td>4160003B</td>
                         <td>35</td>
@@ -273,6 +296,7 @@ $(".add-new").removeAttr("disabled");
                         <td>100</td>
                     </tr>
                     <tr>
+                        <td>3</td>
                         <td>Aaron Pech</td>
                         <td>4160016B</td>
                         <td>35</td>
@@ -282,6 +306,7 @@ $(".add-new").removeAttr("disabled");
 
                     </tr>
                     <tr>
+                        <td>4</td>
                         <td>Nerstor Reina</td>
                         <td>4160013B</td>
                         <td>35</td>
