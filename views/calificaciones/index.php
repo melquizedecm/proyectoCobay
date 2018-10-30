@@ -112,7 +112,7 @@
     {
         if (document.frmcargararchivo.excel.value == "")
         {
-            alert("Suba un archivo");
+            alert("Seleccione un archivo");
             document.frmcargararchivo.excel.focus();
             return false;
         }
@@ -132,8 +132,8 @@
                     '<td></td>' +
                     '<td><input type="text" class="form-control" name="inputname" id="inputname"></td>' +
                     '<td><input type="text" class="form-control" name="inputmatricula" id="inputmatricula"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial 1" id="inputparcial 1"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial 2" id="inputparcial 2"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial 1" id="inputparcial_1"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial 2" id="inputparcial_2"></td>' +
                     '<td><input type="text" class="form-control" name="inputordinario" id="inputordinario"></td>' +
                     '<td><input type="text" class="form-control" name="inputpromedio" id="inputpromedio"></td>' +
                     '</tr>';
