@@ -109,8 +109,8 @@
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:last-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="name" id="name"></td>' +
-                        '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+                        '<td><input type="text" class="form-control" name="inputClave" id="inputClave"></td>' +
+                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
                         
                         '<td>' + actions + '</td>' +
                         '</tr>';
@@ -118,8 +118,29 @@
                 $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
+            
             // Add row on add button click
             $(document).on("click", ".add", function () {
+                ////////GUARDAR LOS DATOS//////
+                ///1. OBTENER LOS VALORES/////
+                var clave=document.getElementById("inputClave").value;
+                var nombre=document.getElementById("inputNombre").value;             
+                alert(clave + " - " + nombre);
+               
+                ///2. ENVIAR POR POST    /////
+                $.post("../../controllers/asignaturasController.php", 
+                {
+                    inputClave: clave,
+                    inputNombre: nombre
+                },
+                function (response){
+                    alert("Datos Guardados con éxito");
+                });
+                
+                ///3. REFRESCAR LA TABLA O LA PAGINA////
+                
+                
+                
                 var empty = false;
                 var input = $(this).parents("tr").find('input[type="text"]');
                 input.each(function () {
@@ -139,6 +160,8 @@
                     $(".add-new").removeAttr("disabled");
                 }
             });
+            
+            
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
@@ -147,6 +170,8 @@
                 $(this).parents("tr").find(".add, .edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
             });
+            
+            
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();

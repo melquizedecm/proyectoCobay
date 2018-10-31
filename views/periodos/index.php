@@ -170,7 +170,7 @@ $(document).ready(function(){
                 <div class="row">
                     <div class="col-sm-8"><h2>Periodos <b>Existentes</b></h2></div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Agregar Periodo</button>
+                        <button type="button" id="buttonAgregarPeriodo"  name="buttonAgregarPeriodo" class="btn btn-info add-new"><i class="fa fa-plus"></i> Agregar Periodo</button>
                     </div>
                 </div>
             </div>
