@@ -1,9 +1,8 @@
-<?php
-/* 
+<?php /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */?>
+ */ ?>
 <!DOCTYPE html>
 <!--
 Author: Aurora Basto
@@ -196,16 +195,15 @@ description:
                         <h2>Crear<b> Plan</b></h2>
                     </div>
                     <div class="col-sm-7">
-                        <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Añadir Plan</span></a>
+                        <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Agregar Plan</span></a>
                     </div>
                 </div>
             </div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th align="center"> id_plan </th>
-                        <th align="center"> plan </th>
-                        <th align="center"> id_periodo </th>
+                        <th align="center"> ID_Plan </th>
+                        <th align="center"> Plan </th>
                         <th align="center"> Estatus </th>
                         <th align="center"> Modificar </th>
 
@@ -215,7 +213,6 @@ description:
                     <tr>
                         <td align="center"> 1 </td>
                         <td align="center"> 2017B </td>
-                        <td align="center"> 17B </td>
                         <td><span class="status text-success">&bull;</span> Activo</td>
                         <td>
                             <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
@@ -225,7 +222,6 @@ description:
                     <tr>
                         <td align="center"> 2 </td>
                         <td align="center"> 2017B </td>
-                        <td align="center"> 17B </td>
                         <td><span class="status text-success">&bull;</span> Activo</td>
                         <td>
                             <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
@@ -235,7 +231,6 @@ description:
                     <tr>
                         <td align="center"> 3 </td>
                         <td align="center"> 2017B </td>
-                        <td align="center"> 17B </td>
                         <td><span class="status text-danger">&bull;</span> Desactivado </td>
                         <td>
                             <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
@@ -245,7 +240,6 @@ description:
                     <tr>
                         <td align="center"> 4 </td>
                         <td align="center"> 2017B </td>
-                        <td align="center"> 17B </td>
                         <td><span class="status text-success">&bull;</span> Activo</td>
                         <td>
                             <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
@@ -255,7 +249,6 @@ description:
                     <tr>
                         <td align="center"> 5 </td>
                         <td align="center"> 2017B </td>
-                        <td align="center"> 17B </td>
                         <td><span class="status text-success">&bull;</span> Activo</td>
                         <td>
                             <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
@@ -264,24 +257,20 @@ description:
                     </tr>
                 </tbody>
             </table>
-            
-            
-            
-            
-           
+
         </div>
         <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div>
+            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+            <ul class="pagination">
+                <li class="page-item disabled"><a href="#">Previous</a></li>
+                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            </ul>
+        </div>
         <div id="footer">
 
         </div>
