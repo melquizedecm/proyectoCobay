@@ -235,7 +235,7 @@ description:
                             <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
-                <!--    <tr>
+                   <tr>
                         <td>02</td>
                         <td>426818981992 </td>
                         <td>Luis Mario</td>
@@ -245,7 +245,7 @@ description:
                             <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
-                    <tr>
+                 <!--   <tr>
                         <td>03</td>
                         <td>270697214582</td>
                         <td>Gemma Canul Gongora</td>
