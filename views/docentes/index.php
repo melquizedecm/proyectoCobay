@@ -143,7 +143,7 @@ description:
                         },
                         function (data) {
                             if(data==="-1"){
-                                alert("Error al guardar");
+                                alert("Error al guardar los datos, revisar la matricula");
                             }
                             else{
                                 alert(data);
