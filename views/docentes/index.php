@@ -1,6 +1,6 @@
 <?php
 require_once '../../lib/links.php';
-libnivel3();
+libreriasDocentes();
 ?>
 <!DOCTYPE html>
 <!--
@@ -130,9 +130,8 @@ description:
             $(document).on("click", ".add", function () {
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
-                var matricula = document.getElementById("inputMatricula").value;//(JALAR EL VALOR INGRESADO)
+                var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
-                
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/docentesController.php",
@@ -142,11 +141,46 @@ description:
                             buttonCreate: true
                         },
                         function (data) {
-                            if(data==="-1"){
+                            if (data === "-1") {
                                 alert("Error al guardar los datos, revisar la matricula");
-                            }
-                            else{
+                            } else {
+                                ///despliega la tabla con los datos////
                                 alert(data);
+                                /*
+                                 var docentes = JSON.parse(data);
+                                 
+                                 alert(docentes);
+                                 var html;
+                                 for (var i=0;i<=docentes.length;i++){
+                                 html=docentes[i]['nombre'];
+                                 }
+                                 alert(html);
+                                 /*        //visualizarDocentes(docentes);
+                                 var tabla = $('table');
+                                 //var tbody = $("<tbody></tbody>");
+                                 for (var i = 0; i < docentes.length; i++){
+                                 var tr = $("<tr></tr>");
+                                 var col_matricula = $("<td>" + docentes[i]['matricula_maestro']) + "</td>");
+                                 var col_nombre = $("<td>" + docentes[i]['nombre']) + "</td>");
+                                 /* var col_accion = $("<td>" +
+                                 "<a class='add' title='Agregar' data-toggle='tooltip'><i class='material-icons'>&#xE03B;</i></a>" +
+                                 "<a class='edit' title='Editar' data-toggle='tooltip'><i class='material-icons'>&#xE254;</i></a>" +
+                                 "<a class='delete' title='Eliminar' data-toggle='tooltip'><i class='material-icons'>&#xE872;</i></a>" +
+                                 "</td>");
+                                 tr.append(col_matricula);
+                                 tr.append(col_nombre);
+                                 tabla.append(tr);
+                                 // tr.append(col_accion);
+                                 //  tbody.append(tr);
+                                 */
+
+
+
+
+
+
+
+
                             }
                         });
             });
@@ -184,24 +218,7 @@ description:
                 $(".add-new").removeAttr("disabled");
             });
         });
-        /* var docentes = JSON.parse(data);
-         //visualizarDocentes(docentes);
-         var tabla = $('table');
-         //var tbody = $("<tbody></tbody>");
-         for (var i = 0; i < docentes.length; i++){
-         var tr = $("<tr></tr>");
-         var col_matricula = $("<td>" + docentes[i]['matricula_maestro']) + "</td>");
-         var col_nombre = $("<td>" + docentes[i]['nombre']) + "</td>");
-         /* var col_accion = $("<td>" +
-         "<a class='add' title='Agregar' data-toggle='tooltip'><i class='material-icons'>&#xE03B;</i></a>" +
-         "<a class='edit' title='Editar' data-toggle='tooltip'><i class='material-icons'>&#xE254;</i></a>" +
-         "<a class='delete' title='Eliminar' data-toggle='tooltip'><i class='material-icons'>&#xE872;</i></a>" +
-         "</td>");
-         tr.append(col_matricula);
-         tr.append(col_nombre);
-         tabla.append(tr);
-         // tr.append(col_accion);
-         //  tbody.append(tr);*/
+
     </script>
 </head>
 <body>
@@ -235,7 +252,7 @@ description:
                             <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
-                   <tr>
+                    <tr>
                         <td>02</td>
                         <td>426818981992 </td>
                         <td>Luis Mario</td>
@@ -245,16 +262,27 @@ description:
                             <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
-                 <!--   <tr>
-                        <td>03</td>
-                        <td>270697214582</td>
-                        <td>Gemma Canul Gongora</td>
+                    <tr>
                         <td>
-                            <a class="add" title="Agregar" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                    <?php
+                    $json = docenteRead();
+                    echo $json;
+                    //$obj = json_decode($json);
+                    //print $obj->{'foo-bar'}; // 12345
+                    ?>
                         </td>
-                    </tr>      -->
+                    </tr>
+
+<!--   <tr>
+    <td>03</td>
+    <td>270697214582</td>
+    <td>Gemma Canul Gongora</td>
+    <td>
+        <a class="add" title="Agregar" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+        <a class="edit" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+        <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+    </td>
+</tr>      -->
                 </tbody>
             </table>
         </div>

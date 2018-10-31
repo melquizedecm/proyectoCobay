@@ -1,7 +1,4 @@
 <?php
-
-require_once '../models/Docentes.php';
-
 /*
  * Program:     docentesController.php
  * Author:      MTI. Melquizedec Moo Medina
@@ -48,19 +45,19 @@ function docenteCreate() {
     //$response=$objetoDocente->create($matricula,$nombre,$status);
     //3.  enviar una respuestaç
     if ($response) {
-        visualizar();
+        docenteRead();
     } else {
         echo "-1";
     }
 }
 
-function visualizar() {
+function docenteRead() {
     $sql = "SELECT * FROM maestros";
     $result = array();
     $link = conectar();
     $response = $link->query($sql);
     if (!$response) {
-        return $link->error;
+        echo $link->error;
     } else {
         while ($row = $response->fetch_assoc()) {
             array_push($result, $row);
