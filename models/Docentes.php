@@ -13,7 +13,6 @@ require_once '../core/config.php';
  * @author melqui
  */
 class Docentes {
-
     function create($matricula, $nombre, $status) {
         $sql = "INSERT INTO maestros(matricula_maestro,nombre,id_status_maestro) VALUES ('" . $matricula . "','$nombre" . "','" . $status . "')";
         $link = conectar();
