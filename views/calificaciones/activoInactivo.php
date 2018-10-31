@@ -26,7 +26,7 @@
         }
 
 
-    </style>
+    </style><!--hola mecs-->
 
     <div style="text-align:center;">
 

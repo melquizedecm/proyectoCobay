@@ -10,8 +10,6 @@
  * 2. Lista de alumnos con su calificación
  * 
  */
-
-
 ?>
 <!DOCTYPE html>
 <head>
@@ -112,7 +110,7 @@
     {
         if (document.frmcargararchivo.excel.value == "")
         {
-            alert("Suba un archivo");
+            alert("Seleccione un archivo");
             document.frmcargararchivo.excel.focus();
             return false;
         }
@@ -132,8 +130,8 @@
                     '<td></td>' +
                     '<td><input type="text" class="form-control" name="inputname" id="inputname"></td>' +
                     '<td><input type="text" class="form-control" name="inputmatricula" id="inputmatricula"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial 1" id="inputparcial 1"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial 2" id="inputparcial 2"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial 1" id="inputparcial_1"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial 2" id="inputparcial_2"></td>' +
                     '<td><input type="text" class="form-control" name="inputordinario" id="inputordinario"></td>' +
                     '<td><input type="text" class="form-control" name="inputpromedio" id="inputpromedio"></td>' +
                     '</tr>';
@@ -252,7 +250,29 @@
                         </div>
                     </div>-->
                     <div class="col-sm-2" >
-                        <button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>
+                        <!--<button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>-->
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>
+
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Selección de Lista</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Some text in the modal.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -274,8 +294,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    
+
+
                     <tr>
                         <td>1</td>
                         <td>Juan Carlos Rodriguez</td>
