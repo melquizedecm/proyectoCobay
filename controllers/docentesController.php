@@ -53,15 +53,17 @@ function docenteCreate() {
 
 function docenteRead() {
     $sql = "SELECT * FROM maestros";
-    $result = array();
     $link = conectar();
     $response = $link->query($sql);
+    $result = array();
     if (!$response) {
         echo $link->error;
     } else {
+        $i=0;
         while ($row = $response->fetch_assoc()) {
-            array_push($result, $row);
+            $result[$i]=$row;
+            $i++;
         }
-        echo json_encode($result);
-    }
+        return json_encode($result);
+    }    
 }

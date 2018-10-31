@@ -111,18 +111,17 @@ description:
     <script type="text/javascript">
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
-            var actions = $("table td:last-child").html();
+            var actions = $("table td:first-child").html();
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
                 $(this).attr("disabled", "disabled");
-                var index = $("table tbody tr:last-child").index();
+                var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td></td>' +
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
-                $("table").append(row);
+                $("table").prepend(row);
                 $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
@@ -235,43 +234,32 @@ description:
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Matricula</th>
                         <th>Nombre</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>479421149848</td>
-                        <td>Sakura Maria Montero Castro</td>
-                        <td>
-                            <a class="add" title="Agregar" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>426818981992 </td>
-                        <td>Luis Mario</td>
-                        <td>
-                            <a class="add" title="Agregar" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                   
                     <?php
                     $json = docenteRead();
-                    echo $json;
+                    $obj = json_decode($json);
+
+                    //print $obj->{'foo-bar'};
+
+                    foreach ($obj as $row) {
+                        echo "<tr><td>".$row->{'matricula_maestro'}."</td>"
+                        ."<td>".$row->{'nombre'}."</td>"
+                        ."<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                        ."<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
+                        ."<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+                        ."</td> </tr>";
+                    }
+
                     //$obj = json_decode($json);
                     //print $obj->{'foo-bar'}; // 12345
                     ?>
-                        </td>
-                    </tr>
+
 
 <!--   <tr>
     <td>03</td>
