@@ -12,6 +12,8 @@
  */
 ///////Agregar Docente///////
 if (isset($_POST['buttonCreate'])) {
+    require_once '../lib/links.php';
+    libnivel2();
     $docentes=new DocentesController();
     $docentes->create();
 }
@@ -21,7 +23,8 @@ elseif (isset($_POST['buttonUpdate'])) {
 }
 ///////Consultar tabla de Docente///////
 elseif (isset($_POST['buttonRead'])) {
-    docenteRead();
+    $docentes=new DocentesController();
+    $docentes->read();
 }
 ///////Consultar tabla de Docente por Id///////
 elseif (isset($_POST['buttonReadId'])) {
@@ -64,7 +67,7 @@ class DocentesController {
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {
-            read();
+            $this->read();
         } else {
             echo "-1";
         }

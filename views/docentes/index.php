@@ -115,6 +115,7 @@ description:
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
+            
             ///////DATABLES ////////
             $(document).ready(function () {
                 $('#tableDocente').DataTable();
@@ -137,6 +138,7 @@ description:
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
+            
             // Add row on add button click (Agregar base de datos)
             $(document).on("click", ".add", function () {
                 /////GUARDAR LOS DATOS/////
@@ -155,8 +157,8 @@ description:
                             if (data === "-1") {
                                 alert("Error al guardar los datos, revisar la matricula");
                             } else {
-                                ///despliega la tabla con los datos////
-                                alert(data);
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
                             }
                         });
             });
@@ -220,11 +222,11 @@ description:
                     <?php
                     
                     $json = $docentes->read();
-                    $obj = json_decode($json);
+                    $datosTabla = json_decode($json);
 
                     //print $obj->{'foo-bar'};
 
-                    foreach ($obj as $row) {
+                    foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'matricula_maestro'} . "</td>"
                         . "<td>" . $row->{'nombre'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
@@ -232,9 +234,6 @@ description:
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
                         . "</td> </tr>";
                     }
-
-                    //$obj = json_decode($json);
-                    //print $obj->{'foo-bar'}; // 12345
                     ?>
 
 
