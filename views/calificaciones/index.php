@@ -264,10 +264,35 @@
                                         <h4 class="modal-title">Selección de Lista</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Some text in the modal.</p>
+                                        <table table style="margin: 0 auto" class="table-bordered" class="fa fa-plus">
+                                            <th>
+                                                <select name="Semestre">
+                                                    <option>Semestre</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <select name="Semestre">
+                                                    <option>Grupo</option>
+                                                    <option>A</option>
+                                                    <option>B</option>
+                                                    <option>C</option>
+                                                    <option>D</option>
+                                                    <option>E</option>
+                                                    <option>F</option>
+
+                                                </select>
+                                            </th>
+                                        </table>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
                                     </div>
                                 </div>
 
