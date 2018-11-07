@@ -13,8 +13,6 @@ Description:
     body {
         margin: 0;
         padding: 0;
-       // background: #E4D7C7;
-
 
         font-family: sans-serif;
         height: 100vh;
@@ -32,10 +30,10 @@ Description:
         box-sizing: border-box;
         padding: 70px 30px;
         background-image: url(img/fondo.jpeg);
-        
+
         -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-    box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+        box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
     }
 
     .login-box .avatar {
@@ -52,15 +50,15 @@ Description:
         padding: 0 0 20px;
         text-align: center;
         font-size: 22px;
-         color: #3B0B0B;
+        color: #3B0B0B;
     }
 
     .login-box label {
         margin: 0;
         padding: 0;
-      //font-weight: bold;
+
         display: block;
-         color: #3B0B0B;
+        color: #3B0B0B;
     }
 
     .login-box input {
@@ -106,15 +104,15 @@ Description:
     }
 
     .form-container
-{
-	border: 1px solid #fff; 
-	padding: 50px 60px; 
-	margin-top:20vh; 
-    
-    -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-    box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
-}
+    {
+        border: 1px solid #fff; 
+        padding: 50px 60px; 
+        margin-top:20vh; 
+
+        -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+        -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+        box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+    }
 
 
 </style>
@@ -138,8 +136,8 @@ Description:
             <label for="password">Contraseña</label>
             <input type="password"id="inputPassword" placeholder="Ingrese contraseña">
             <input type="submit" value="Iniciar Sesión" id="buttonLogin">
- 
-            
+
+
         </form>
     </div>
 </body>
