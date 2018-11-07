@@ -1,4 +1,6 @@
 <?php
+require_once '../../lib/links.php';
+libnivel3();
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,7 +18,7 @@
    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <title>Asignar calificaciones</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">  
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -216,7 +218,9 @@
 </script>
 </head>
 <body>
-
+    <?php
+    getHeader();
+    ?>
     <div class="container">
 
         <div class="table-wrapper">
