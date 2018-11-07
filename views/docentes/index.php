@@ -199,6 +199,10 @@ description:
     </script>
 </head>
 <body>
+    <?php
+    getHeader();
+    ?>
+    
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">

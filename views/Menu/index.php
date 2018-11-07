@@ -32,9 +32,9 @@ libnivel3();
     </style>
 </head>
 <body style="background-color:#66CDAA;">
-<?php 
- getHeader();
- ?>
+        <?php
+    getHeader();
+    ?>
     <div>
         <center>
             <div class="container">

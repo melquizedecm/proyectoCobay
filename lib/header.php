@@ -3,7 +3,7 @@
         ?>
         <meta charset="UTF-16">
         <header>
-            <div class="jumbotron">
+            <div>
                 <div class="container text-center">
                     <div>
                         <img src="../../img/cobay.png" style="left:20px;bottom:550px;position:absolute" width="150" height="100"/>
@@ -20,7 +20,6 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-
                     </div
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
