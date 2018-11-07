@@ -316,7 +316,7 @@
                                                 </select>
                                             </th>
                                             <th>
-                                                <select name="Semestre">
+                                                <select name="Grupo">
                                                     <option>Grupo</option>
                                                     <option>A</option>
                                                     <option>B</option>
@@ -324,6 +324,15 @@
                                                     <option>D</option>
                                                     <option>E</option>
                                                     <option>F</option>
+
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <select name="Materia">
+                                                    <option>Materia</option>
+                                                    <option>ingles</option>
+                                                    <option>Matematicas</option>
+                                                    
 
                                                 </select>
                                             </th>
