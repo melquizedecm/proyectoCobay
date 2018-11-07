@@ -133,10 +133,10 @@ Description:
         <form>
             <!-- USERNAME INPUT -->
             <label for="username" >Matrícula</label>
-            <input type="text" id="inputMatricula" placeholder="Enter Username">
+            <input type="text" id="inputMatricula" placeholder="Ingrese Matrícula">
             <!-- PASSWORD INPUT -->
             <label for="password">Contraseña</label>
-            <input type="password"id="inputPassword" placeholder="Enter Password">
+            <input type="password"id="inputPassword" placeholder="Ingrese contraseña">
             <input type="submit" value="Iniciar Sesión" id="buttonLogin">
  
             
