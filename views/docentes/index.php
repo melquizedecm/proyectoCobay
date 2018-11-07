@@ -2,7 +2,7 @@
 require_once ('../../lib/links.php');
 libnivel3();
 require_once ('../../controllers/docentesController.php');
-$docentes= new DocentesController();
+$docentes = new DocentesController();
 require_once ('../../models/Docentes.php');
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ description:
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <title>Administración de Docentes</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">  
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -115,13 +115,10 @@ description:
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
             ///////DATABLES ////////
-            $(document).ready(function () {
                 $('#tableDocente').DataTable();
-            });
-
-
+                
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
@@ -135,10 +132,9 @@ description:
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .delete , .update").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
-            
             // Add row on add button click (Agregar base de datos)
             $(document).on("click", ".add", function () {
                 /////GUARDAR LOS DATOS/////
@@ -180,16 +176,19 @@ description:
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
                 $(".add-new").removeAttr("disabled");
+                $(".update").removeAttr("enabled");
             }
-
+            var cont=0;
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+               $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    $(this).html('<input name="input'+ cont+'" type="text" class="form-control" value="' + $(this).text() + '">');
+                    cont=cont+1;
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
+                $(".update").attr("disabled", "disabled");
             });
+            
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();
@@ -220,11 +219,10 @@ description:
                 </thead>
                 <tbody>
                     <?php
-                    
                     $json = $docentes->read();
                     $datosTabla = json_decode($json);
 
-                    //print $obj->{'foo-bar'};
+//print $obj->{'foo-bar'};
 
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'matricula_maestro'} . "</td>"
@@ -232,6 +230,7 @@ description:
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE873;</i></a>"       
                         . "</td> </tr>";
                     }
                     ?>
