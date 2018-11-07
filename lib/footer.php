@@ -1,7 +1,4 @@
 <?php
-
-class footer {
-
     function getFooter() {
         ?>
                 <footer>
@@ -23,4 +20,4 @@ class footer {
         </footer>
         <?php
     }
-}
+
