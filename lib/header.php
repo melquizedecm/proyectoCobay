@@ -1,27 +1,42 @@
 <?php
-
-class header {
-
     function getHeader() {
         ?>
         <meta charset="UTF-16">
         <header>
-            <nav class="nav navbar-itsp navbar-static-top" role="navigation">
+            <div>
+                <div class="container text-center">
+                    <div>
+                        <img src="../../img/cobay.png" style="left:20px;bottom:550px;position:absolute" width="150" height="100"/>
+                    </div>
+                    <center><h2>COBAY</h2></center>
+                    <p>Colegio De Bachilleres Del Estado De Yucatán</p>
+                </div>
+            </div>
+            <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="menu.php">SCHOOL PLATAFORM</a>     
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Accesos</a></li>
+                            <li><a href="#">Configuraciones</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Cerrar Sesion</a></li>
+                        </ul>
                     </div>
-                    <!-- Menú de Usuario -->
-                    <ul class="nav navbar-nav navbar-itsp navbar-right">
-                        <li><a href="menu.php"><span class="glyphicon glyphicon-user"></span><?php echo $_SESSION['session_username'];?></a></li>
-                        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión </a></li>
-                    </ul>
-                    <a href="menu.php" class="navbar-right"><img src="../img/home.png" height="40" width="40"></a>
                 </div>
             </nav>
         </header>
         <?php
     }
 
-}
+
 ?>
