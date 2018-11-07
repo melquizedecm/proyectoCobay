@@ -414,6 +414,9 @@ libnivel3();
                 </tbody>
             </table>
         </div>
-    </div>     
+    </div>
+     <?php
+    getFooter();
+    ?>
 </body>
 
