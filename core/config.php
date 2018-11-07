@@ -1,5 +1,4 @@
 <?php
-
 function conectar() {
 ///PARAMETROS PARA LOCALHOST
     $DBuser = "root";

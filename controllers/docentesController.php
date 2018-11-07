@@ -1,4 +1,5 @@
 <?php
+//require_once '../core/config.php';
 /*
  * Program:     docentesController.php
  * Author:      MTI. Melquizedec Moo Medina
@@ -9,10 +10,10 @@
  * evalua el tipo de acción proveniente analizando la variable button.
  * y realiza el algoritmo especificado en la acción.
  */
-
 ///////Agregar Docente///////
 if (isset($_POST['buttonCreate'])) {
-    docenteCreate();
+    $docentes=new DocentesController();
+    $docentes->create();
 }
 ///////Modificar Datos de Docente///////
 elseif (isset($_POST['buttonUpdate'])) {
@@ -30,40 +31,59 @@ elseif (isset($_POST['buttonReadId'])) {
 elseif (isset($_POST['buttonDelete'])) {
     docenteDelete();
 } else {
-    echo "False";
+    return False;
 }
 
-function docenteCreate() {
-    ///1. recibir datos
-    $matricula = $_POST['inputMatricula'];
-    $nombre = $_POST['inputNombre'];
-    $status = "1";
-
-    //2. guardar datos en el modelo
-    $objetoDocente = new Docentes();
-    $response = $objetoDocente->create($matricula, $nombre, $status);
-    //$response=$objetoDocente->create($matricula,$nombre,$status);
-    //3.  enviar una respuestaç
-    if ($response) {
-        docenteRead();
-    } else {
-        echo "-1";
-    }
-}
-
-function docenteRead() {
-    $sql = "SELECT * FROM maestros";
-    $link = conectar();
-    $response = $link->query($sql);
-    $result = array();
-    if (!$response) {
-        echo $link->error;
-    } else {
-        $i=0;
-        while ($row = $response->fetch_assoc()) {
-            $result[$i]=$row;
-            $i++;
+class DocentesController {
+    function index() {
+        $objetoDocente = new Docentes();
+        $response = $objetoDocente->read();
+        $result = array();
+        if (!$response) {
+            $link->error;
+        } else {
+            $i = 0;
+            while ($row = $response->fetch_assoc()) {
+                $result[$i] = $row;
+                $i++;
+            }
+            return json_encode($result);
         }
-        return json_encode($result);
-    }    
+    }
+
+    function create() {
+///1. recibir datos
+        $matricula = $_POST['inputMatricula'];
+        $nombre = $_POST['inputNombre'];
+        $status = "1";
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Docentes.php';
+        $objetoDocente = new Docentes();
+        $response = $objetoDocente->create($matricula, $nombre, $status);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+        if ($response) {
+            read();
+        } else {
+            echo "-1";
+        }
+    }
+
+    function read() {
+        $objetoDocente = new Docentes();
+        $response = $objetoDocente->read();
+        $result = array();
+        if (!$response) {
+            $link->error;
+        } else {
+            $i = 0;
+            while ($row = $response->fetch_assoc()) {
+                $result[$i] = $row;
+                $i++;
+            }
+            return json_encode($result);
+        }
+    }
+
 }

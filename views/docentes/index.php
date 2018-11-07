@@ -1,10 +1,13 @@
 <?php
-require_once '../../lib/links.php';
-libreriasDocentes();
+require_once ('../../lib/links.php');
+libnivel3();
+require_once ('../../controllers/docentesController.php');
+$docentes= new DocentesController();
+require_once ('../../models/Docentes.php');
 ?>
 <!DOCTYPE html>
 <!--
-Author: Carlos Castro 
+Author: Carlos Castro, Meluizedec Moo Medina
 Program:  Alta de Docentes 
 description: 
 1. Formulario pra subir docentes 
@@ -16,12 +19,14 @@ description:
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap Table with Add and Delete Row Feature</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">  
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <style type="text/css">
         body {
             color: #404E67;
@@ -110,8 +115,15 @@ description:
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
+            ///////DATABLES ////////
+            $(document).ready(function () {
+                $('#tableDocente').DataTable();
+            });
+
+
+            ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
-            var actions = $("table td:first-child").html();
+            var actions = $("table td:last-child").html();
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
                 $(this).attr("disabled", "disabled");
@@ -122,7 +134,7 @@ description:
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
             // Add row on add button click (Agregar base de datos)
@@ -145,41 +157,6 @@ description:
                             } else {
                                 ///despliega la tabla con los datos////
                                 alert(data);
-                                /*
-                                 var docentes = JSON.parse(data);
-                                 
-                                 alert(docentes);
-                                 var html;
-                                 for (var i=0;i<=docentes.length;i++){
-                                 html=docentes[i]['nombre'];
-                                 }
-                                 alert(html);
-                                 /*        //visualizarDocentes(docentes);
-                                 var tabla = $('table');
-                                 //var tbody = $("<tbody></tbody>");
-                                 for (var i = 0; i < docentes.length; i++){
-                                 var tr = $("<tr></tr>");
-                                 var col_matricula = $("<td>" + docentes[i]['matricula_maestro']) + "</td>");
-                                 var col_nombre = $("<td>" + docentes[i]['nombre']) + "</td>");
-                                 /* var col_accion = $("<td>" +
-                                 "<a class='add' title='Agregar' data-toggle='tooltip'><i class='material-icons'>&#xE03B;</i></a>" +
-                                 "<a class='edit' title='Editar' data-toggle='tooltip'><i class='material-icons'>&#xE254;</i></a>" +
-                                 "<a class='delete' title='Eliminar' data-toggle='tooltip'><i class='material-icons'>&#xE872;</i></a>" +
-                                 "</td>");
-                                 tr.append(col_matricula);
-                                 tr.append(col_nombre);
-                                 tabla.append(tr);
-                                 // tr.append(col_accion);
-                                 //  tbody.append(tr);
-                                 */
-
-
-
-
-
-
-
-
                             }
                         });
             });
@@ -231,7 +208,7 @@ description:
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="tableDocente">
                 <thead>
                     <tr>
                         <th>Matricula</th>
@@ -240,20 +217,20 @@ description:
                     </tr>
                 </thead>
                 <tbody>
-                   
                     <?php
-                    $json = docenteRead();
+                    
+                    $json = $docentes->read();
                     $obj = json_decode($json);
 
                     //print $obj->{'foo-bar'};
 
                     foreach ($obj as $row) {
-                        echo "<tr><td>".$row->{'matricula_maestro'}."</td>"
-                        ."<td>".$row->{'nombre'}."</td>"
-                        ."<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
-                        ."<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                        ."<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        ."</td> </tr>";
+                        echo "<tr><td>" . $row->{'matricula_maestro'} . "</td>"
+                        . "<td>" . $row->{'nombre'} . "</td>"
+                        . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                        . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
+                        . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+                        . "</td> </tr>";
                     }
 
                     //$obj = json_decode($json);

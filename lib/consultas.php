@@ -1,6 +1,4 @@
 <?php
-//require_once("../core/config.php");
-
 function getFila($sql){  ///DEVUELVE LA FILA DE LA CONSULTA SQL///
 	$link=  conectar();
         $tabla= $link->query($sql);
