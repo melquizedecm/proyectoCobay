@@ -6,7 +6,7 @@
             <div>
                 <div class="container text-center">
                     <div>
-                        <img src="../../img/cobay.png" style="left:20px;bottom:550px;position:absolute" width="150" height="100"/>
+                        <img src="../../img/cobay.png" style="left:20px;bottom:630px;position:absolute" width="150" height="100"/>
                     </div>
                     <center><h2>COBAY</h2></center>
                     <p>Colegio De Bachilleres Del Estado De Yucatán</p>
