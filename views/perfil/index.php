@@ -19,20 +19,9 @@ and open the template in the editor.
                 <div class="col-md-3 ">
                     <div class="list-group ">
                         <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
-                        <a href="#" class="list-group-item list-group-item-action">User Management</a>
-                        <a href="#" class="list-group-item list-group-item-action">Used</a>
-                        <a href="#" class="list-group-item list-group-item-action">Enquiry</a>
-                        <a href="#" class="list-group-item list-group-item-action">Dealer</a>
-                        <a href="#" class="list-group-item list-group-item-action">Media</a>
-                        <a href="#" class="list-group-item list-group-item-action">Post</a>
-                        <a href="#" class="list-group-item list-group-item-action">Category</a>
-                        <a href="#" class="list-group-item list-group-item-action">New</a>
-                        <a href="#" class="list-group-item list-group-item-action">Comments</a>
-                        <a href="#" class="list-group-item list-group-item-action">Appearance</a>
-                        <a href="#" class="list-group-item list-group-item-action">Reports</a>
-                        <a href="#" class="list-group-item list-group-item-action">Settings</a>
-
-
+                        <a href="#" class="list-group-item list-group-item-action">Cambiar Contraseña</a>
+                        <a href="#" class="list-group-item list-group-item-action">Perfil de Usuario</a>
+     
                     </div> 
                 </div>
                 <div class="col-md-9">
@@ -48,59 +37,34 @@ and open the template in the editor.
                                 <div class="col-md-12">
                                     <form>
                                         <div class="form-group row">
-                                            <label for="username" class="col-4 col-form-label">User Name*</label> 
+                                            <label for="username" class="col-4 col-form-label">Nombre de Usuario*</label> 
                                             <div class="col-8">
-                                                <input id="username" name="username" placeholder="Username" class="form-control here" required="required" type="text">
+                                                <input id="username" name="username" placeholder="Ejemplo: Juan2018" class="form-control here" required="required" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="name" class="col-4 col-form-label">First Name</label> 
+                                            <label for="name" class="col-4 col-form-label">Nombres</label> 
                                             <div class="col-8">
-                                                <input id="name" name="name" placeholder="First Name" class="form-control here" type="text">
+                                                <input id="name" name="name" placeholder="Ejemplo: Juan" class="form-control here" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="lastname" class="col-4 col-form-label">Last Name</label> 
+                                            <label for="lastname" class="col-4 col-form-label">Apellidos</label> 
                                             <div class="col-8">
-                                                <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" type="text">
+                                                <input id="lastname" name="lastname" placeholder="Ejemplo: Pérez Pérez" class="form-control here" type="text">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="text" class="col-4 col-form-label">Nick Name*</label> 
-                                            <div class="col-8">
-                                                <input id="text" name="text" placeholder="Nick Name" class="form-control here" required="required" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="select" class="col-4 col-form-label">Display Name public as</label> 
-                                            <div class="col-8">
-                                                <select id="select" name="select" class="custom-select">
-                                                    <option value="admin">Admin</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="form-group row">
                                             <label for="email" class="col-4 col-form-label">Email*</label> 
                                             <div class="col-8">
-                                                <input id="email" name="email" placeholder="Email" class="form-control here" required="required" type="text">
+                                                <input id="email" name="email" placeholder="email@cobay.com" class="form-control here" required="required" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="website" class="col-4 col-form-label">Website</label> 
+                                            <label for="newpass" class="col-4 col-form-label">Nuevo Password</label> 
                                             <div class="col-8">
-                                                <input id="website" name="website" placeholder="website" class="form-control here" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="publicinfo" class="col-4 col-form-label">Public Info</label> 
-                                            <div class="col-8">
-                                                <textarea id="publicinfo" name="publicinfo" cols="40" rows="4" class="form-control"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="newpass" class="col-4 col-form-label">New Password</label> 
-                                            <div class="col-8">
-                                                <input id="newpass" name="newpass" placeholder="New Password" class="form-control here" type="text">
+                                                <input id="newpass" name="newpass" placeholder="Escribe tu password (8 digitos)" class="form-control here" type="text">
                                             </div>
                                         </div> 
                                         <div class="form-group row">
