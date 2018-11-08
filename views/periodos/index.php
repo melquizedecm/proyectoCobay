@@ -18,12 +18,16 @@ require_once ('../../models/Periodos.php');
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        
+
         <?php
         getMeta("Administración de Periodos");
         estilosPaginas();
         ?>        
         <script type="text/javascript">
+            
+            function activarPeriodo(this){
+                alert ("periodo");
+            }
 
             ///////DATABLES ////////
             $(document).ready(function ()
@@ -164,12 +168,13 @@ require_once ('../../models/Periodos.php');
                         $datosTabla = json_decode($json);
 
                         foreach ($datosTabla as $row) {
-                            echo "<tr><td>" . $row->{'id_periodo'} . "</td>"
+                            echo "<tr>"
+                            . "<td>" . $row->{'id_periodo'} . "</td>"
                             . "<td>" . $row->{'periodo'} . "</td>";
                             if ($row->{'status_periodo'} === "ACTIVO") {
                                 echo "<td><button class='btn-success'>" . $row->{'status_periodo'} . "</button></td>";
                             } else {
-                                echo "<td><button class='btn-danger'>" . $row->{'status_periodo'} . "</button></td>";
+                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPeriodo(this);'>" . $row->{'status_periodo'} . "</button></td>";
                             }
 
                             echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
@@ -178,15 +183,14 @@ require_once ('../../models/Periodos.php');
                             . "</td></tr>";
                         }
                         ?>
-
                     </tbody>
                 </table>
             </div>
         </div>  
 
-<?php
-getFooter();
-?>
+        <?php
+        getFooter();
+        ?>
 
     </body>
 </html> 
