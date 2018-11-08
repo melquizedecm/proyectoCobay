@@ -13,6 +13,7 @@ Description:
     body {
         margin: 0;
         padding: 0;
+        background: #66CDAA;
 
         font-family: sans-serif;
         height: 100vh;
@@ -124,7 +125,7 @@ Description:
 <link rel="stylesheet" href="/css/master.css">
 </head>
 <body>
-
+  
     <div class="login-box">
         <img src="img/logo.png" class="avatar" alt="Avatar Image">
         <h1>Alumno</h1>
@@ -140,6 +141,7 @@ Description:
 
         </form>
     </div>
+   
 </body>
 </html>
 
