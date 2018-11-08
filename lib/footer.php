@@ -1,7 +1,4 @@
 <?php
-
-class footer {
-
     function getFooter() {
         ?>
                 <footer>
@@ -9,18 +6,14 @@ class footer {
                 <div class="row">
                     <div class="col-xs-12 inner">
                         <ul class="icons">
-                            <li><a href="https://twitter.com/tecprogreso" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-                            <li><a href="https://www.facebook.com/institutotecnologico.superiorprogreso" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-                            <li><a href="https://www.flickr.com/photos/tecprogresoweb" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
-                            <li><a href="http://tecprogreso.blogspot.mx/" class="icon alt fa-rss"><span class="label">RSS</span></a></li>
-                        </ul>
-                        <ul class="copyright">
-                            <li>Plantilla de Desarrollo del ITSP</li> <li> <a href="http://www.itsprogreso.edu.mx/">Instituto Tecnológico Superior Progreso</a></li> <li>&copy; 2017 </li> <li>En Desarrollo...</li>
-                        </ul>
+                        <h4><img src="../../img/laptop.png"<li><a href="http://www.cobay.edu.mx/" class="icon alt fa-twitter"><span class="label">Pagina Oficial</h4></span></a></li>
+                        <h4><img src="../../img/facebook.png"<li><a href="https://www.facebook.com/COBAYPlantelProgreso/" class="icon alt fa-twitter"><span class="label">Facebook</h4></span></a></li>
+                        <h4><img src="../../img/arroba.png"<li><span class="label">Correo: cobay@cobay.edu.mx</h4></span></a></li>
+                        <h4><img src="../../img/telefono.png"<li><span class="label">Telefono: (999) 611.86.90</h4></span></a></li>
                     </div>
                 </div>
             </div>
         </footer>
         <?php
     }
-}
+

@@ -7,10 +7,10 @@
  */
 
 /**
- * Description of alumnos_editar
+ * Description of usuarios_alumnos
  *
- * @author Brayan Cetina
+ * @author glen
  */
-class alumnos_editar {
+class usuarios_alumnos {
     //put your code here
 }

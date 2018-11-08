@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2018 at 04:07 PM
+-- Generation Time: Nov 08, 2018 at 03:10 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.10
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cobay`
+-- Database: `proyecto_cobay`
 --
 
 -- --------------------------------------------------------
@@ -94,7 +94,8 @@ INSERT INTO `asignaturas` (`id_asignatura`, `asignatura`) VALUES
 ('17-B211010721I', 'INGLES'),
 ('17-B211010721M', 'MATEMATICAS'),
 ('17-B211010721T', 'TALLER DE LECTURA Y REDACCION'),
-('17-B211010721U', 'INFORMATICA II');
+('17-B211010721U', 'INFORMATICA II'),
+('ejemplo', 'prueba');
 
 -- --------------------------------------------------------
 
@@ -371,7 +372,7 @@ INSERT INTO `semestres` (`id_semestre`) VALUES
 
 CREATE TABLE `tipos` (
   `id_tipo` int(11) NOT NULL,
-  `tipo` varchar(11) COLLATE utf8_spanish2_ci NOT NULL
+  `tipo` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -379,20 +380,38 @@ CREATE TABLE `tipos` (
 --
 
 INSERT INTO `tipos` (`id_tipo`, `tipo`) VALUES
-(1, 'ALUMNO'),
+(1, 'ADMINISTRATIVO'),
 (2, 'DOCENTE');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `usuarios_alumnos`
 --
 
-CREATE TABLE `usuarios` (
-  `matricula` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+CREATE TABLE `usuarios_alumnos` (
+  `matricula` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
+  `password` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usuarios_maestros`
+--
+
+CREATE TABLE `usuarios_maestros` (
+  `matricula` bigint(20) NOT NULL,
   `password` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `id_tipo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Dumping data for table `usuarios_maestros`
+--
+
+INSERT INTO `usuarios_maestros` (`matricula`, `password`, `id_tipo`) VALUES
+(11003000080, 'sakura', 2);
 
 --
 -- Indexes for dumped tables
@@ -502,9 +521,15 @@ ALTER TABLE `tipos`
   ADD PRIMARY KEY (`id_tipo`);
 
 --
--- Indexes for table `usuarios`
+-- Indexes for table `usuarios_alumnos`
 --
-ALTER TABLE `usuarios`
+ALTER TABLE `usuarios_alumnos`
+  ADD PRIMARY KEY (`matricula`);
+
+--
+-- Indexes for table `usuarios_maestros`
+--
+ALTER TABLE `usuarios_maestros`
   ADD PRIMARY KEY (`matricula`),
   ADD KEY `id_tipo` (`id_tipo`);
 
@@ -627,10 +652,17 @@ ALTER TABLE `periodos`
   ADD CONSTRAINT `periodos_ibfk_1` FOREIGN KEY (`id_status_periodo`) REFERENCES `periodo_status` (`id_status_periodo`);
 
 --
--- Constraints for table `usuarios`
+-- Constraints for table `usuarios_alumnos`
 --
-ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipos` (`id_tipo`);
+ALTER TABLE `usuarios_alumnos`
+  ADD CONSTRAINT `usuarios_alumnos_ibfk_1` FOREIGN KEY (`matricula`) REFERENCES `alumnos` (`matricula`);
+
+--
+-- Constraints for table `usuarios_maestros`
+--
+ALTER TABLE `usuarios_maestros`
+  ADD CONSTRAINT `usuarios_maestros_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipos` (`id_tipo`),
+  ADD CONSTRAINT `usuarios_maestros_ibfk_2` FOREIGN KEY (`matricula`) REFERENCES `maestros` (`matricula_maestro`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
