@@ -108,4 +108,4 @@ function getTablaWhereDesc($link,$table,$campoId,$id){
 function formatoMoneda($monto){
 	return "$ ".number_format($monto,'2','.',',');
 }
-?>
+
