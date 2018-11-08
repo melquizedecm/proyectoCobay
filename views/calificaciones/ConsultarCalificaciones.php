@@ -5,8 +5,24 @@
  * Description:
  * 1. Formulario para que el alumno vea sus calificaciones del semestre actual
  */
+
+//importamos los archivos del modelo y del controlador
+require_once ('../../lib/links.php');
+libnivel3();
+/*require_once ('../../controllers/consultarcalificacionController.php');
+$alumno= new consultarcalificacionController();
+require_once ('../../models/Consulta.php');*/
+
 ?>
 <!DOCTYPE html>
+<title>Mis calificaciones</title>
+<head>
+    <?php
+    getMeta("Tabla de calificaciones");
+    estilosPaginas();
+    ?>
+
+<!--
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -18,11 +34,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  #F5F7FA-->
+
 <style type="text/css">
     body {
         color: #404E67;
-        background: #F5F7FA;
+        background: #66CDAA; 
 		font-family: 'Open Sans', sans-serif;
 	}
 	.table-wrapper {
@@ -117,11 +134,12 @@
 	background-color: #ddd;	
 	}
 	tr:hover td{
-	background-color:#57C472;
-	color: white; 
+	background-color:#F5F7FA;
+	color: black; 
  }
 	
 </style>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
@@ -178,16 +196,29 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+    <?php
+    getHeader();
+    ?>
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-9"><h2> <b>Lista de calificaciones</b></h2></div>
+                    <div class="col-sm-9"><h2> <b>Tabla de calificaciones</b></h2></div>
                 <div class="col-sm-3">
-                   <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button>
+                <!--   <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> -->
                 </div>
                 </div>
-				<h4>Alumno: José Luis Rivera Avelino</h4>
+				<h4>Alumno:
+                                    <?php 
+                                    /*/*mostramos el nombre del alumno
+                                    //usare de ejemplo la matrícula 17B003000037
+                                    //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
+                                    $nombre = $alumno->ObtenerNombre("17B003000037");
+                                    echo $nombre;
+                                    [Todavia le hacen falta pruebas]
+                                    */
+                                    ?>
+                                José Luis Rivera Avelino</h4>
 				<h4>Semestre: 1</h4>
 				<h4>Grupo: A</h4>
 				
@@ -196,8 +227,8 @@ $(document).ready(function(){
                 <thead>
                     <tr>
                         <th>Materia</th>
-                        <th>P1</th>
-                        <th>P2</th>
+                        <th>Parcial 1</th>
+                        <th>Parcial 2</th>
                         <th>Ordinario</th>
                         <th>Total</th>
                     </tr>
@@ -242,6 +273,9 @@ $(document).ready(function(){
 					
             </table>
         </div>
-    </div>     
+    </div>   
+    <?php
+    getFooter();
+    ?>
 </body>
 </html>      
