@@ -24,7 +24,7 @@ description:
         $(document).ready(function () {
 
             ///////DATABLES ////////
-            $('#tableUsuarios').DataTable();
+            $('#tableAdministrativos').DataTable();
 
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
@@ -36,7 +36,8 @@ description:
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
                         '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword"></td>' +
-                        '<td><input type="text" class="form-control" name="inputTipo" id="inputTipo"></td>' +
+                        '<td><input type="text" class="form-control" name="inputCargo" id="inputCargo"></td>' +
+                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -49,12 +50,16 @@ description:
                 //1. OBTENER LOS VALORES//
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var password = document.getElementById("inputPassword").value;
+                var cargo = document.getElementById("inputCargo").value;
+                var nombre = document.getElementById("inputNombre").value;
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/administrativoController.php",
                         {
                             inputMatricula: matricula,
                             inputPassword: password,
+                            inputPassword: cargo,
+                            inputPassword: nombre,
                             buttonCreate: true
                         },
                         function (data) {
@@ -115,7 +120,7 @@ description:
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2><center>Administración De Usuarios<b> Docentes y Administrativos</b></h2></div></center>
+                    <div class="col-sm-8"><h2><center>Administración De Usuarios<b> Administrativos</b></h2></div></center>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Nuevo Usuario</button>
                     </div>
@@ -126,9 +131,9 @@ description:
                     <tr>
                         <th>Matricula</th>
                         <th>Password</th>
-                         <th>Tipo</th>
-
-                        <th></th>
+                        <th>Cargo</th>
+                        <th>Nombre</th>
+                         <th>Herramientas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,7 +146,8 @@ description:
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'matricula'} . "</td>"
                         . "<td>" . $row->{'password'} . "</td>"
-                        ."<td>" . $row->{'id_tipo'} . "</td>"
+                        ."<td>" . $row->{'cargo'} . "</td>"
+                        ."<td>" . $row->{'nombre'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
