@@ -5,7 +5,7 @@ libnivel3();
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Menu Cobay</title>
+        <title>COBAY - Sistema de Consulta de Calificaciones</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1"table width="100%" height="100%" border="1" cellspacing="0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
