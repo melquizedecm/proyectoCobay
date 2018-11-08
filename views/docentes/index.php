@@ -10,7 +10,7 @@ require_once ('../../models/Docentes.php');
 Author: Carlos Castro, Meluizedec Moo Medina
 Program:  Alta de Docentes 
 description: 
-1. Formulario pra subir docentes 
+1. Formulario para subir docentes 
 2. Lista de Docentes.
 -->
 
@@ -92,9 +92,10 @@ description:
                     $(this).html('<input name="input' + cont + '" type="text" class="form-control" value="' + $(this).text() + '">');
                     cont = cont + 1;
                 });
-                $(this).parents("tr").find(".add, .edit").toggle();
+                $(this).parents("tr").find(".edit").toggle();
                 $(".update").attr("disabled", "disabled");
             });
+             
 
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
@@ -114,7 +115,7 @@ description:
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2><center>Administración De <b>Docentes</b></h2></div></center>
+                    <div class="col-sm-8"><h2><center><b>Administración de Docentes</b></h2></div></center>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Nuevo Docente</button>
                     </div>
@@ -141,7 +142,7 @@ description:
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE873;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>
