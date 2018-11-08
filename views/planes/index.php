@@ -1,189 +1,205 @@
-<?php /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */ ?>
+<?php
+require_once ('../../lib/links.php');
+libnivel3();
+require_once ('../../controllers/planesController.php');
+$planes = new PlanesController();
+require_once ('../../models/Planes.php');
+?>
 <!DOCTYPE html>
 <!--
-Author: Aurora Basto
-Program:  Crear Plan 
+Author: Aurora Basto 
+Program:  Agregar planes
 description: 
-1. Formulario para crear plan 
-2. vusualizacion de planes.
+1. Agregar planes 
+2. Lista de planes
 -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap User Management Data Table</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">  
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <style type="text/css">
         body {
-            color: #566787;
-            background: #f5f5f5;
-            font-family: 'Varela Round', sans-serif;
-            font-size: 13px;
+            color: #404E67;
+            background: #F5F7FA;
+            font-family: 'Open Sans', sans-serif;
         }
         .table-wrapper {
+            width: 700px;
+            margin: 30px auto;
             background: #fff;
-            padding: 20px 25px;
-            margin: 30px 0;
-            border-radius: 3px;
+            padding: 5px;	
             box-shadow: 0 1px 1px rgba(0,0,0,.05);
         }
         .table-title {
-            padding-bottom: 15px;
-            background: #2EB177;
-            color: #fff;
-            padding: 16px 30px;
-            margin: -20px -25px 10px;
-            border-radius: 3px 3px 0 0;
+            padding-bottom: 10px;
+            margin: 0 0 10px;
         }
         .table-title h2 {
-            margin: 5px 0 0;
-            font-size: 24px;
+            margin: 6px 0 0;
+            font-size: 22px;
         }
-        .table-title .btn {
-            color: #566787;
+        .table-title .add-new {
             float: right;
-            font-size: 13px;
-            background: #fff;
-            border: none;
-            min-width: 50px;
-            border-radius: 2px;
-            border: none;
-            outline: none !important;
-            margin-left: 10px;
+            height: 30px;
+            font-weight: bold;
+            font-size: 12px;
+            text-shadow: none;
+            min-width: 100px;
+            border-radius: 50px;
+            line-height: 13px;
         }
-        .table-title .btn:hover, .table-title .btn:focus {
-            color: #566787;
-            background: #f2f2f2;
+        .table-title .add-new i {
+            margin-right: 4px;
         }
-        .table-title .btn i {
-            float: left;
-            font-size: 21px;
-            margin-right: 5px;
-        }
-        .table-title .btn span {
-            float: left;
-            margin-top: 2px;
+        table.table {
+            table-layout: fixed;
         }
         table.table tr th, table.table tr td {
             border-color: #e9e9e9;
-            padding: 12px 15px;
-            vertical-align: middle;
-        }
-        table.table tr th:first-child {
-            width: 60px;
-        }
-        table.table tr th:last-child {
-            width: 100px;
-        }
-        table.table-striped tbody tr:nth-of-type(odd) {
-            background-color: #fcfcfc;
-        }
-        table.table-striped.table-hover tbody tr:hover {
-            background: #f5f5f5;
         }
         table.table th i {
             font-size: 13px;
             margin: 0 5px;
             cursor: pointer;
-        }	
-        table.table td:last-child i {
-            opacity: 0.9;
-            font-size: 22px;
-            margin: 0 5px;
+        }
+        table.table th:last-child {
+            width: 100px;
+
         }
         table.table td a {
-            font-weight: bold;
-            color: #566787;
+            cursor: pointer;
             display: inline-block;
-            text-decoration: none;
+            margin: 0 5px;
+            min-width: 24px;
+        }    
+        table.table td a.add {
+            color: #27C46B;
         }
-        table.table td a:hover {
-            color: #2196F3;
-        }
-        table.table td a.settings {
-            color: #2196F3;
+        table.table td a.edit {
+            color: #FFC107;
         }
         table.table td a.delete {
-            color: #F44336;
+            color: #E34724;
         }
         table.table td i {
             font-size: 19px;
         }
-        table.table .avatar {
-            border-radius: 50%;
-            vertical-align: middle;
-            margin-right: 10px;
+        table.table td a.add i {
+            font-size: 24px;
+            margin-right: -1px;
+            position: relative;
+            top: 4px;
+        }    
+        table.table .form-control {
+            height: 32px;
+            line-height: 32px;
+            box-shadow: none;
+            border-radius: 2px;
         }
-        .status {
-            font-size: 30px;
-            margin: 2px 2px 0 0;
-            display: inline-block;
-            vertical-align: middle;
-            line-height: 10px;
+        table.table .form-control.error {
+            border-color: #f50000;
         }
-        .text-success {
-            color: #10c469;
-        }
-        .text-info {
-            color: #62c9e8;
-        }
-        .text-warning {
-            color: #FFC107;
-        }
-        .text-danger {
-            color: #ff5b5b;
-        }
-        .pagination {
-            float: right;
-            margin: 0 0 5px;
-        }
-        .pagination li a {
-            border: none;
-            font-size: 13px;
-            min-width: 30px;
-            min-height: 30px;
-            color: #999;
-            margin: 0 2px;
-            line-height: 30px;
-            border-radius: 2px !important;
-            text-align: center;
-            padding: 0 6px;
-        }
-        .pagination li a:hover {
-            color: #666;
-        }	
-        .pagination li.active a, .pagination li.active a.page-link {
-            background: #03A9F4;
-        }
-        .pagination li.active a:hover {        
-            background: #0397d6;
-        }
-        .pagination li.disabled i {
-            color: #ccc;
-        }
-        .pagination li i {
-            font-size: 16px;
-            padding-top: 6px
-        }
-        .hint-text {
-            float: left;
-            margin-top: 10px;
-            font-size: 13px;
+        table.table td .add {
+            display: none;
         }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            ///////DATABLES ////////
+            $(document).ready(function () {
+                $('#tablePlanes').DataTable();
+            });
+
+
+            ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
+            var actions = $("table td:last-child").html();
+            // Append table with add row form on add new button click
+            $(".add-new").click(function () {
+                $(this).attr("disabled", "disabled");
+                var index = $("table tbody tr:first-child").index();
+                var row = '<tr>' +
+                        '<td><input type="text" class="form-control" name="inputID_Plan" id="inputid_plan" placeholder="Automatico" readonly></td>'+
+                '<td><input type="text" class="form-control" name="inputPlan" id="inputplan"></td>' +
+                        /*'<td><input type="text" class="form-control" name="inputEstatus" id="inputestatus"></td>' +*/
+                        '<td>' + actions + '</td>' +
+                        '</tr>';
+                $("table").prepend(row);
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            // Add row on add button click (Agregar base de datos)
+            $(document).on("click", ".add", function () {
+                /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+                var id_plan = document.getElementById("inputid_plan").value;
+                var plan = document.getElementById("inputplan").value; //(JALAR EL VALOR INGRESADO)
+                /*var estatus = document.getElementById("inputEstatus").value;*/
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
+                $.post("../../controllers/planesController.php",
+                        {
+                            inputID_Plan: id_plan,
+                            inputPlan: plan,
+                            /*inputEstatus: estatus,*/
+                            buttonCreate: true
+                        },
+                function (data) {
+                    if (data === "-1") {
+                        alert("Error al guardar los datos, revisar la matricula");
+                    } else {
+                        alert("Registro Guardado con éxito");
+                        location.reload(true);
+                    }
+                });
+            });
+            //3. REFRESCAR LOS VALORES///
+            var empty = false;
+            var input = $(this).parents("tr").find('input[type="text"]');
+            input.each(function () {
+                if (!$(this).val()) {
+                    $(this).addClass("error");
+                    empty = true;
+                } else {
+                    $(this).removeClass("error");
+                }
+            });
+            $(this).parents("tr").find(".error").first().focus();
+            if (!empty) {
+                input.each(function () {
+                    $(this).parent("td").html($(this).val());
+                });
+                $(this).parents("tr").find(".add, .edit").toggle();
+                $(".add-new").removeAttr("disabled");
+            }
+
+            // Edit row on edit button click
+            $(document).on("click", ".edit", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+                });
+                $(this).parents("tr").find(".add, .edit").toggle();
+                $(".add-new").attr("disabled", "disabled");
+            });
+            // Delete row on delete button click
+            $(document).on("click", ".delete", function () {
+                $(this).parents("tr").remove();
+                $(".add-new").removeAttr("disabled");
+            });
         });
+
     </script>
 </head>
 <body>
@@ -191,89 +207,43 @@ description:
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-5">
-                        <h2>Crear<b> Plan</b></h2>
-                    </div>
-                    <div class="col-sm-7">
-                        <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Agregar Plan</span></a>
+                    <div class="col-sm-8"><h2><center>Administración De <b>Planes</b></h2></div></center>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Agregar Plan</button>
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-hover">
+            <table class="table table-bordered" id="tablePlanes">
                 <thead>
                     <tr>
+                        
                         <th align="center"> ID_Plan </th>
                         <th align="center"> Plan </th>
-                        <th align="center"> Estatus </th>
+                        
                         <th align="center"> Modificar </th>
-
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td align="center"> 1 </td>
-                        <td align="center"> 2017B </td>
-                        <td><span class="status text-success">&bull;</span> Activo</td>
-                        <td>
-                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center"> 2 </td>
-                        <td align="center"> 2017B </td>
-                        <td><span class="status text-success">&bull;</span> Activo</td>
-                        <td>
-                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center"> 3 </td>
-                        <td align="center"> 2017B </td>
-                        <td><span class="status text-danger">&bull;</span> Desactivado </td>
-                        <td>
-                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center"> 4 </td>
-                        <td align="center"> 2017B </td>
-                        <td><span class="status text-success">&bull;</span> Activo</td>
-                        <td>
-                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center"> 5 </td>
-                        <td align="center"> 2017B </td>
-                        <td><span class="status text-success">&bull;</span> Activo</td>
-                        <td>
-                            <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                        </td>
-                    </tr>
+                    <?php
+                    $json = $planes->read();
+                    $datosTabla = json_decode($json);
+
+                    //print $obj->{'foo-bar'};
+
+                    foreach ($datosTabla as $row) {
+                        echo "<tr><td>" . $row->{'id_plan'} . "</td>"
+                        . "<td>" . $row->{'plan'} . "</td>"
+                        /*. "<td>" . $row->{'estatus'} . "</td>"*/
+                        . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                        . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
+                        . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
+                        . "</td> </tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
-
         </div>
-        <div class="clearfix">
-            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-            <ul class="pagination">
-                <li class="page-item disabled"><a href="#">Previous</a></li>
-                <li class="page-item"><a href="#" class="page-link">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                <li class="page-item"><a href="#" class="page-link">Next</a></li>
-            </ul>
-        </div>
-        <div id="footer">
-
-        </div>
-    </center>
+    </div>     
 </body>
-</html>
+</html>  
