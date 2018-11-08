@@ -6,9 +6,9 @@
             <div>
                 <div class="container text-center">
                     <div>
-                        <img src="../../img/cobay.png" style="left:20px;bottom:630px;position:absolute" width="150" height="100"/>
+                        <center><img src="../../img/cobay.png" style="right:89px;bottom:650px;float: left;" width="150" height="100"/>
                     </div>
-                    <center><h2>COBAY</h2></center>
+                    <h2>COBAY</h2></center>
                     <p>Colegio De Bachilleres Del Estado De Yucatán</p>
                 </div>
             </div>
