@@ -1,6 +1,7 @@
 <?php
     function getHeader() {
         ?>
+<body style="background-color:#66CDAA;">
         <meta charset="UTF-16">
         <header>
             <div>
