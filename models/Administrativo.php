@@ -13,8 +13,8 @@
 class Administrativo {
     
 
-    function create($matricula, $password, $tipo) {
-        $sql = "INSERT INTO usuarios_maestros(matricula,password,id_tipo) VALUES ('" . $matricula . "','".$password . "','" . $tipo . "')";
+    function create($matricula, $password, $cargo, $nombre) {
+        $sql = "INSERT INTO administrativos(matricula,password,cargo,nombre) VALUES ('" . $matricula . "','".$password . "','" . $cargo . "','" . $nombre . "')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -24,7 +24,7 @@ class Administrativo {
     }
 
     function read() {
-        return getTabla("usuarios_maestros");
+        return getTabla("administrativos");
     }
 
 }

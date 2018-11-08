@@ -58,12 +58,13 @@ class administrativoController {
 ///1. recibir datos
         $matricula = $_POST['inputMatricula'];
         $password = $_POST['inputPassword'];
-        $tipo = "1";
+        $cargo = $_POST['inputCargo'];
+        $nombre = $_POST['inputNombre'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Administrativo.php';
         $objetoAdministrativo = new Administrativo();
-        $response = $objetoAdministrativo->create($matricula, $password, $tipo);
+        $response = $objetoAdministrativo->create($matricula, $password, $cargo, $nombre);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {

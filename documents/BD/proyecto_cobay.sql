@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2018 at 03:10 PM
+-- Generation Time: Nov 08, 2018 at 04:36 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.10
 
@@ -25,11 +25,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `administrativos`
+--
+
+CREATE TABLE `administrativos` (
+  `matricula` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  `password` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  `cargo` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Dumping data for table `administrativos`
+--
+
+INSERT INTO `administrativos` (`matricula`, `password`, `cargo`, `nombre`) VALUES
+('00003', 'petro', '', ''),
+('0001', 'admin', 'jefe', 'aaron');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `alumnos`
 --
 
 CREATE TABLE `alumnos` (
   `matricula` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
+  `password` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `id_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -38,17 +60,17 @@ CREATE TABLE `alumnos` (
 -- Dumping data for table `alumnos`
 --
 
-INSERT INTO `alumnos` (`matricula`, `nombre`, `id_status`) VALUES
-('15B003000462', 'CHALE CHIM SINAI VIRIDIANA', 1),
-('17B003000004', 'ACOSTA CHUC JOSHUA JONATHAN', 1),
-('17B003000014', 'ALDANA NAAL JESUS ALFONSO', 1),
-('17B003000016', 'ALFARO UITZIL SAMUEL ABRAHAM', 1),
-('17B003000027', 'ARCEO FERREYRA EMILIANO DE JESUS', 2),
-('17B003000037', 'AZCORRA ORTIZ KAREN ANGELICA', 2),
-('17B003000038', 'AZUETA PACHECO LUIS ENRIQUE', 2),
-('17B003000056', 'BUENO QUINO TATIANA', 1),
-('17B003000061', 'CAB CANUL ISIDRO JAYR', 2),
-('17B003000114', 'CHI TAMAY BRIGIDA DEL ROSARIO', 1);
+INSERT INTO `alumnos` (`matricula`, `password`, `nombre`, `id_status`) VALUES
+('15B003000462', '', 'CHALE CHIM SINAI VIRIDIANA', 1),
+('17B003000004', '', 'ACOSTA CHUC JOSHUA JONATHAN', 1),
+('17B003000014', '', 'ALDANA NAAL JESUS ALFONSO', 1),
+('17B003000016', '', 'ALFARO UITZIL SAMUEL ABRAHAM', 1),
+('17B003000027', '', 'ARCEO FERREYRA EMILIANO DE JESUS', 2),
+('17B003000037', '', 'AZCORRA ORTIZ KAREN ANGELICA', 2),
+('17B003000038', '', 'AZUETA PACHECO LUIS ENRIQUE', 2),
+('17B003000056', '', 'BUENO QUINO TATIANA', 1),
+('17B003000061', '', 'CAB CANUL ISIDRO JAYR', 2),
+('17B003000114', '', 'CHI TAMAY BRIGIDA DEL ROSARIO', 1);
 
 -- --------------------------------------------------------
 
@@ -208,6 +230,7 @@ INSERT INTO `grupos` (`id_grupo`, `grupo`) VALUES
 
 CREATE TABLE `maestros` (
   `matricula_maestro` bigint(20) NOT NULL,
+  `password` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `id_status_maestro` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -216,13 +239,13 @@ CREATE TABLE `maestros` (
 -- Dumping data for table `maestros`
 --
 
-INSERT INTO `maestros` (`matricula_maestro`, `nombre`, `id_status_maestro`) VALUES
-(11003000080, 'MONTERO CASTRO SAKURA MARIA', 1),
-(11003000081, 'ALVAREZ MARLY', 1),
-(11003000082, 'CANUL GEMMA', 1),
-(11003000083, 'GARCIA MAURA', 1),
-(11003000084, 'SOSA ALICIA', 1),
-(11003000085, 'BRAGA JOSE', 2);
+INSERT INTO `maestros` (`matricula_maestro`, `password`, `nombre`, `id_status_maestro`) VALUES
+(11003000080, '', 'MONTERO CASTRO SAKURA MARIA', 1),
+(11003000081, '', 'ALVAREZ MARLY', 1),
+(11003000082, '', 'CANUL GEMMA', 1),
+(11003000083, '', 'GARCIA MAURA', 1),
+(11003000084, '', 'SOSA ALICIA', 1),
+(11003000085, '', 'BRAGA JOSE', 2);
 
 -- --------------------------------------------------------
 
@@ -296,22 +319,23 @@ INSERT INTO `periodo_status` (`id_status_periodo`, `status_periodo`) VALUES
 
 CREATE TABLE `planes` (
   `id_plan` int(11) NOT NULL,
-  `plan` varchar(5) COLLATE utf8_spanish2_ci NOT NULL
+  `plan` varchar(5) COLLATE utf8_spanish2_ci NOT NULL,
+  `id_status_plan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Dumping data for table `planes`
 --
 
-INSERT INTO `planes` (`id_plan`, `plan`) VALUES
-(1, '12-B'),
-(2, '13-B'),
-(3, '14-B'),
-(4, '15-B'),
-(5, '16-B'),
-(6, '17-B'),
-(7, '18-B'),
-(8, '19-B');
+INSERT INTO `planes` (`id_plan`, `plan`, `id_status_plan`) VALUES
+(1, '12-B', 1),
+(2, '13-B', 1),
+(3, '14-B', 1),
+(4, '15-B', 1),
+(5, '16-B', 1),
+(6, '17-B', 1),
+(7, '18-B', 1),
+(8, '19-B', 1);
 
 -- --------------------------------------------------------
 
@@ -343,6 +367,25 @@ INSERT INTO `planteles` (`id_plantel`, `plantel`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `plan_status`
+--
+
+CREATE TABLE `plan_status` (
+  `id_status_plan` int(11) NOT NULL,
+  `status_plan` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Dumping data for table `plan_status`
+--
+
+INSERT INTO `plan_status` (`id_status_plan`, `status_plan`) VALUES
+(1, 'ACTIVO'),
+(2, 'DESACTIVADO');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `semestres`
 --
 
@@ -364,58 +407,15 @@ INSERT INTO `semestres` (`id_semestre`) VALUES
 (7),
 (8);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `tipos`
---
-
-CREATE TABLE `tipos` (
-  `id_tipo` int(11) NOT NULL,
-  `tipo` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Dumping data for table `tipos`
---
-
-INSERT INTO `tipos` (`id_tipo`, `tipo`) VALUES
-(1, 'ADMINISTRATIVO'),
-(2, 'DOCENTE');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuarios_alumnos`
---
-
-CREATE TABLE `usuarios_alumnos` (
-  `matricula` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
-  `password` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuarios_maestros`
---
-
-CREATE TABLE `usuarios_maestros` (
-  `matricula` bigint(20) NOT NULL,
-  `password` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `id_tipo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Dumping data for table `usuarios_maestros`
---
-
-INSERT INTO `usuarios_maestros` (`matricula`, `password`, `id_tipo`) VALUES
-(11003000080, 'sakura', 2);
-
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `administrativos`
+--
+ALTER TABLE `administrativos`
+  ADD PRIMARY KEY (`matricula`);
 
 --
 -- Indexes for table `alumnos`
@@ -500,7 +500,8 @@ ALTER TABLE `periodo_status`
 -- Indexes for table `planes`
 --
 ALTER TABLE `planes`
-  ADD PRIMARY KEY (`id_plan`);
+  ADD PRIMARY KEY (`id_plan`),
+  ADD KEY `id_status_plan` (`id_status_plan`);
 
 --
 -- Indexes for table `planteles`
@@ -509,29 +510,17 @@ ALTER TABLE `planteles`
   ADD PRIMARY KEY (`id_plantel`);
 
 --
+-- Indexes for table `plan_status`
+--
+ALTER TABLE `plan_status`
+  ADD PRIMARY KEY (`id_status_plan`),
+  ADD KEY `id_status_plan` (`id_status_plan`);
+
+--
 -- Indexes for table `semestres`
 --
 ALTER TABLE `semestres`
   ADD PRIMARY KEY (`id_semestre`);
-
---
--- Indexes for table `tipos`
---
-ALTER TABLE `tipos`
-  ADD PRIMARY KEY (`id_tipo`);
-
---
--- Indexes for table `usuarios_alumnos`
---
-ALTER TABLE `usuarios_alumnos`
-  ADD PRIMARY KEY (`matricula`);
-
---
--- Indexes for table `usuarios_maestros`
---
-ALTER TABLE `usuarios_maestros`
-  ADD PRIMARY KEY (`matricula`),
-  ADD KEY `id_tipo` (`id_tipo`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -598,16 +587,16 @@ ALTER TABLE `planteles`
   MODIFY `id_plantel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `plan_status`
+--
+ALTER TABLE `plan_status`
+  MODIFY `id_status_plan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `semestres`
 --
 ALTER TABLE `semestres`
   MODIFY `id_semestre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `tipos`
---
-ALTER TABLE `tipos`
-  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -652,17 +641,10 @@ ALTER TABLE `periodos`
   ADD CONSTRAINT `periodos_ibfk_1` FOREIGN KEY (`id_status_periodo`) REFERENCES `periodo_status` (`id_status_periodo`);
 
 --
--- Constraints for table `usuarios_alumnos`
+-- Constraints for table `planes`
 --
-ALTER TABLE `usuarios_alumnos`
-  ADD CONSTRAINT `usuarios_alumnos_ibfk_1` FOREIGN KEY (`matricula`) REFERENCES `alumnos` (`matricula`);
-
---
--- Constraints for table `usuarios_maestros`
---
-ALTER TABLE `usuarios_maestros`
-  ADD CONSTRAINT `usuarios_maestros_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipos` (`id_tipo`),
-  ADD CONSTRAINT `usuarios_maestros_ibfk_2` FOREIGN KEY (`matricula`) REFERENCES `maestros` (`matricula_maestro`);
+ALTER TABLE `planes`
+  ADD CONSTRAINT `planes_ibfk_1` FOREIGN KEY (`id_status_plan`) REFERENCES `plan_status` (`id_status_plan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
