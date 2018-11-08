@@ -9,9 +9,9 @@
 //importamos los archivos del modelo y del controlador
 require_once ('../../lib/links.php');
 libnivel3();
-/*require_once ('../../controllers/consultarcalificacionController.php');
+require_once ('../../controllers/consultarcalificacionController.php');
 $alumno= new consultarcalificacionController();
-require_once ('../../models/Consulta.php');*/
+require_once ('../../models/Consulta.php');
 
 ?>
 <!DOCTYPE html>
@@ -34,10 +34,13 @@ require_once ('../../models/Consulta.php');*/
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  #F5F7FA-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  #F5F7FA
+<?php
+getMeta ("Tabla de calificaciones");
+estilosPaginas();
+?>
 
-<style type="text/css">
-    body {
+<!--    body {
         color: #404E67;
         background: #66CDAA; 
 		font-family: 'Open Sans', sans-serif;
@@ -48,7 +51,9 @@ require_once ('../../models/Consulta.php');*/
         background: #fff;
         padding: 20px;	
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    }
+    }-->
+<style type="text/css">
+
     .table-title {
         padding-bottom: 10px;
         margin: 0 0 10px;
@@ -204,24 +209,45 @@ $(document).ready(function(){
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-9"><h2> <b>Tabla de calificaciones</b></h2></div>
-                <div class="col-sm-3">
-                <!--   <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> -->
+                    <div class="col-sm-3">
+                    <!--   <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> -->
+                    </div>
                 </div>
-                </div>
-				<h4>Alumno:
-                                    <?php 
-                                    /*/*mostramos el nombre del alumno
-                                    //usare de ejemplo la matrícula 17B003000037
-                                    //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
-                                    $nombre = $alumno->ObtenerNombre("17B003000037");
-                                    echo $nombre;
-                                    [Todavia le hacen falta pruebas]
-                                    */
-                                    ?>
-                                José Luis Rivera Avelino</h4>
-				<h4>Semestre: 1</h4>
-				<h4>Grupo: A</h4>
-				
+                <h4>Alumno:
+                    <?php
+                    //mostramos el nombre del alumno
+                    //usare de ejemplo la matrícula 17B003000037
+                    //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
+                    
+                    $json = $alumno->ObtenerNombre("17B003000004");
+                    $datosTabla = json_decode($json);
+
+                    foreach ($datosTabla as $row) {
+                        echo $row->{'nombre'};
+                    }
+                    ?>
+                </h4>
+                <h4>Semestre: 
+                    <?php
+                    $json = $alumno->ObtenerSemestre("17B003000004");
+                    $datosTabla = json_decode($json);
+
+                    foreach ($datosTabla as $row) {
+                        echo $row->{'id_semestre'};
+                    }
+                    ?>
+                </h4>
+                <h4>Grupo: 
+                    <?php
+                    $json = $alumno->obtenerGrupo("17B003000004");
+                    $datosTabla = json_decode($json);
+
+                    foreach ($datosTabla as $row) {
+                        echo $row->{'grupo'};
+                    }
+                    ?>
+                </h4>
+
             </div>
             <table class="table table-bordered">
                 <thead>
