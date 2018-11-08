@@ -9,9 +9,9 @@
 //importamos los archivos del modelo y del controlador
 require_once ('../../lib/links.php');
 libnivel3();
-require_once ('../../controllers/consultarcalificacionController.php');
+/*require_once ('../../controllers/consultarcalificacionController.php');
 $alumno= new consultarcalificacionController();
-require_once ('../../models/Consulta.php');
+require_once ('../../models/Consulta.php');*/
 
 ?>
 <!DOCTYPE html>
