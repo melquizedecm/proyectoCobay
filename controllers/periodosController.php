@@ -94,7 +94,7 @@ class PeriodosController
         $result = array();
         if (!$response) 
         {
-            $link->error;
+            echo $response;
         } 
         else 
         {
