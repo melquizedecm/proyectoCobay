@@ -1,46 +1,46 @@
 <?php
 //require_once '../core/config.php';
 /*
- * Program:     asignaturasController.php
- * Author:      Aaron Pech
- * Description: Programa que permite recibir los datos de las asignaturas, 
+ * Program:     docentesController.php
+ * Author:      MTI. Melquizedec Moo Medina
+ * Description: Programa que permite recibir los datos del docente, 
  * los analiza, configura y almacena en la Base de Datos.
  * 
  * Function: 
  * evalua el tipo de acción proveniente analizando la variable button.
  * y realiza el algoritmo especificado en la acción.
  */
-///////Agregar Docente///////
+///////Agregar alumno///////
 if (isset($_POST['buttonCreate'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $asignaturas=new AsignaturasController();
-    $asignaturas->create();
+    $alumnos=new alumnosController();
+    $alumnos->create();
 }
-///////Modificar Datos de Docente///////
+///////Modificar Datos de alumno///////
 elseif (isset($_POST['buttonUpdate'])) {
-    asignaturasUpdate();
+    alumnosUpdate();
 }
-///////Consultar tabla de Docente///////
+///////Consultar tabla de alumno///////
 elseif (isset($_POST['buttonRead'])) {
-    $asignaturas=new AsignaturasController();
-    $asignaturas->read();
+    $alumnos = new alumnosController();
+    $alumnos->read();
 }
-///////Consultar tabla de Docente por Id///////
+///////Consultar tabla de alumno por Id///////
 elseif (isset($_POST['buttonReadId'])) {
-    asignaturasReadId();
+    alumnosReadId();
 }
 ///////Eliminar Datos de Docente///////
 elseif (isset($_POST['buttonDelete'])) {
-    asignaturasDelete();
+    alumnosDelete();
 } else {
     return False;
 }
 
-class AsignaturasController {
+class alumnosController {
     function index() {
-        $objetoAsignaturas = new Asignaturas();
-        $response = $objetoAsignaturas->read();
+        $objetoAlumno = new Alumno();
+        $response = $objetoAlumno->read();
         $result = array();
         if (!$response) {
             $link->error;
@@ -56,15 +56,15 @@ class AsignaturasController {
 
     function create() {
 ///1. recibir datos
-        $clave = $_POST['inputClave'];
+        $matricula = $_POST['inputMatricula'];
         $nombre = $_POST['inputNombre'];
+        $status = "1";
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
-        require_once '../models/Asignaturas.php';
-        $objetoAsignaturas = new Asignaturas();
-        $response = $objetoAsignaturas->create($clave, $nombre);
-//$response=$objetoDocente->create($matricula,$nombre,$status);
-//3.  enviar una respuestaç
+        require_once '../models/Alumnos.php';
+        $objetoAlumno = new Alumno();
+        $response = $objetoAlumno->create($matricula, $nombre, $status);
+//3.  enviar una respuesta
         if ($response) {
             $this->read();
         } else {
@@ -73,8 +73,8 @@ class AsignaturasController {
     }
 
     function read() {
-        $objetoAsignaturas = new Asignaturas();
-        $response = $objetoAsignaturas->read();
+        $objetoAlumno = new Alumno();
+        $response = $objetoAlumno->read();
         $result = array();
         if (!$response) {
             $link->error;

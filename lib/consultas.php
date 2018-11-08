@@ -25,15 +25,18 @@ function getTablaUTF8($tabla, $campo, $valor){
 	}
 }
 
-function getTabla($tabla){
+function getTabla($tabla)
+{
 	$link = conectar();
 	$sql="SELECT * FROM ".$tabla;
 	$res = $link->query($sql);
-	if (!$res) {
+	if (!$res) 
+        {
 		//echo $link->error;
 		return null;
 	}
-	else{
+	else
+        {
 		return $res;
 	}
 }
@@ -105,4 +108,4 @@ function getTablaWhereDesc($link,$table,$campoId,$id){
 function formatoMoneda($monto){
 	return "$ ".number_format($monto,'2','.',',');
 }
-?>
+

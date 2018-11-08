@@ -1,4 +1,6 @@
 <?php
+require_once '../../lib/links.php';
+libnivel3();
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,97 +15,22 @@
 ?>
 <!DOCTYPE html>
 <head>
+   <!--<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<title>Asignar calificaciones</title>-->
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<style type="text/css">
-
-    body {
-        color: #404E67;
-        background: #F5F7FA;
-        font-family: 'Open Sans', sans-serif;
-    }
-    .table-wrapper {
-        width: 700px;
-        margin: 30px auto;
-        background: #fff;
-        padding: 20px;	
-        box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    }
-    .table-title {
-        padding-bottom: 10px;
-        margin: 0 0 10px;
-    }
-    .table-title h2 {
-        margin: 6px 0 0;
-        font-size: 22px;
-    }
-    .table-title .add-new {
-        float: right;
-        height: 30px;
-        font-weight: bold;
-        font-size: 12px;
-        text-shadow: none;
-        min-width: 100px;
-        border-radius: 50px;
-        line-height: 13px;
-    }
-    .table-title .add-new i {
-        margin-right: 4px;
-    }
-    table.table {
-        table-layout: fixed;
-    }
-    table.table tr th, table.table tr td {
-        border-color: #e9e9e9;
-    }
-    table.table th i {
-        font-size: 13px;
-        margin: 0 5px;
-        cursor: pointer;
-    }
-    table.table th:last-child {
-        width: 100px;
-    }
-    table.table td a {
-        cursor: pointer;
-        display: inline-block;
-        margin: 0 5px;
-        min-width: 24px;
-    }    
-    table.table td a.add {
-        color: #27C46B;
-    }
-    table.table td a.edit {
-        color: #FFC107;
-    }
-    table.table td a.delete {
-        color: #E34724;
-    }
-    table.table td i {
-        font-size: 19px;
-    }
-    table.table td a.add i {
-        font-size: 24px;
-        margin-right: -1px;
-        position: relative;
-        top: 3px;
-    }    
-    table.table .form-control {
-        height: 32px;
-        line-height: 32px;
-        box-shadow: none;
-        border-radius: 2px;
-    }
-    table.table .form-control.error {
-        border-color: #f50000;
-    }
-    table.table td .add {
-        display: none;
-    }
-</style>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
+<?php
+getMeta("Asignar calificaciones");
+estilosPaginas();
+?>
 <script type="text/javascript">
 
     function cargarHojaExcel()
@@ -120,6 +47,7 @@
     }
 
     $(document).ready(function () {
+        //GENERACION DE LA TABLA
         $('[data-toggle="tooltip"]').tooltip();
         var actions = $("table td:last-child").html();
         // Append table with add row form on add new button click
@@ -130,8 +58,8 @@
                     '<td></td>' +
                     '<td><input type="text" class="form-control" name="inputname" id="inputname"></td>' +
                     '<td><input type="text" class="form-control" name="inputmatricula" id="inputmatricula"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial 1" id="inputparcial_1"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial 2" id="inputparcial_2"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial_1" id="inputparcial_1"></td>' +
+                    '<td><input type="text" class="form-control" name="inputparcial_2" id="inputparcial_2"></td>' +
                     '<td><input type="text" class="form-control" name="inputordinario" id="inputordinario"></td>' +
                     '<td><input type="text" class="form-control" name="inputpromedio" id="inputpromedio"></td>' +
                     '</tr>';
@@ -139,8 +67,40 @@
             $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
             $('[data-toggle="tooltip"]').tooltip();
         });
+        
+        
+        
         // Add row on add button click
         $(document).on("click", ".add", function () {
+             /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+                var nombre = document.getElementById("inputname").value; //(JALAR EL VALOR INGRESADO)
+                var matricula = document.getElementById("inputmatricula").value;
+                var parcial1 = document.getElementById("inputparcial_1").value;
+                var parcial2 = document.getElementById("inputparcial_2").value;
+                var promedio = document.getElementById("inputpromedio").value;
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
+                $.post("../../controllers/calificacionController.php",
+                        {
+                            inputname: nombre,
+                            inputmatricula: matricula,
+                            inputparcial_1: parcial1,
+                            inputparcial_2: parcial2,
+                            inputpromedio: promedio,
+                            buttonCreate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar la matricula");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
+        });
+        
+         //3. REFRESCAR LOS VALORES///
             var empty = false;
             var input = $(this).parents("tr").find('input[type="text"]');
             input.each(function () {
@@ -156,11 +116,9 @@
                 input.each(function () {
                     $(this).parent("td").html($(this).val());
                 });
-
                 $(this).parents("tr").find(".add, .edit").toggle();
                 $(".add-new").removeAttr("disabled");
             }
-        });
 // Edit row on edit button click
         $(document).on("click", ".edit", function () {
             $(this).parents("tr").find("td:not(:last-child)").each(function () {
@@ -178,7 +136,9 @@
 </script>
 </head>
 <body>
-
+    <?php
+    getHeader();
+    ?>
     <div class="container">
 
         <div class="table-wrapper">
@@ -205,52 +165,8 @@
                         </form>
                     </div>     
 
-                    <!--<div >
-                        <div class="dropdown">
-
-                            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Grupos
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1A</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1B</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1C</a></li>
-
-
-                            </ul>
-
-                        </div>
-
-                        <div class="dropdown">
-
-                            <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Materias
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Informatica</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Matematicas</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Ingles 1</a></li>
-                            </ul>
-
-                        </div>
-                         <div class="dropdown">
-
-                            <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown">Semestre
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu3">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Primero</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tercero</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Quinto</a></li>
-                            </ul>
-
-                        </div>
-                    </div>-->
+                    
                     <div class="col-sm-2" >
-                        <!--<button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>-->
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>
 
                         <!-- Modal -->
@@ -264,10 +180,44 @@
                                         <h4 class="modal-title">Selección de Lista</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Some text in the modal.</p>
+                                        <table table class="table table-bordered" class="fa fa-plus">
+                                            <th>
+                                                <select name="Semestre">
+                                                    <option>Semestre</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <select name="Grupo">
+                                                    <option>Grupo</option>
+                                                    <option>A</option>
+                                                    <option>B</option>
+                                                    <option>C</option>
+                                                    <option>D</option>
+                                                    <option>E</option>
+                                                    <option>F</option>
+
+                                                </select>
+                                            </th>
+                                            <th>
+                                                <select name="Materia">
+                                                    <option>Materia</option>
+                                                    <option>ingles</option>
+                                                    <option>Matematicas</option>
+                                                    
+
+                                                </select>
+                                            </th>
+                                        </table>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
                                     </div>
                                 </div>
 
@@ -338,6 +288,9 @@
                 </tbody>
             </table>
         </div>
-    </div>     
+    </div>
+     <?php
+    getFooter();
+    ?>
 </body>
 
