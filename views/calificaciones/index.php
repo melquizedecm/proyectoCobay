@@ -135,7 +135,6 @@ estilosPaginas();
     });
 </script>
 </head>
-<body>
     <?php
     getHeader();
     ?>
