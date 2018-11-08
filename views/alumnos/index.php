@@ -1,14 +1,14 @@
 <?php
 require_once ('../../lib/links.php');
 libnivel3();
-require_once ('../../controllers/docentesController.php');
-$docentes = new DocentesController();
-require_once ('../../models/Docentes.php');
+require_once ('../../controllers/alumnosController.php');
+$Alumnos = new alumnosController();
+require_once ('../../models/Alumnos.php');
 ?>
 <!DOCTYPE html>
 <!--
 Author: Carlos Castro, Meluizedec Moo Medina
-Program:  Alta de Docentes 
+Program:  Alta de alumnos 
 description: 
 1. Formulario pra subir docentes 
 2. Lista de Docentes.
@@ -24,7 +24,7 @@ description:
         $(document).ready(function () {
 
             ///////DATABLES ////////
-            $('#tableDocente').DataTable();
+            $('#tableAlumnos').DataTable();
 
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
@@ -50,7 +50,7 @@ description:
                 var nombre = document.getElementById("inputNombre").value;
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
-                $.post("../../controllers/docentesController.php",
+                $.post("../../controllers/alumnosController.php",
                         {
                             inputMatricula: matricula,
                             inputNombre: nombre,
@@ -120,7 +120,7 @@ description:
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered" id="tableDocente">
+            <table class="table table-bordered" id="tableAlumnos">
                 <thead>
                     <tr>
                         <th>Matricula</th>
@@ -130,18 +130,18 @@ description:
                 </thead>
                 <tbody>
                     <?php
-                    $json = $docentes->read();
+                    $json = $Alumnos->read();
                     $datosTabla = json_decode($json);
 
 //print $obj->{'foo-bar'};
 
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'matricula_maestro'} . "</td>"
+                        echo "<tr><td>" . $row->{'matricula'} . "</td>"
                         . "<td>" . $row->{'nombre'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE873;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>
