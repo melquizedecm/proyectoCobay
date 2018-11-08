@@ -247,52 +247,8 @@ libnivel3();
                         </form>
                     </div>     
 
-                    <!--<div >
-                        <div class="dropdown">
-
-                            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Grupos
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1A</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1B</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1C</a></li>
-
-
-                            </ul>
-
-                        </div>
-
-                        <div class="dropdown">
-
-                            <button class="btn btn-default dropdown-toggle" type="button" id="menu2" data-toggle="dropdown">Materias
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu2">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Informatica</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Matematicas</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Ingles 1</a></li>
-                            </ul>
-
-                        </div>
-                         <div class="dropdown">
-
-                            <button class="btn btn-default dropdown-toggle" type="button" id="menu3" data-toggle="dropdown">Semestre
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu3">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Primero</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tercero</a></li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Quinto</a></li>
-                            </ul>
-
-                        </div>
-                    </div>-->
+                    
                     <div class="col-sm-2" >
-                        <!--<button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>-->
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>
 
                         <!-- Modal -->
