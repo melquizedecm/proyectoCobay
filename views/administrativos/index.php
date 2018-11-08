@@ -58,8 +58,8 @@ description:
                         {
                             inputMatricula: matricula,
                             inputPassword: password,
-                            inputPassword: cargo,
-                            inputPassword: nombre,
+                            inputCargo: cargo,
+                            inputNombre: nombre,
                             buttonCreate: true
                         },
                         function (data) {
