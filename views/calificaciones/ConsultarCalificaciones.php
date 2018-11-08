@@ -9,9 +9,9 @@
 //importamos los archivos del modelo y del controlador
 require_once ('../../lib/links.php');
 libnivel3();
-require_once ('../../controllers/consultarcalificacionController.php');
+/*require_once ('../../controllers/consultarcalificacionController.php');
 $alumno= new consultarcalificacionController();
-require_once ('../../models/Consulta.php');
+require_once ('../../models/Consulta.php');*/
 
 ?>
 <!DOCTYPE html>
@@ -34,12 +34,12 @@ require_once ('../../models/Consulta.php');
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  #F5F7FA-->
 
 <style type="text/css">
     body {
         color: #404E67;
-        background: #F5F7FA;
+        background: #66CDAA; 
 		font-family: 'Open Sans', sans-serif;
 	}
 	.table-wrapper {

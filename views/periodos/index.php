@@ -10,7 +10,7 @@
 require_once ('../../lib/links.php');
 libnivel3();
 require_once ('../../controllers/periodosController.php');
-$docentes= new PeriodosController();
+$periodos= new PeriodosController();
 require_once ('../../models/Periodos.php');
 ?>
      
@@ -222,6 +222,11 @@ $(document).ready(function()
 </script>
 </head>
 <body>
+    
+    <?php
+    getHeader();
+    ?>
+    
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
@@ -238,23 +243,23 @@ $(document).ready(function()
                         <th>ID</th>
                         <th>Periodo</th>
                         <th>Estado Actual</th>
-                        <th>Actions</th>
+                        <th>Herramientas</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     <?php
                     
-                    $json = $docentes->read();
+                    $json = $periodos->read();
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) 
                     {
                         echo "<tr><td>" . $row->{'id_periodo'} . "</td>"
                                . "<td>" . $row->{'periodo'} . "</td>"
-                               . "<td>" . $row->{'id_status_periodo'} . "</td>"
+                               . "<td>" . $row->{'status_periodo'} . "</td>"
                                . "<td>"
-                               . "<a class = 'active' title = 'Activar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xe008;</i></a>"
+                               . "<a class = 'active' title = 'Activar' data-toggle = 'tooltip'><i class = 'material-icons'>done_all</i></a>"
                                . "<a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                                . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                                . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
@@ -265,6 +270,11 @@ $(document).ready(function()
                 </tbody>
             </table>
         </div>
-    </div>     
+    </div>  
+    
+    <?php
+        getFooter();
+    ?>
+    
 </body>
 </html> 
