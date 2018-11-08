@@ -135,7 +135,7 @@ estilosPaginas();
     });
 </script>
 </head>
-<body>
+<body style="background-color:#66CDAA;">
     <?php
     getHeader();
     ?>
