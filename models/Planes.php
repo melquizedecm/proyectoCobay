@@ -21,6 +21,5 @@ class Planes {
     function read() {
         return getTabla("planes");
     }
-
 }
 
