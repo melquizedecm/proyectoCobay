@@ -12,6 +12,8 @@
 ///////Agregar Periodo///////
 if (isset($_POST['buttonCreate'])) 
 {
+    require_once '../lib/links.php';
+    libnivel2();
     $periodos=new PeriodosController();
     $periodos->create();
 }
@@ -66,15 +68,14 @@ class PeriodosController
     function create() 
     {
     ///1. recibir datos MODIFICAR
-        $matricula = $_POST['inputMatricula'];
-        $nombre = $_POST['inputNombre'];
-        $status = "1";
+        $id = $_POST['inputId'];
+        $periodo = $_POST['inputPeriodo'];
+        $status = "inputEstatus";
     //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Periodos.php';
         $objetoPeriodos = new Periodos();
-        $response = $objetoPeriodos->create($matricula, $nombre, $status);
-    //$response=$objetoDocente->create($matricula,$nombre,$status);
+        $response = $objetoPeriodos->create($id, $periodo, $status);
     //3.  enviar una respuestaç
         if ($response) 
         {

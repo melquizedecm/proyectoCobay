@@ -20,8 +20,15 @@ class Periodos
 
     function read() 
     {
-        return getTabla("periodos");
+        return getDataId("periodos","periodo_status");
     }
+    
+    function getDataId($table,$table2)
+{
+    $link = conectar();
+    $consulta="SELECT ".$table.".id_periodo,".$table.".periodo,".$table2."status_periodo FROM ".$table.",".$table2." WHERE ".$table.".id_status_periodo=".$table2.".id_status_periodo";
+    return $link->query($consulta);
+}
 
 }
 
