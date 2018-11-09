@@ -1,12 +1,14 @@
 <?php
+session_start();
 $matricula=$_POST['matricula'];
 $contraseña=$_POST['contraseña'];
+
+$_SESSION['matricula']=$matricula; // PARA MANDAR A JOSÉ LUÍS
 
 //Conectando a la base de datos
 $conexion=mysqli_connect("localhost","root","","proyecto_cobay");
 //Consulta
-echo $matricula;
-echo $contraseña;
+
 $consulta= "SELECT * FROM alumnos WHERE matricula='$matricula' and password='$contraseña'"; 
 
 $resultado=  mysqli_query($conexion, $consulta);
