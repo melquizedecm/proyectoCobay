@@ -19,27 +19,36 @@ class Consulta{
         }
     }
     function read($matricula){
-       // getTabla("alumnos");
+       
         $sql ="SELECT nombre FROM `alumnos` WHERE matricula = '".$matricula."'";
         $response = getResultSQL($sql);
         return $response;
     }
     function leerSemestre($matricula){
-        /*
-SELECT semestres.id_semestre FROM semestres,excel,alumnos WHERE alumnos.matricula='17B003000037' AND alumnos.matricula=excel.matricula AND excel.id_semestre=semestres.id_semestre
-         *          */
-        $sql ="SELECT semestres.id_semestre FROM semestres,excel,alumnos"
+         $sql ="SELECT semestres.id_semestre FROM semestres,excel,alumnos"
               . " WHERE alumnos.matricula='".$matricula."' AND alumnos.matricula=excel.matricula "
                 . "AND excel.id_semestre=semestres.id_semestre";
         $response = getResultSQL($sql);
         return $response;
     }
     function leerGrupo($matricula){
-        /*
-SELECT grupos.grupo FROM grupos,excel,alumnos WHERE alumnos.matricula='17B003000004' AND alumnos.matricula=excel.matricula AND grupos.id_grupo=excel.id_grupo         */
-    $sql ="SELECT grupos.grupo FROM grupos,excel,alumnos WHERE alumnos.matricula='".$matricula."' AND alumnos.matricula=excel.matricula AND grupos.id_grupo=excel.id_grupo";
+       $sql ="SELECT grupos.grupo FROM grupos,excel,alumnos WHERE alumnos.matricula='".$matricula."' AND alumnos.matricula=excel.matricula AND grupos.id_grupo=excel.id_grupo";
         $response = getResultSQL($sql);
         return $response;
         
+    }
+    function llenarTabla($matricula){
+        /**
+SELECT asignaturas.asignatura, calificaciones.parcial_uno,calificaciones.parcial_dos,calificaciones.ordinario FROM asignaturas,calificaciones,excel_asignatura,excel,alumnos WHERE alumnos.matricula='17B003000004' and alumnos.matricula=excel.matricula and excel_asignatura.id_excel=excel.id_excel
+        
+         * asignaturas.id_asignatura= excel_asignatura.id_asignatura and calificaciones.id_calificaciones=excel_asignatura.id_calificaciones
+         *  */
+        $sql ="SELECT asignaturas.asignatura, calificaciones.parcial_uno,calificaciones.parcial_dos,calificaciones.ordinario "
+                . "FROM asignaturas,calificaciones,excel_asignatura,excel,alumnos "
+                . "WHERE alumnos.matricula='".$matricula."' and alumnos.matricula=excel.matricula "
+                . "and excel_asignatura.id_excel=excel.id_excel "
+                . "and calificaciones.id_calificaciones=excel_asignatura.id_calificaciones";
+        $response = getResultSQL($sql);
+        return $response;
     }
 }

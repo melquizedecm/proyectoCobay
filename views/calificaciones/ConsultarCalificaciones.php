@@ -260,41 +260,55 @@ $(document).ready(function(){
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                    $json = $alumno->llenarTabla("17B003000004");
+                    $datosTabla = json_decode($json);
+
+                    foreach ($datosTabla as $row) {
+                        echo "<tr><td>" . $row->{'asignatura'} . "</td>"
+                        . "<td>" . $row->{'parcial_uno'} . " </td>"
+                        . "<td>" . $row->{'parcial_dos'} . " </td>"
+                        . "<td>" . $row->{'ordinario'} . " </td>" 
+                        . "</tr>";
+                    }
+                    ?>
+
+                    <!--
                     <tr>
                         <td>Ética y valores I</td>
                         <td>35</td>
                         <td>35</td>
                         <td>30</td>
-						<td>100</td>
+			<td>100</td>
                     </tr>
 				    <tr>
                         <td>Introducción a las ciencias sociales</td>
                         <td>35</td>
                         <td>35</td>
                         <td>30</td>
-						<td>100</td>
+			<td>100</td>
                     </tr>
-					<tr>
+			<tr>
                         <td>Lengua Adicional al Español I</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-						<td>100</td>
-                    </tr>
-					<tr>
-                        <td>Química I</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-						<td>100</td>
-                    </tr>
-					<tr>
-                        <td>Taller de lectura y redacción I</td>
                         <td>35</td>
                         <td>35</td>
                         <td>30</td>
 			<td>100</td>
                     </tr>
+			<tr>
+                        <td>Química I</td>
+                        <td>35</td>
+                        <td>35</td>
+                        <td>30</td>
+			<td>100</td>
+                    </tr>
+			<tr>
+                        <td>Taller de lectura y redacción I</td>
+                        <td>35</td>
+                        <td>35</td>
+                        <td>30</td>
+			<td>100</td>
+                    </tr>-->
                 </tbody>
 					
             </table>
