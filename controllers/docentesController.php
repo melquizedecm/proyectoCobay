@@ -19,7 +19,10 @@ if (isset($_POST['buttonCreate'])) {
 }
 ///////Modificar Datos de Docente///////
 elseif (isset($_POST['buttonUpdate'])) {
-    docenteUpdate();
+     require_once '../lib/links.php';
+    libnivel2();
+     $docentes=new DocentesController();
+      $docentes->docenteUpdate();
 }
 ///////Consultar tabla de Docente///////
 elseif (isset($_POST['buttonRead'])) {
@@ -87,6 +90,26 @@ class DocentesController {
             }
             return json_encode($result);
         }
+    }
+    function docenteUpdate(){
+     ///1. recibir datos
+        $matAnt=$_POST['matAnt'];
+        $matricula = $_POST['matricula'];
+        $nombre = $_POST['nombre'];
+        $status = "1";
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Docentes.php';
+        $objetoDocente = new Docentes();
+        $response = $objetoDocente->update($matAnt,$matricula, $nombre, $status);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        }   
+        
     }
 
 }
