@@ -25,7 +25,6 @@ description:
 
             ///////DATABLES ////////
             $('#tableDocente').DataTable();
-
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
@@ -86,17 +85,47 @@ description:
                 $(".update").removeAttr("enabled");
             }
             var cont = 0;
-            // Edit row on edit button click
+             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
+                var cont=0;
+               
+              
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input name="input' + cont + '" type="text" class="form-control" value="' + $(this).text() + '">');
+
+                    $(this).html('<input name="antDato" id="antDato' + cont + '" value="' + $(this).text() + '" ><input name="input' + cont + '" id="input' + cont + '" type="text" class="form-control" value="' + $(this).text() + '">');
                     cont = cont + 1;
                 });
                 $(this).parents("tr").find(".edit").toggle();
                 $(".update").attr("disabled", "disabled");
             });
-             
-
+            
+            
+            //actualizar
+           $(document).on("click", ".update", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    var matAnt=document.getElementById("antDato0").value;
+                    var matricula = document.getElementById("input0").value;
+                    var name = document.getElementById("input1").value;
+                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
+                 
+                
+               $.post("../../controllers/docentesController.php",
+                        {
+                            matAnt: matAnt,
+                            matricula: matricula,
+                            nombre: name,
+                            buttonUpdate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar la matricula");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
+                   });
+            });
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();
@@ -135,14 +164,16 @@ description:
                     $datosTabla = json_decode($json);
 
 //print $obj->{'foo-bar'};
-
+                    //data-id=".$row->('id')."
+                    $cont = 0;
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'matricula_maestro'} . "</td>"
-                        . "<td>" . $row->{'nombre'} . "</td>"
+                        $cont++;
+                        echo "<tr  data-fila=" . $cont . "><td id='mat" . $cont . "'>" . $row->{'matricula_maestro'} . "</td>"
+                        . "<td id='name" . $cont . "'>" . $row->{'nombre'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar'  data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>
