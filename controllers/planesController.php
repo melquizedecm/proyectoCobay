@@ -54,12 +54,12 @@ class PlanesController {
 ///1. recibir datos
         $id_plan = $_POST['inputID_Plan'];
         $plan = $_POST['inputPlan'];
-        /*$estatus = "1";*/
+        $estatus = $_POST['inputEstatus'];;
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Planes.php';
         $objetoPlanes= new Planes();
-        $response = $objetoPlanes->create($id_plan, $plan);
+        $response = $objetoPlanes->create($id_plan, $plan, $estatus);
 //3.  enviar una respuestaç
         if ($response) {
             $this->read();
@@ -73,7 +73,7 @@ class PlanesController {
         $response = $objetoPlanes->read();
         $result = array();
         if (!$response) {
-            $link->error;
+            echo $response;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {

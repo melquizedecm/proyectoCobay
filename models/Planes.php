@@ -8,8 +8,8 @@
 class Planes {
     
 
-    function create($id_plan, $plan) {
-        $sql = "INSERT INTO planes(id_plan,plan) VALUES ('" . NULL . "','$plan" . "')";
+    function create($id_plan, $plan, $estatus) {
+        $sql = "INSERT INTO planes(id_plan,plan,id_status_plan) VALUES ('" . $id_plan . "','$plan" . "','" . $estatus . "')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -19,7 +19,9 @@ class Planes {
     }
 
     function read() {
-        return getTabla("planes");
+        $sql = "SELECT id_plan,plan, plan_status.status_plan FROM planes INNER JOIN plan_status ON planes.id_status_plan = plan_status.id_status_plan";
+
+        return getResultSQL($sql);
     }
 }
 

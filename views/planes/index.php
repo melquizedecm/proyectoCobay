@@ -14,12 +14,12 @@ description:
 2. Lista de planes
 -->
 
-<head>
+<head lang ="en">
     <?php
     getMeta("Administración de Planes");
     estilosPaginas();
     ?>
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -32,18 +32,19 @@ description:
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
+
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputID_Plan" id="inputid_plan" placeholder="Automatico" readonly></td>'+
-                '<td><input type="text" class="form-control" name="inputPlan" id="inputplan"></td>' +
-                        /*'<td><input type="text" class="form-control" name="inputEstatus" id="inputestatus"></td>' +*/
+                        '<td><input type="text" class="form-control" name="inputID_Plan" id="inputid_plan" placeholder="Automatico" readonly></td>' +
+                        '<td><input type="text" class="form-control" name="inputPlan" id="inputplan"></td>' +
+                        '<td><input type="text" class="form-control" name="inputEstatus" id="inputestatus"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit, .active").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
 
@@ -53,14 +54,14 @@ description:
                 //1. OBTENER LOS VALORES//
                 var id_plan = document.getElementById("inputid_plan").value;
                 var plan = document.getElementById("inputplan").value; //(JALAR EL VALOR INGRESADO)
-                /*var estatus = document.getElementById("inputEstatus").value;*/
+                var estatus = document.getElementById("inputestatus").value;
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/planesController.php",
                         {
                             inputID_Plan: id_plan,
                             inputPlan: plan,
-                            /*inputEstatus: estatus,*/
+                            inputEstatus: estatus,
                             buttonCreate: true
                         },
                 function (data) {
@@ -126,10 +127,10 @@ description:
             <table class="table table-bordered" id="tablePlanes">
                 <thead>
                     <tr>
-                        
+
                         <th align="center"> ID_Plan </th>
                         <th align="center"> Plan </th>
-                        
+                        <th align="center"> Estado Actual </th>
                         <th align="center"> Modificar </th>
                     </tr>
                 </thead>
@@ -141,14 +142,20 @@ description:
                     //print $obj->{'foo-bar'};
 
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'id_plan'} . "</td>"
-                        . "<td>" . $row->{'plan'} . "</td>"
-                        /*. "<td>" . $row->{'estatus'} . "</td>"*/
-                        . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                        echo "<tr>"
+                        ."<td>" . $row->{'id_plan'} . "</td>"
+                        . "<td>" . $row->{'plan'} . "</td>";
+                        if ($row->{'status_plan'} === "ACTIVO")
+                        {
+                            echo "<td><button class='btn-success'>" . $row->{'status_plan'} . "</button></td>";
+                        } else {
+                            echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPlan(this);'>" . $row->{'status_plan'} . "</button></td>";
+                        }
+                        echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
                         . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
-                        . "</td> </tr>";
+                        . "</td></tr>";
                     }
                     ?>
                 </tbody>
