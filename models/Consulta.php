@@ -46,8 +46,8 @@ SELECT asignaturas.asignatura, calificaciones.parcial_uno,calificaciones.parcial
         $sql ="SELECT asignaturas.asignatura, calificaciones.parcial_uno,calificaciones.parcial_dos,calificaciones.ordinario "
                 . "FROM asignaturas,calificaciones,excel_asignatura,excel,alumnos "
                 . "WHERE alumnos.matricula='".$matricula."' and alumnos.matricula=excel.matricula "
-                . "and excel_asignatura.id_excel=excel.id_excel "
-                . "and calificaciones.id_calificaciones=excel_asignatura.id_calificaciones";
+                . "and excel.id_excel=excel_asignatura.id_excel "
+                . "and excel_asignatura.id_calificaciones=calificaciones.id_calificaciones and excel_asignatura.id_asignatura=asignaturas.id_asignatura";
         $response = getResultSQL($sql);
         return $response;
     }

@@ -18,6 +18,7 @@ require_once ('../../models/Consulta.php');
 <title>Mis calificaciones</title>
 <head>
     <?php
+    $matricula = $_POST['matricula'];
     getMeta("Tabla de calificaciones");
     estilosPaginas();
     ?>
@@ -205,21 +206,21 @@ $(document).ready(function(){
     getHeader();
     ?>
     <div class="container">
-        <div class="table-wrapper">
+      <div class="table-wrapper"> 
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-9"><h2> <b>Tabla de calificaciones</b></h2></div>
+                    <div class="col-sm-9"><h2> <b>TABLA DE CALIFICACIONES</b></h2></div>
                     <div class="col-sm-3">
                     <!--   <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> -->
                     </div>
                 </div>
-                <h4>Alumno:
+                <h4>ALUMNO: 
                     <?php
                     //mostramos el nombre del alumno
                     //usare de ejemplo la matrícula 17B003000037
                     //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
                     
-                    $json = $alumno->ObtenerNombre("17B003000004");
+                    $json = $alumno->ObtenerNombre($matricula);
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -227,9 +228,9 @@ $(document).ready(function(){
                     }
                     ?>
                 </h4>
-                <h4>Semestre: 
+                <h4>SEMESTRE: 
                     <?php
-                    $json = $alumno->ObtenerSemestre("17B003000004");
+                    $json = $alumno->ObtenerSemestre($matricula);
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -237,9 +238,9 @@ $(document).ready(function(){
                     }
                     ?>
                 </h4>
-                <h4>Grupo: 
+                <h4>GRUPO: 
                     <?php
-                    $json = $alumno->obtenerGrupo("17B003000004");
+                    $json = $alumno->obtenerGrupo($matricula);
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -252,68 +253,38 @@ $(document).ready(function(){
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Materia</th>
-                        <th>Parcial 1</th>
-                        <th>Parcial 2</th>
-                        <th>Ordinario</th>
-                        <th>Total</th>
+                        <th>ASIGNATURA</th>
+                        <th>PARCIAL 1</th>
+                        <th>PARCIAL 2</th>
+                        <th>ORDINARIO</th>
+                        <th>TOTAL</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $json = $alumno->llenarTabla("17B003000004");
+                    $json = $alumno->llenarTabla($matricula);
                     $datosTabla = json_decode($json);
-
+                    $numeric =0;
                     foreach ($datosTabla as $row) {
+                        if ($row->{'ordinario'}!=null){
+                            
+                        }
+                        $numeric=(int)$row->{'ordinario'}+(int)$row->{'parcial_uno'}+(int)$row->{'parcial_dos'} ;
                         echo "<tr><td>" . $row->{'asignatura'} . "</td>"
                         . "<td>" . $row->{'parcial_uno'} . " </td>"
                         . "<td>" . $row->{'parcial_dos'} . " </td>"
                         . "<td>" . $row->{'ordinario'} . " </td>" 
+                        . "<td>" . $numeric . " </td>" 
                         . "</tr>";
                     }
                     ?>
 
-                    <!--
-                    <tr>
-                        <td>Ética y valores I</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-			<td>100</td>
-                    </tr>
-				    <tr>
-                        <td>Introducción a las ciencias sociales</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-			<td>100</td>
-                    </tr>
-			<tr>
-                        <td>Lengua Adicional al Español I</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-			<td>100</td>
-                    </tr>
-			<tr>
-                        <td>Química I</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-			<td>100</td>
-                    </tr>
-			<tr>
-                        <td>Taller de lectura y redacción I</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-			<td>100</td>
-                    </tr>-->
+                    
                 </tbody>
 					
             </table>
-        </div>
-    </div>   
+       </div> 
+   </div>   
     <?php
     getFooter();
     ?>
