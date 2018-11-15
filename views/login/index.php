@@ -125,23 +125,23 @@ Description:
 <link rel="stylesheet" href="/css/master.css">
 </head>
 <body>
-  
+
     <div class="login-box">
         <img src="img/logo.png" class="avatar" alt="Avatar Image">
         <h1>Alumno</h1>
-        <form action ="validar.php" method="post">
+        <form action="../../controllers/login.php" method="post">
             <!-- USERNAME INPUT -->
             <label for="username" >Matrícula</label>
-            <input type="text" id="inputMatricula" placeholder="Ingrese Matrícula" name="matricula">
+            <input type="text" id="inputMatricula" placeholder="Ingrese Matrícula" name="inputMatricula">
             <!-- PASSWORD INPUT -->
             <label for="password">Contraseña</label>
-            <input type="password"id="inputPassword" placeholder="Ingrese contraseña" name="contraseña">
+            <input type="password"id="inputPassword" placeholder="Ingrese contraseña" name="inputPassword">
             <input type="submit" value="Iniciar Sesión" id="buttonLogin">
 
 
         </form>
     </div>
-   
+
 </body>
 </html>
 
