@@ -9,7 +9,7 @@ $_SESSION['matricula']=$matricula; // PARA MANDAR A JOSÉ LUÍS
 $conexion=mysqli_connect("localhost","root","","proyecto_cobay");
 //Consulta
 
-$consulta= "SELECT * FROM alumnos WHERE matricula='$matricula' and password='$contraseña'"; 
+$consulta= "SELECT * FROM alumnos WHERE matricula='".$matricula."' and password='".$contraseña."'"; 
 
 $resultado=  mysqli_query($conexion, $consulta);
 $filas=  mysqli_num_rows($resultado);
