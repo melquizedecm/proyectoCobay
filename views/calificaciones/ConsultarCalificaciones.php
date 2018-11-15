@@ -18,7 +18,7 @@ require_once ('../../models/Consulta.php');
 <title>Mis calificaciones</title>
 <head>
     <?php
-    $matricula = $_POST['matricula'];
+ //   $matricula = $_POST['matricula'];
     getMeta("Tabla de calificaciones");
     estilosPaginas();
     ?>
@@ -220,7 +220,7 @@ $(document).ready(function(){
                     //usare de ejemplo la matrícula 17B003000037
                     //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
                     
-                    $json = $alumno->ObtenerNombre($matricula);
+                    $json = $alumno->ObtenerNombre($_POST['matricula']);
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -230,7 +230,7 @@ $(document).ready(function(){
                 </h4>
                 <h4>SEMESTRE: 
                     <?php
-                    $json = $alumno->ObtenerSemestre($matricula);
+                    $json = $alumno->ObtenerSemestre($_POST['matricula']);
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -240,7 +240,7 @@ $(document).ready(function(){
                 </h4>
                 <h4>GRUPO: 
                     <?php
-                    $json = $alumno->obtenerGrupo($matricula);
+                    $json = $alumno->obtenerGrupo($_POST['matricula']);
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -262,7 +262,7 @@ $(document).ready(function(){
                 </thead>
                 <tbody>
                     <?php
-                    $json = $alumno->llenarTabla($matricula);
+                    $json = $alumno->llenarTabla($_POST['matricula']);
                     $datosTabla = json_decode($json);
                     $numeric =0;
                     foreach ($datosTabla as $row) {
