@@ -125,52 +125,24 @@ Description:
 <link rel="stylesheet" href="/css/master.css">
 </head>
 <body>
-  
+
     <div class="login-box">
         <img src="img/logo.png" class="avatar" alt="Avatar Image">
         <h1>Alumno</h1>
-        <form>
+        <form action="../../controllers/login.php" method="post">
             <!-- USERNAME INPUT -->
             <label for="username" >Matrícula</label>
-            <input type="text" id="inputMatricula" placeholder="Ingrese Matrícula">
+            <input type="text" id="inputMatricula" placeholder="Ingrese Matrícula" name="inputMatricula">
             <!-- PASSWORD INPUT -->
             <label for="password">Contraseña</label>
-            <input type="password"id="inputPassword" placeholder="Ingrese contraseña">
+            <input type="password"id="inputPassword" placeholder="Ingrese contraseña" name="inputPassword">
             <input type="submit" value="Iniciar Sesión" id="buttonLogin">
 
 
         </form>
     </div>
-   
+
 </body>
 </html>
 
 
-
-
-<script type="text/javascript">
-
-    var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
-    var nombre = document.getElementById("inputNombre").value;
-    //2. ENVIAR POR POTS//
-    //$.post("url", variables, response);
-    $.post("../../controllers/colsutarcalificacionController.php",
-            {
-                inputMatricula: matricula,
-                inputNombre: nombre,
-                buttonCreate: true
-            },
-    function (data) {
-        if (data === "-1") {
-            alert("Error al iniciar sesión");
-        } else {
-            alert("Bienvenido al sistema");
-            location.reload(true);
-        }
-    });
-
-
-
-
-
-</script>

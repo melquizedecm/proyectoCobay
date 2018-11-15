@@ -4,6 +4,7 @@
  * Program: Consultar Calificaciones
  * Description:
  * 1. Formulario para que el alumno vea sus calificaciones del semestre actual
+ * $_sesion['inputmatricula']= matricula
  */
 
 //importamos los archivos del modelo y del controlador
@@ -219,8 +220,9 @@ $(document).ready(function(){
                     //mostramos el nombre del alumno
                     //usare de ejemplo la matrícula 17B003000037
                     //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
-                    
-                    $json = $alumno->ObtenerNombre($_POST['matricula']);
+                    $recibir = filter_input(INPUT_POST, 'matricula');
+                  
+                    $json = $alumno->ObtenerNombre($recibir);
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
