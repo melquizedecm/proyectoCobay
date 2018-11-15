@@ -7,11 +7,11 @@ require_once ('../../models/Alumnos.php');
 ?>
 <!DOCTYPE html>
 <!--
-Author: Carlos Castro, Meluizedec Moo Medina
+Author: Brayan Cetina
 Program:  Alta de alumnos 
 description: 
 1. Formulario pra subir docentes 
-2. Lista de Docentes.
+2. Lista de Alumnos.
 -->
 
 <head>
@@ -98,9 +98,25 @@ description:
 
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
-                $(this).parents("tr").remove();
-                $(".add-new").removeAttr("disabled");
+                //$(this).parents("tr").remove();
+                //$(".add-new").removeAttr("disabled");
+                var matricula = $(this).parents("tr").find("td:first-child").html();
+                //alert(matricula);
+                $.post("../../controllers/alumnosController.php",
+                        {
+                            inputMatricula: matricula,
+                            buttonDelete: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar la matricula" + matricula);
+                            } else {
+                                alert("Cambio Realizado");
+                                location.reload(true);
+                            }
+                        });
             });
+
         });
 
     </script>

@@ -1,9 +1,10 @@
 <?php
+
 //require_once '../core/config.php';
 /*
  * Program:     docentesController.php
- * Author:      MTI. Melquizedec Moo Medina
- * Description: Programa que permite recibir los datos del docente, 
+ * Author:      MTI. Brayan Cetina
+ * Description: Programa que permite recibir los datos del alumno, 
  * los analiza, configura y almacena en la Base de Datos.
  * 
  * Function: 
@@ -14,7 +15,7 @@
 if (isset($_POST['buttonCreate'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $alumnos=new alumnosController();
+    $alumnos = new alumnosController();
     $alumnos->create();
 }
 ///////Modificar Datos de alumno///////
@@ -32,12 +33,16 @@ elseif (isset($_POST['buttonReadId'])) {
 }
 ///////Eliminar Datos de Docente///////
 elseif (isset($_POST['buttonDelete'])) {
-    alumnosDelete();
+    require_once '../lib/links.php';
+    libnivel2();
+    $alumnos = new alumnosController();
+    $alumnos->delete();
 } else {
     return False;
 }
 
 class alumnosController {
+
     function index() {
         $objetoAlumno = new Alumno();
         $response = $objetoAlumno->read();
@@ -85,6 +90,22 @@ class alumnosController {
                 $i++;
             }
             return json_encode($result);
+        }
+    }
+
+    function delete() {
+        $matricula = $_POST['inputMatricula'];
+        //$status = $_POST['inputStatus'];
+        //llamar lib
+        require_once '../lib/consultas.php';
+        require_once '../models/Alumnos.php';
+        $objetoAlumno = new Alumno();
+        $response = $objetoAlumno->Alumnodelete($matricula);
+//3.  enviar una respuesta
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
         }
     }
 
