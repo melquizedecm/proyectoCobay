@@ -2,7 +2,7 @@
 
 function getFooter() {
     ?>
-    <
+    
     <div id="footer" class="container-fluid text-center">
         <div class="row">
             <div class="col-xs-12 inner">
