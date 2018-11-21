@@ -9,8 +9,8 @@
 class Asignaturas {
     
 
-    function create($clave, $nombre) {
-        $sql = "INSERT INTO asignaturas(id_asignatura,asignatura) VALUES ('" . $clave . "','" . $nombre . "')";
+    function create($clave, $nombre,$status) {
+        $sql = "INSERT INTO asignaturas(id_asignatura,asignatura) VALUES ('" . $clave . "','" . $nombre . "','.$status.')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;

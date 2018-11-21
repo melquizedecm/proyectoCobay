@@ -37,6 +37,7 @@ description:
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputClave" id="inputClave"></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
+                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -50,6 +51,7 @@ description:
                 ///1. OBTENER LOS VALORES/////
                 var clave = document.getElementById("inputClave").value;
                 var nombre = document.getElementById("inputNombre").value;
+                var status = document.getElementById("inputStatus").value; 
 
 
                 ///2. ENVIAR POR POST    /////
@@ -57,6 +59,7 @@ description:
                         {
                             inputClave: clave,
                             inputNombre: nombre,
+                            inputStatus: status,
                             buttonCreate: true
                         },
                         function (data) {
@@ -108,6 +111,24 @@ description:
                 $(this).parents("tr").remove();
                 $(".add-new").removeAttr("disabled");
             });
+            
+            
+            //desactivar grupo 
+            
+            $(document).on("click", ".btn-success", function () {
+                                     /*alert($(this).parents("tr").html());*/
+                  $(this).parents("tr").remove();
+                     /*alert($(this).parents("tr").html());*/
+                     var id_grupo=($(this).parents("tr").find("td:last-child").html());
+                     alert($(this).parents("tr").find("td:last-child").html());
+                     
+            });
+            //activar grupo 
+            
+            
+            $(document).on("click", ".btn-danger", function () {
+                                     alert($(this).parents("tr").html());
+            });
         });
     </script>
 </head>
@@ -130,7 +151,7 @@ description:
                     <tr>
                         <th>Clave</th>
                         <th>Nombre</th>
-
+                        <th>Estatus</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -144,10 +165,15 @@ description:
 
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'id_asignatura'} . "</td>"
-                        . "<td>" . $row->{'asignatura'} . "</td>"
-                        . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                        . "<td>" . $row->{'asignatura'} . "</td>";
+                        if ($row->{'status'} === "ACTIVADO") {
+                                echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
+                            } else {
+                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarGrupo(this);'>" . $row->{'status'} . "</button></td>";
+                            }
+                            echo
+                         "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                        . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>

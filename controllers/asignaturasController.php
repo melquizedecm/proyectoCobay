@@ -58,11 +58,12 @@ class AsignaturasController {
 ///1. recibir datos
         $clave = $_POST['inputClave'];
         $nombre = $_POST['inputNombre'];
+        $status=$_POST['inputStatus'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Asignaturas.php';
         $objetoAsignaturas = new Asignaturas();
-        $response = $objetoAsignaturas->create($clave, $nombre);
+        $response = $objetoAsignaturas->create($clave, $nombre,$status);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {
