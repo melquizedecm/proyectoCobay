@@ -36,9 +36,8 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputId_grupo" id="inputId_grupo" placeholder="Automatico" readonly ></td>' +
-                        '<td><input type="text" class="form-control" name="inputGrupo" id="inputGrupo"></td>' +
-                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" ></td>' +
+                        '<td><input type="text" class="form-control" name="inputId_grupo" id="inputId_grupo"  ></td>' +
+                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -51,14 +50,12 @@ description:
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
                 var id_grupo = document.getElementById("inputId_grupo").value; 
-                var grupo = document.getElementById("inputGrupo").value;
                 var status = document.getElementById("inputStatus").value; 
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
-                            inputGrupo: grupo,
                             inputStatus: status,
                             buttonCreate: true
                         },
@@ -93,12 +90,43 @@ description:
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                
+                $(this).parents("tr").find("td:first-child").each(function () {
                     $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
+                
+                
+                
+                
             });
+            
+            /*Actualizar*/
+             $(document).on("click", ".update", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    var id_grupo=document.getElementById("input0").value;
+                //
+                //    
+                //            var name = document.getElementById("input1").value;
+                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
+                
+               $.post("../../controllers/docentesController.php",
+                        {
+                            inputId_grupo:id_grupo,
+                            buttonUpdate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar la matricula");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
+                   });
+            });
+            
             
             //desactivar grupo 
             
@@ -142,14 +170,7 @@ description:
                      /*alert($(this).parents("tr").html());*/
                      var id_grupo=($(this).parents("tr").find("td:first-child").html());
                      alert($(this).parents("tr").find("td:first-child").html());
-                                /*$(".add-new").removeAttr("disabled");*/
-
-                
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-               
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
+                     
                $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
@@ -190,8 +211,7 @@ description:
             <table class="table table-bordered" id="tableGrupo">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Grupo</th>
+                        <th>Semestre y Grupo</th>
                         <th>Estatus</th>
                         <th>Herramientas</th>
                     </tr>
@@ -208,9 +228,8 @@ description:
                     
 
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'id_grupo'} . "</td>"
-                             ."<td>" . $row->{'grupo'} . "</td>";
-                             /*."<td>" . $row->{'status'} . "</td>" solo visualia no es boton*/
+                        echo "<tr><td>" . $row->{'id_grupo'} . "</td>";
+                            
                         if ($row->{'status'} === "ACTIVADO") {
                                 echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
                             } else {
