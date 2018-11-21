@@ -1,10 +1,3 @@
-<?php
-require_once ('../../lib/links.php');
-libnivel3();
-require_once ('../../controllers/docentesController.php');
-$docentes = new DocentesController();
-require_once ('../../models/Docentes.php');
-?>
 <!DOCTYPE html>
 <!--
 Author: Carlos Castro, Meluizedec Moo Medina
@@ -13,6 +6,13 @@ description:
 1. Formulario para subir docentes 
 2. Lista de Docentes.
 -->
+<?php
+require_once ('../../lib/links.php');
+libnivel3();
+require_once ('../../controllers/docentesController.php');
+$docentes = new DocentesController();
+require_once ('../../models/Docentes.php');
+?>
 
 <head>
     <?php
