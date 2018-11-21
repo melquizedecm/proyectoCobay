@@ -13,6 +13,7 @@ description:
 1. Formulario pra subir grupos
 2. Lista de Grupos.
 -->
+
 <head>
      <?php
     getMeta("Administración de Grupos");
@@ -20,6 +21,7 @@ description:
     ?>
     
     <script type="text/javascript">
+        var temp;
         $(document).ready(function () {
             
             ///////DATABLES ////////
@@ -41,7 +43,7 @@ description:
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .edit, .active").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
             
@@ -92,9 +94,11 @@ description:
             $(document).on("click", ".edit", function () {
                 
                 $(this).parents("tr").find("td:first-child").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+                    $(this).html('<input type="text" class="form-control" id="temporal" value="' + $(this).text() + '">');
                 });
-                $(this).parents("tr").find(".add, .edit").toggle();
+                temp=document.getElementById("temporal").value;
+ alert(temp)
+                $(this).parents("tr").find(".edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
                 
                 
@@ -102,18 +106,25 @@ description:
                 
             });
             
+            
             /*Actualizar*/
              $(document).on("click", ".update", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    var id_grupo=document.getElementById("input0").value;
+                $(this).parents("tr").find("td:not(:last-child)").each(function ()  {
+
+
+                    var id_grupo=document.getElementById("temporal").value;
+                    alert(temp);
+                    alert (id_grupo);
+                   
                 //
                 //    
                 //            var name = document.getElementById("input1").value;
                     //console.log(matAnt+'el nuevo'+matricula+'name'+name);
                 
-               $.post("../../controllers/docentesController.php",
+               $.post("../../controllers/gruposController.php",
                         {
-                            inputId_grupo:id_grupo,
+                            inputId_grupoactual:temp,
+                            inputId_gruponuevo:id_grupo,
                             buttonUpdate: true
                         },
                         function (data) {
