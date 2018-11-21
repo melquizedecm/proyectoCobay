@@ -14,16 +14,19 @@ require_once ('../../controllers/consultarcalificacionController.php');
 $alumno= new consultarcalificacionController();
 require_once ('../../models/Consulta.php');
 
+//---------------------------- Variable con la cual se obtendrá la matricula -------------------------------------------------------
+//$usuario =$_SESSION['session_username']; 
+
 ?>
 <!DOCTYPE html>
-<title>Mis calificaciones</title>
 <head>
+    <title>Mis calificaciones</title>
     <?php
- //   $matricula = $_POST['matricula'];
     getMeta("Tabla de calificaciones");
     estilosPaginas();
     ?>
-
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">﻿ <!-- SIrve para hacer zoom en movil-->
+</head>
 <!--
 <html lang="en">
 <head>
@@ -53,9 +56,22 @@ estilosPaginas();
         background: #fff;
         padding: 20px;	
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
     }-->
 <style type="text/css">
 
+    body {
+        color: #404E67;
+        background: #66CDAA; 
+	font-family: 'Open Sans', sans-serif;
+	}
+	.table-wrapper {
+		width: 700px;
+		margin: 30px auto;
+         background: #fff;
+        padding: 20px;	
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
     .table-title {
         padding-bottom: 10px;
         margin: 0 0 10px;
@@ -96,10 +112,10 @@ estilosPaginas();
         width: 100px;
     }
     table.table td a {
-		cursor: pointer;
+	cursor: pointer;
         display: inline-block;
         margin: 0 5px;
-		min-width: 24px;
+	min-width: 24px;
     }    
 	table.table td a.add {
         color: #27C46B;
@@ -143,6 +159,8 @@ estilosPaginas();
 	tr:hover td{
 	background-color:#F5F7FA;
 	color: black; 
+        
+ 
  }
 	
 </style>
@@ -204,7 +222,7 @@ $(document).ready(function(){
 </head>
 <body>
     <?php
-    getHeader();
+   // getHeader();
     ?>
     <div class="container">
       <div class="table-wrapper"> 
@@ -212,7 +230,7 @@ $(document).ready(function(){
                 <div class="row">
                     <div class="col-sm-9"><h2> <b>TABLA DE CALIFICACIONES</b></h2></div>
                     <div class="col-sm-3">
-                    <!--   <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> -->
+                      <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> 
                     </div>
                 </div>
                 <h4>ALUMNO: 
@@ -220,9 +238,8 @@ $(document).ready(function(){
                     //mostramos el nombre del alumno
                     //usare de ejemplo la matrícula 17B003000037
                     //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
-                    $recibir = filter_input(INPUT_POST, 'matricula');
-                  
-                    $json = $alumno->ObtenerNombre($recibir);
+                   
+                    $json = $alumno->ObtenerNombre("17B003000037"); //$usuario que es la variable extraida del login
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -232,7 +249,7 @@ $(document).ready(function(){
                 </h4>
                 <h4>SEMESTRE: 
                     <?php
-                    $json = $alumno->ObtenerSemestre($_POST['matricula']);
+                    $json = $alumno->ObtenerSemestre("17B003000037");
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -242,7 +259,7 @@ $(document).ready(function(){
                 </h4>
                 <h4>GRUPO: 
                     <?php
-                    $json = $alumno->obtenerGrupo($_POST['matricula']);
+                    $json = $alumno->obtenerGrupo("17B003000037");
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -264,20 +281,40 @@ $(document).ready(function(){
                 </thead>
                 <tbody>
                     <?php
-                    $json = $alumno->llenarTabla($_POST['matricula']);
+                    $json = $alumno->llenarTabla("17B003000037");
                     $datosTabla = json_decode($json);
-                    $numeric =0;
+                    $numeric = 0;
                     foreach ($datosTabla as $row) {
-                        if ($row->{'ordinario'}!=null){
-                            
+
+                        echo "<tr><td>" . $row->{'asignatura'} . "</td>";
+                        if ($row->{'parcial_uno'} == 35 && $row->{'parcial_dos'} == 35) { //si en los 2 parciales obtuvo 35 se agregará automaticamente el resto para sumar 100
+                            $numeric = (int) $row->{'ordinario'} + (int) $row->{'parcial_uno'} + (int) $row->{'parcial_dos'};
+                            echo "<td>" . $row->{'parcial_uno'} . " </td>"
+                            . "<td>" . $row->{'parcial_dos'} . " </td>"
+                            . "<td>" . $row->{'ordinario'} . " </td>"
+                            . "<td>" . $numeric . " </td>"
+                            . "</tr>";
+                        } else {
+                            if ($row->{'parcial_uno'} != null && $row->{'parcial_dos'} != null && $row->{'ordinario'} != null) { //Si los campos estan llenos
+                                $numeric = (int) $row->{'ordinario'} + (int) $row->{'parcial_uno'} + (int) $row->{'parcial_dos'};
+                                echo "<td>" . $row->{'parcial_uno'} . " </td>"
+                                . "<td>" . $row->{'parcial_dos'} . " </td>"
+                                . "<td>" . $row->{'ordinario'} . " </td>"
+                                . "<td>" . $numeric . " </td>"
+                                . "</tr>";
+                                if ($numeric < 70) {
+                                    //no mostrara nada
+                                }
+                            }
                         }
-                        $numeric=(int)$row->{'ordinario'}+(int)$row->{'parcial_uno'}+(int)$row->{'parcial_dos'} ;
-                        echo "<tr><td>" . $row->{'asignatura'} . "</td>"
-                        . "<td>" . $row->{'parcial_uno'} . " </td>"
-                        . "<td>" . $row->{'parcial_dos'} . " </td>"
-                        . "<td>" . $row->{'ordinario'} . " </td>" 
-                        . "<td>" . $numeric . " </td>" 
-                        . "</tr>";
+
+                        // $numeric=(int)$row->{'ordinario'}+(int)$row->{'parcial_uno'}+(int)$row->{'parcial_dos'} ;
+                        /*    echo "<tr><td>" . $row->{'asignatura'} . "</td>"
+                          . "<td>" . $row->{'parcial_uno'} . " </td>"
+                          . "<td>" . $row->{'parcial_dos'} . " </td>"
+                          . "<td>" . $row->{'ordinario'} . " </td>"
+                          . "<td>" . $numeric . " </td>"
+                          . "</tr>"; */
                     }
                     ?>
 
@@ -286,9 +323,10 @@ $(document).ready(function(){
 					
             </table>
        </div> 
-   </div>   
+   <!-- </div>    Clase contendor-->
     <?php
     getFooter();
     ?>
+   </div>  
 </body>
 </html>      
