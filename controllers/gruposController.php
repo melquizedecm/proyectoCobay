@@ -32,7 +32,12 @@ elseif (isset($_POST['buttonReadId'])) {
 }
 ///////Eliminar Datos de Docente///////
 elseif (isset($_POST['buttonDelete'])) {
-    gruposDelete();
+    require_once '../lib/links.php';
+    libnivel2();
+    $grupos=new GruposController();
+    $grupos->delete();
+    
+    
 } else {
     return False;
 }
@@ -56,14 +61,17 @@ class GruposController {
 
     function create() {
 ///1. recibir datos
+      
         $id_grupo = $_POST['inputId_grupo'];
+         /*$semestre=$_POST['inputSemestre'];*/
         $grupo = $_POST['inputGrupo'];
+        $status=$_POST['inputStatus'];
         
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
-        $response = $objetoGrupo->create($id_grupo, $grupo);
+        $response = $objetoGrupo->create($id_grupo,$grupo,$status);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {
@@ -87,6 +95,25 @@ class GruposController {
             }
             return json_encode($result);
         }
+    }
+    function delete(){
+    ///1. recibir datos
+        $id_grupo = $_POST['Id_grupo'];
+       
+        
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Grupos.php';
+        $objetoGrupo = new Grupos();
+        $response = $objetoGrupo->delete($id_grupo);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        };
+        
     }
 
 }

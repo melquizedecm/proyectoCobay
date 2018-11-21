@@ -36,12 +36,13 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputId_grupo" id="inputId_grupo" placeholder="Automatico" readonly></td>' +
+                        '<td><input type="text" class="form-control" name="inputId_grupo" id="inputId_grupo" placeholder="Automatico" readonly ></td>' +
                         '<td><input type="text" class="form-control" name="inputGrupo" id="inputGrupo"></td>' +
+                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit, .active").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
             
@@ -49,14 +50,16 @@ description:
             $(document).on("click", ".add", function () {
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
-                var id_grupo = document.getElementById("inputId_grupo").value; //(JALAR EL VALOR INGRESADO)
+                var id_grupo = document.getElementById("inputId_grupo").value; 
                 var grupo = document.getElementById("inputGrupo").value;
+                var status = document.getElementById("inputStatus").value; 
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/gruposController.php",
                         {
-                            inputId_grupo: id_grupo,
+                            inputId_grupo:id_grupo,
                             inputGrupo: grupo,
+                            inputStatus: status,
                             buttonCreate: true
                         },
                         function (data) {
@@ -98,9 +101,102 @@ description:
             });
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
-                $(this).parents("tr").remove();
-                $(".add-new").removeAttr("disabled");
+
+                     $(this).parents("tr").remove();
+                     /*alert($(this).parents("tr").html());*/
+                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
+                                $(".add-new").removeAttr("disabled");
+
+                $.post("../../controllers/gruposController.php",
+                        {
+                           Id_grupo: id_grupo,
+                            buttonDelete: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al borrar el dato");
+                            } else {
+                                alert("Registro eliminado");
+                                location.reload(true);
+                            }
+                        });
+                                 
+
+                
             });
+            
+            
+            //desactivar grupo 
+            
+            $(document).on("click", ".btn-success", function () {
+                                     /*alert($(this).parents("tr").html());*/
+                  $(this).parents("tr").remove();
+                     /*alert($(this).parents("tr").html());*/
+                     var id_grupo=($(this).parents("tr").find("td:last-child").html());
+                     alert($(this).parents("tr").find("td:last-child").html());
+                                /*$(".add-new").removeAttr("disabled");*/
+
+                
+                /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+               
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
+               /* $.post("../../controllers/gruposController.php",
+                        {
+                            inputId_grupo:id_grupo,
+                            inputGrupo: grupo,
+                            inputStatus: status,
+                            buttonCreate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar el Id");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });*/
+            });
+            //fin cambiar estado grupo
+            
+            
+            //activar grupo 
+            
+            
+            $(document).on("click", ".btn-danger", function () {
+                                     alert($(this).parents("tr").html());
+
+                
+                /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+              /*  var id_grupo = document.getElementById("inputId_grupo").value; 
+                var grupo = document.getElementById("inputGrupo").value;
+                var status = document.getElementById("inputStatus").value; 
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
+                $.post("../../controllers/gruposController.php",
+                        {
+                            inputId_grupo:id_grupo,
+                            inputGrupo: grupo,
+                            inputStatus: status,
+                            buttonCreate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar el Id");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });*/
+            });
+            //fin cambiar estado grupo
+            
+            
+            
+            
         });
 
     </script>
@@ -124,7 +220,8 @@ description:
                     <tr>
                         <th>Id</th>
                         <th>Grupo</th>
-                        <th>Modificar</th>
+                        <th>Estatus</th>
+                        <th>Herramientas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,13 +231,22 @@ description:
                     $datosTabla = json_decode($json);
 
                     //print $obj->{'foo-bar'};
+                     
+                    
+                    
 
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'id_grupo'} . "</td>"
-                        . "<td>" . $row->{'grupo'} . "</td>"
-    . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                             ."<td>" . $row->{'grupo'} . "</td>";
+                             /*."<td>" . $row->{'status'} . "</td>" solo visualia no es boton*/
+                        if ($row->{'status'} === "ACTIVADO") {
+                                echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
+                            } else {
+                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarGrupo(this);'>" . $row->{'status'} . "</button></td>";
+                            }
+                            echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
     . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-    . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+   /* . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"*/
     . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
     . "</td> </tr>";
 }
