@@ -49,6 +49,7 @@ class Grupos {
          /*$sql = "DELETE grupos(id_grupo,grupo) VALUES ('" . $id_grupo ."')"; DELETE FROM grupos WHERE grupos.id_grupo=19 /*agregar lo de values*/
         $sql="DELETE  FROM grupos WHERE grupos.id_grupo = ( ".$id_grupo." )";
         
+        
 
         
         $response = getResultSQL($sql);
@@ -57,6 +58,38 @@ class Grupos {
         } else {
             return true;
         }
+    }
+    
+    function desactivar($id_grupo){
+          /*$sql = "DELETE grupos(id_grupo,grupo) VALUES ('" . $id_grupo ."')"; DELETE FROM grupos WHERE grupos.id_grupo=19 /*agregar lo de values*/
+        /*$sql="DELETE  FROM grupos WHERE grupos.id_grupo = ( ".$id_grupo." )";*/
+        /*ATE `grupos` SET `id_status_grupo`=0 WHERE id_grupo=1*/
+         $sql = "UPDATE  grupos SET id_status_grupo= (" . 0 . ") WHERE id_grupo=( ".$id_grupo." ) ";
+        $response = getResultSQL($sql);
+        if (!$response) {
+            return false;
+        } else {
+            return true;
+        }
+        
+        
+        
+    }
+    
+     function activar($id_grupo){
+          /*$sql = "DELETE grupos(id_grupo,grupo) VALUES ('" . $id_grupo ."')"; DELETE FROM grupos WHERE grupos.id_grupo=19 /*agregar lo de values*/
+        /*$sql="DELETE  FROM grupos WHERE grupos.id_grupo = ( ".$id_grupo." )";*/
+        /*ATE `grupos` SET `id_status_grupo`=0 WHERE id_grupo=1*/
+         $sql = "UPDATE  grupos SET id_status_grupo= (" . 1 . ") WHERE id_grupo=( ".$id_grupo." ) ";
+        $response = getResultSQL($sql);
+        if (!$response) {
+            return false;
+        } else {
+            return true;
+        }
+        
+        
+        
     }
 
 }
