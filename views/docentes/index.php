@@ -96,7 +96,6 @@ require_once ('../../models/Docentes.php');
                 $(".update").attr("disabled", "disabled");
             });
             
-            
             //actualizar
            $(document).on("click", ".update", function () {
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
