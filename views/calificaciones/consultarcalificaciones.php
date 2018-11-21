@@ -224,7 +224,7 @@ $(document).ready(function(){
 </head>
 <body>
     <?php
-   // getHeader();
+   getHeader();
     ?>
     <div class="container">
       <div class="table-wrapper"> 
