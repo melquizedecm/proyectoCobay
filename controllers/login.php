@@ -1,7 +1,7 @@
 <?php
 session_start();
-$matricula=$_POST['inputMatricula'];
-$contraseña=$_POST['inputPassword'];
+$matricula= stripslashes($_POST['inputMatricula']);
+$contraseña=stripslashes($_POST['inputPassword']);
 
 $_SESSION['username']=$matricula; 
 
