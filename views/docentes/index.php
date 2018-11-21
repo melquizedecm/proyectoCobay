@@ -85,7 +85,10 @@ require_once ('../../models/Docentes.php');
                 $(".update").removeAttr("enabled");
             }
             var cont = 0;
-             // Edit row on edit button click
+             
+
+
+// Edit row on edit button click
             $(document).on("click", ".edit", function () {
                 var cont=0;    
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
