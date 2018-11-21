@@ -85,35 +85,34 @@ require_once ('../../models/Docentes.php');
                 $(".update").removeAttr("enabled");
             }
             var cont = 0;
-             // Edit row on edit button click
-            $(document).on("click", ".edit", function () {
-                var cont=0;
-               
-              
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+             
 
-                    $(this).html('<input name="antDato" id="antDato' + cont + '" value="' + $(this).text() + '" ><input name="input' + cont + '" id="input' + cont + '" type="text" class="form-control" value="' + $(this).text() + '">');
+
+// Edit row on edit button click
+            $(document).on("click", ".edit", function () {
+                var cont=0;    
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    $(this).html('<input name="input'+ cont +'" id="input' + cont + '" value="' + $(this).text() + '" >');
                     cont = cont + 1;
                 });
                 $(this).parents("tr").find(".edit").toggle();
                 $(".update").attr("disabled", "disabled");
             });
             
-            
             //actualizar
            $(document).on("click", ".update", function () {
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    var matAnt=document.getElementById("antDato0").value;
-                    var matricula = document.getElementById("input0").value;
-                    var name = document.getElementById("input1").value;
+                    var matricula=document.getElementById("input0").value;
+                    var nombre = document.getElementById("input1").value;
+                //
+                //    
+                //            var name = document.getElementById("input1").value;
                     //console.log(matAnt+'el nuevo'+matricula+'name'+name);
-                 
                 
                $.post("../../controllers/docentesController.php",
                         {
-                            matAnt: matAnt,
                             matricula: matricula,
-                            nombre: name,
+                            nombre: nombre,
                             buttonUpdate: true
                         },
                         function (data) {
