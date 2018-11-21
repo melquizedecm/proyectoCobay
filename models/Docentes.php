@@ -26,8 +26,8 @@ class Docentes {
     function read() {
         return getTabla("maestros");
     }
-    function update($matAnt,$matricula, $nombre, $status){
-         $sql = "UPDATE  maestros SET matricula_maestro='" . $matricula . "',nombre='".$nombre."',id_status_maestro='".$status."' WHERE matricula_maestro='" . $matAnt. "'  ";
+    function update($campoClave,$valorClave, $nombre, $status){
+         $sql = "UPDATE  maestros SET nombre='".$nombre."',id_status_maestro='".$status."' WHERE ".$campoClave."='" . $valorClave. "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -35,5 +35,4 @@ class Docentes {
             return true;
         }
     }
-
 }

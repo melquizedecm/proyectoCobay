@@ -93,7 +93,6 @@ class DocentesController {
     }
     function docenteUpdate(){
      ///1. recibir datos
-        $matAnt=$_POST['matAnt'];
         $matricula = $_POST['matricula'];
         $nombre = $_POST['nombre'];
         $status = "1";
@@ -101,7 +100,7 @@ class DocentesController {
         require_once '../lib/consultas.php';
         require_once '../models/Docentes.php';
         $objetoDocente = new Docentes();
-        $response = $objetoDocente->update($matAnt,$matricula, $nombre, $status);
+        $response = $objetoDocente->update("matricula_maestro",$matricula, $nombre, $status);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {

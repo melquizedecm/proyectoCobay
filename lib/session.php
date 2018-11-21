@@ -7,12 +7,8 @@
  */
 session_start();
 require_once("consultas.php");
-
 if(!isset($_SESSION['session_username'])) {
- 
-    
-    header("location: ../view/userLogin.php");
- 
+    header("location: ../Login/");
 }
 
 ?>
