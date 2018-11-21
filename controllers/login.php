@@ -22,6 +22,7 @@ if($filas>0)
 else
 {
     echo"Error en la autentificación";
+    
 }
 mysqli_free_result($resultado);
 mysqli_close($conexion);
