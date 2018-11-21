@@ -37,7 +37,7 @@ function libnivel2() {
 }
 
 function libnivel3() {
-    //require_once("../../lib/session.php");
+ //   require_once("../../lib/session.php");
     require_once '../../lib/meta.php';
     require_once '../../lib/estilos.php';
     require_once '../../lib/header.php';
