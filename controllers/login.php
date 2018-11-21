@@ -9,6 +9,7 @@ $_SESSION['username']=$matricula;
 $conexion=mysqli_connect("localhost","root","","proyecto_cobay");
 //Consulta
 
+
 $consulta= "SELECT * FROM alumnos WHERE matricula='".$matricula."' and password='".$contraseña."'"; 
 
 $resultado=  mysqli_query($conexion, $consulta);
@@ -16,7 +17,7 @@ $filas=  mysqli_num_rows($resultado);
 
 if($filas>0)
 {
-    header("location:http://localhost/proyectoCobay/views/calificaciones/ConsultarCalificaciones.php");
+    header("location:http://localhost/proyectoCobay/views/Menu/");
 }
 else
 {
