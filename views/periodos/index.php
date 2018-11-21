@@ -25,9 +25,10 @@ require_once ('../../models/Periodos.php');
         ?>        
         <script type="text/javascript">
             
-            function activarPeriodo(this){
+            /*function activarPeriodo(this)
+            {
                 alert ("periodo");
-            }
+            }*/
 
             ///////DATABLES ////////
             $(document).ready(function ()
@@ -47,15 +48,15 @@ require_once ('../../models/Periodos.php');
                 $(".add-new").click(function ()
                 {
                     $(this).attr("disabled", "disabled");
-                    var index = $("table tbody tr:last-child").index();
+                    var index = $("table tbody tr:first-child").index();
                     var row = '<tr>' +
-                            '<td><input type="text" class="form-control" name="id" id="inputId"></td>' +
+                            '<td><input type="text" class="form-control" name="id" id="inputId" placeholder="AUTOMATICO" readonly></td>' +
                             '<td><input type="text" class="form-control" name="periodo" id="inputPeriodo"></td>' +
-                            '<td><input type="text" class="form-control" name="estatus" id="inputEstatus"></td>' +
+                            '<td><input type="text" class="form-control" name="estatus" id="inputEstatus" placeholder="AUTOMATICO" readonly></td>' +
                             '<td>' + actions + '</td>' +
                             '</tr>';
-                    $("table").append(row);
-                    $("table tbody tr").eq(index + 1).find(".add, .edit, .active").toggle();
+                    $("table").prepend(row);
+                    $("table tbody tr").eq(index + 0).find(".add, .edit, .active").toggle();
                     $('[data-toggle="tooltip"]').tooltip();
                 });
 
@@ -82,10 +83,11 @@ require_once ('../../models/Periodos.php');
                                 if (data === "-1")
                                 {
                                     alert("Error al guardar los datos, revisar la matricula");
-                                } else
+                                } 
+                                else
                                 {
-                                    ///despliega la tabla con los datos////
-                                    alert(data);
+                                    alert("Registro Guardado con éxito");
+                                    location.reload(true);
                                 }
                             });
                 });
@@ -99,13 +101,15 @@ require_once ('../../models/Periodos.php');
                     {
                         $(this).addClass("error");
                         empty = true;
-                    } else
+                    } 
+                    else
                     {
                         $(this).removeClass("error");
                     }
                 });
 
                 $(this).parents("tr").find(".error").first().focus();
+                
                 if (!empty)
                 {
                     input.each(function ()
@@ -130,6 +134,31 @@ require_once ('../../models/Periodos.php');
                 // Delete row on delete button click
                 $(document).on("click", ".delete", function ()
                 {
+                    
+                    //1. OBTENER LOS VALORES//
+                    var id = document.getElementById("inputId").value; //Jalar valor ingresado
+                    
+                    //2. ENVIAR POR POTS//
+                    //$.post("url", variables, response);
+                    $.post("../../controllers/periodosController.php",
+                            {
+                                //Datos post
+                                inputId: id,
+                                buttonDelete: true
+                            },
+                            function (data)
+                            {
+                                if (data === "-1")
+                                {
+                                    alert("Error al guardar los datos, revisar la matricula");
+                                } 
+                                else
+                                {
+                                    ///despliega la tabla con los datos////
+                                    alert(data);
+                                }
+                            });
+                            
                     $(this).parents("tr").remove();
                     $(".add-new").removeAttr("disabled");
                 });
@@ -167,13 +196,18 @@ require_once ('../../models/Periodos.php');
                         $json = $periodos->read();
                         $datosTabla = json_decode($json);
 
-                        foreach ($datosTabla as $row) {
+                        foreach ($datosTabla as $row) 
+                        {
                             echo "<tr>"
                             . "<td>" . $row->{'id_periodo'} . "</td>"
                             . "<td>" . $row->{'periodo'} . "</td>";
-                            if ($row->{'status_periodo'} === "ACTIVO") {
+                            
+                            if ($row->{'status_periodo'} === "ACTIVADO") 
+                            {
                                 echo "<td><button class='btn-success'>" . $row->{'status_periodo'} . "</button></td>";
-                            } else {
+                            } 
+                            else 
+                            {
                                 echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPeriodo(this);'>" . $row->{'status_periodo'} . "</button></td>";
                             }
 
@@ -183,6 +217,7 @@ require_once ('../../models/Periodos.php');
                             . "</td></tr>";
                         }
                         ?>
+                        
                     </tbody>
                 </table>
             </div>

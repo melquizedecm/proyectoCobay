@@ -35,7 +35,10 @@ elseif (isset($_POST['buttonReadId']))
 ///////Eliminar Datos de Periodo///////
 elseif (isset($_POST['buttonDelete'])) 
 {
-    periodosDelete();
+    require_once '../lib/links.php';
+    libnivel2();
+    $periodos=new PeriodosController();
+    $periodos->delete();
 } 
 else 
 {
@@ -79,7 +82,7 @@ class PeriodosController
     //3.  enviar una respuestaç
         if ($response) 
         {
-            read();
+            $this->read();
         } 
         else 
         {
@@ -88,6 +91,27 @@ class PeriodosController
     }
 
     function read() 
+    {
+        $objetoPeriodos = new Periodos();
+        $response = $objetoPeriodos->read();
+        $result = array();
+        if (!$response) 
+        {
+            echo $response;
+        } 
+        else 
+        {
+            $i = 0;
+            while ($row = $response->fetch_assoc()) 
+            {
+                $result[$i] = $row;
+                $i++;
+            }
+            return json_encode($result);
+        }
+    }
+    
+    function delete()
     {
         $objetoPeriodos = new Periodos();
         $response = $objetoPeriodos->read();

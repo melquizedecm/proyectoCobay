@@ -14,8 +14,14 @@ class Periodos {
         }
     }
 
-    function read() {
+    function read() 
+    {
         $sql = "SELECT id_periodo,periodo, periodo_status.status_periodo FROM periodos INNER JOIN periodo_status ON periodos.id_status_periodo = periodo_status.id_status_periodo";
         return getResultSQL($sql);
+    }
+    
+    function delete()
+    {
+        
     }
 }
