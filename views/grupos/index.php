@@ -97,9 +97,10 @@ description:
                     $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
+                $(".add-new").
+            
             });
-            // Delete row on delete button click
+           
             $(document).on("click", ".delete", function () {
 
                      $(this).parents("tr").remove();
@@ -121,34 +122,22 @@ description:
                                 location.reload(true);
                             }
                         });
-                                 
-
-                
+                               
             });
-            
-            
-            //desactivar grupo 
             
             $(document).on("click", ".btn-success", function () {
                                      /*alert($(this).parents("tr").html());*/
-                  $(this).parents("tr").remove();
+                  /*$(this).parents("tr").remove();*/
                      /*alert($(this).parents("tr").html());*/
-                     var id_grupo=($(this).parents("tr").find("td:last-child").html());
-                     alert($(this).parents("tr").find("td:last-child").html());
+                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
                                 /*$(".add-new").removeAttr("disabled");*/
 
-                
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-               
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-               /* $.post("../../controllers/gruposController.php",
+            
+               $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
-                            inputGrupo: grupo,
-                            inputStatus: status,
-                            buttonCreate: true
+                            buttonDesactivar: true
                         },
                         function (data) {
                             if (data === "-1") {
@@ -157,31 +146,18 @@ description:
                                 alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
-                        });*/
+                        });
             });
-            //fin cambiar estado grupo
-            
-            
-            //activar grupo 
-            
             
             $(document).on("click", ".btn-danger", function () {
-                                     alert($(this).parents("tr").html());
-
-                
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-              /*  var id_grupo = document.getElementById("inputId_grupo").value; 
-                var grupo = document.getElementById("inputGrupo").value;
-                var status = document.getElementById("inputStatus").value; 
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-                $.post("../../controllers/gruposController.php",
+                                      
+                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
+                                
+               $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
-                            inputGrupo: grupo,
-                            inputStatus: status,
-                            buttonCreate: true
+                            buttonActivar: true
                         },
                         function (data) {
                             if (data === "-1") {
@@ -190,12 +166,11 @@ description:
                                 alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
-                        });*/
+                        });
+
+             
             });
             //fin cambiar estado grupo
-            
-            
-            
             
         });
 
