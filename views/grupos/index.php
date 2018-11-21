@@ -99,33 +99,6 @@ description:
                 $(this).parents("tr").find(".add, .edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
             });
-            // Delete row on delete button click
-            $(document).on("click", ".delete", function () {
-
-                     $(this).parents("tr").remove();
-                     /*alert($(this).parents("tr").html());*/
-                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
-                     alert($(this).parents("tr").find("td:first-child").html());
-                                $(".add-new").removeAttr("disabled");
-
-                $.post("../../controllers/gruposController.php",
-                        {
-                           Id_grupo: id_grupo,
-                            buttonDelete: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al borrar el dato");
-                            } else {
-                                alert("Registro eliminado");
-                                location.reload(true);
-                            }
-                        });
-                                 
-
-                
-            });
-            
             
             //desactivar grupo 
             
