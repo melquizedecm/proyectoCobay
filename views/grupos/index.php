@@ -97,10 +97,9 @@ description:
                     $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").
-            
+                $(".add-new").attr("disabled", "disabled");
             });
-           
+            // Delete row on delete button click
             $(document).on("click", ".delete", function () {
 
                      $(this).parents("tr").remove();
@@ -122,8 +121,13 @@ description:
                                 location.reload(true);
                             }
                         });
-                               
+                                 
+
+                
             });
+            
+            
+            //desactivar grupo 
             
             $(document).on("click", ".btn-success", function () {
                                      /*alert($(this).parents("tr").html());*/
@@ -133,7 +137,12 @@ description:
                      alert($(this).parents("tr").find("td:first-child").html());
                                 /*$(".add-new").removeAttr("disabled");*/
 
-            
+                
+                /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+               
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
                $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
@@ -148,12 +157,26 @@ description:
                             }
                         });
             });
+            //fin cambiar estado grupo
+            
+            
+            //activar grupo 
+            
             
             $(document).on("click", ".btn-danger", function () {
-                                      
+                                  /*alert($(this).parents("tr").html());*/
+                  /*$(this).parents("tr").remove();*/
+                     /*alert($(this).parents("tr").html());*/
                      var id_grupo=($(this).parents("tr").find("td:first-child").html());
                      alert($(this).parents("tr").find("td:first-child").html());
-                                
+                                /*$(".add-new").removeAttr("disabled");*/
+
+                
+                /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+               
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
                $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
@@ -167,10 +190,11 @@ description:
                                 location.reload(true);
                             }
                         });
-
-             
             });
             //fin cambiar estado grupo
+            
+            
+            
             
         });
 
