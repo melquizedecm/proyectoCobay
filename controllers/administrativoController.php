@@ -19,7 +19,10 @@ if (isset($_POST['buttonCreate'])) {
 }
 ///////Modificar Datos de Docente///////
 elseif (isset($_POST['buttonUpdate'])) {
-    administrativoUpdate();
+    require_once '../lib/links.php';
+    libnivel2();
+    $administrativo = new AdministrativoController();
+    $administrativo->administrativoUpdate();
 }
 ///////Consultar tabla de Docente///////
 elseif (isset($_POST['buttonRead'])) {
@@ -90,4 +93,26 @@ class administrativoController {
         }
     }
 
+
+function administrativoUpdate() {
+        ///1. recibir datos
+        $matricula = $_POST['matricula'];
+        $password = $_POST['password'];
+        $cargo = $_POST['cargo'];
+        $nombre = $_POST['nombre'];
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Administrativo.php';
+        $objetoAdministrativo = new Administrativo();
+        $response = $objetoAdministrativo->update("administrativos", $matricula, $password, $cargo, $nombre);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        }
+    }
+
 }
+

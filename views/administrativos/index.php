@@ -24,9 +24,10 @@ description:
         $(document).ready(function () {
 
             ///////DATABLES ////////
-            $('#tableAdministrativos').DataTable();
+            $(document).ready(function () {
+                $('#tableAdministrativo').DataTable();
+            });
 
-            ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
             // Append table with add row form on add new button click
@@ -35,25 +36,27 @@ description:
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
-                        '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword"></td>' +
+                        '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword" ></td>' +
                         '<td><input type="text" class="form-control" name="inputCargo" id="inputCargo"></td>' +
-                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
+                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .delete , .update").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
-            // Add row on add button click (Agregar base de datos)
+
+            // Add row on add button click
             $(document).on("click", ".add", function () {
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-                var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
+                ////////GUARDAR LOS DATOS//////
+                ///1. OBTENER LOS VALORES/////
+                var matricula = document.getElementById("inputMatricula").value;
                 var password = document.getElementById("inputPassword").value;
                 var cargo = document.getElementById("inputCargo").value;
                 var nombre = document.getElementById("inputNombre").value;
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
+
+
+                ///2. ENVIAR POR POST    /////
                 $.post("../../controllers/administrativoController.php",
                         {
                             inputMatricula: matricula,
@@ -70,37 +73,41 @@ description:
                                 location.reload(true);
                             }
                         });
-            });
-            //3. REFRESCAR LOS VALORES///
-            var empty = false;
-            var input = $(this).parents("tr").find('input[type="text"]');
-            input.each(function () {
-                if (!$(this).val()) {
-                    $(this).addClass("error");
-                    empty = true;
-                } else {
-                    $(this).removeClass("error");
+
+                ///3. REFRESCAR LA TABLA O LA PAGINA////
+
+
+
+                var empty = false;
+                var input = $(this).parents("tr").find('input[type="text"]');
+                input.each(function () {
+                    if (!$(this).val()) {
+                        $(this).addClass("error");
+                        empty = true;
+                    } else {
+                        $(this).removeClass("error");
+                    }
+                });
+                $(this).parents("tr").find(".error").first().focus();
+                if (!empty) {
+                    input.each(function () {
+                        $(this).parent("td").html($(this).val());
+                    });
+                    $(this).parents("tr").find(".add, .edit").toggle();
+                    $(".add-new").removeAttr("disabled");
                 }
             });
-            $(this).parents("tr").find(".error").first().focus();
-            if (!empty) {
-                input.each(function () {
-                    $(this).parent("td").html($(this).val());
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").removeAttr("disabled");
-                $(".update").removeAttr("enabled");
-            }
-            var cont = 0;
+
+
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input name="input' + cont + '" type="text" class="form-control" value="' + $(this).text() + '">');
-                    cont = cont + 1;
+                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
-                $(".update").attr("disabled", "disabled");
+                $(".add-new").attr("disabled", "disabled");
             });
+
 
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
@@ -133,7 +140,7 @@ description:
                         <th>Password</th>
                         <th>Cargo</th>
                         <th>Nombre</th>
-                         <th>Herramientas</th>
+                        <th>Herramientas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,8 +153,8 @@ description:
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'matricula'} . "</td>"
                         . "<td>" . $row->{'password'} . "</td>"
-                        ."<td>" . $row->{'cargo'} . "</td>"
-                        ."<td>" . $row->{'nombre'} . "</td>"
+                        . "<td>" . $row->{'cargo'} . "</td>"
+                        . "<td>" . $row->{'nombre'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
