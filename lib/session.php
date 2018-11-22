@@ -1,4 +1,5 @@
 <?php
+
 /////////////verificar si esta autorizado para ver un modulo/////////////////
 /*
  * 1. OBTENER EL TIPO DE USUARIO
@@ -6,9 +7,7 @@
  * 3. SI COINCIDEN ACCEDER, SINO MANDAR A INDEX
  */
 session_start();
-require_once("consultas.php");
-if(!isset($_SESSION['session_username'])) {
-    header("location: ../Login/");
+if (!isset($_SESSION['username'])) {
+    header("location: ../login/");
 }
-
 ?>
