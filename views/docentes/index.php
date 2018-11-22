@@ -55,14 +55,14 @@ require_once ('../../models/Docentes.php');
                             inputNombre: nombre,
                             buttonCreate: true
                         },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar la matricula");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
+                function (data) {
+                    if (data === "-1") {
+                        alert("Error al guardar los datos, revisar la matricula");
+                    } else {
+                        alert("Registro Guardado con éxito");
+                        location.reload(true);
+                    }
+                });
             });
             //3. REFRESCAR LOS VALORES///
             var empty = false;
@@ -85,53 +85,66 @@ require_once ('../../models/Docentes.php');
                 $(".update").removeAttr("enabled");
             }
             var cont = 0;
-             
-
-
 // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                var cont=0;    
+                var cont = 0;
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input name="input'+ cont +'" id="input' + cont + '" value="' + $(this).text() + '" >');
+                    $(this).html('<input name="input' + cont + '" id="input' + cont + '" value="' + $(this).text() + '" >');
                     cont = cont + 1;
                 });
                 $(this).parents("tr").find(".edit").toggle();
                 $(".update").attr("disabled", "disabled");
             });
-            
             //actualizar
-           $(document).on("click", ".update", function () {
+            $(document).on("click", ".update", function () {
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    var matricula=document.getElementById("input0").value;
+                    var matricula = document.getElementById("input0").value;
                     var nombre = document.getElementById("input1").value;
-                //
-                //    
-                //            var name = document.getElementById("input1").value;
+                    //
+                    //    
+                    //            var name = document.getElementById("input1").value;
                     //console.log(matAnt+'el nuevo'+matricula+'name'+name);
-                
-               $.post("../../controllers/docentesController.php",
-                        {
-                            matricula: matricula,
-                            nombre: nombre,
-                            buttonUpdate: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar la matricula");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
-                   });
+
+                    $.post("../../controllers/docentesController.php",
+                            {
+                                matricula: matricula,
+                                nombre: nombre,
+                                buttonUpdate: true
+                            },
+                    function (data) {
+                        if (data === "-1") {
+                            alert("Error al guardar los datos, revisar la matricula");
+                        } else {
+                            alert("Registro Guardado con éxito");
+                            location.reload(true);
+                        }
+                    });
+                });
             });
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();
+                /alert($(this).parents("tr").html());/
+                var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
                 $(".add-new").removeAttr("disabled");
+                // pongo el nuevo codigo
+                $.post("../../controllers/docentesController.php",
+                        {
+                            matricula_maestro: matriculaMaestro,
+                            buttonDelete: true
+                        },
+                function (data) {
+                    if (data === "-1") {
+                        alert("Error al borrar el dato");
+                        
+                    } else {
+                        alert(data);
+                        alert("Registro eliminado");
+                        location.reload(true);
+                    }
+                });
             });
         });
-
     </script>
 </head>
 <body>

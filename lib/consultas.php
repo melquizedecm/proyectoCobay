@@ -100,6 +100,13 @@ function getTablaWhere($table,$campo,$valor){
 		cerrar($link);
 }
 
+function getTablaWhereNot($table,$campo,$valor){
+        $link = conectar();
+	$consulta="SELECT * FROM ".$table." WHERE ".$campo." <> '".$valor."' ORDER BY ".$campo." ASC";
+		return $link->query($consulta);
+		cerrar($link);
+}
+
 function getTablaWhereDesc($link,$table,$campoId,$id){
 	$consulta="SELECT * FROM ".$table." WHERE ".$campoId."='".$id."' ORDER BY ".$campoId." DESC";
 		return $link->query($consulta);
