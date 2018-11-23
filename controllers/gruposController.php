@@ -19,7 +19,10 @@ if (isset($_POST['buttonCreate'])) {
 }
 ///////Modificar Datos de Docente///////
 elseif (isset($_POST['buttonUpdate'])) {
-    grupoUpdate();
+    require_once '../lib/links.php';
+    libnivel2();
+     $docentes=new DocentesController();
+      $docentes->gruposUpdate();
 }
 ///////Consultar tabla de Docente///////
 elseif (isset($_POST['buttonRead'])) {
@@ -38,7 +41,24 @@ elseif (isset($_POST['buttonDelete'])) {
     $grupos->delete();
     
     
-} else {
+}
+elseif (isset($_POST['buttonDesactivar'])) {
+    require_once '../lib/links.php';
+    libnivel2();
+    $grupos=new GruposController();
+    $grupos->desactivar();
+    
+    
+}
+elseif (isset($_POST['buttonActivar'])) {
+    require_once '../lib/links.php';
+    libnivel2();
+    $grupos=new GruposController();
+    $grupos->activar();
+    
+    
+}
+else {
     return False;
 }
 
@@ -63,15 +83,13 @@ class GruposController {
 ///1. recibir datos
       
         $id_grupo = $_POST['inputId_grupo'];
-         /*$semestre=$_POST['inputSemestre'];*/
-        $grupo = $_POST['inputGrupo'];
         $status=$_POST['inputStatus'];
         
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
-        $response = $objetoGrupo->create($id_grupo,$grupo,$status);
+        $response = $objetoGrupo->create($id_grupo,$status);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {
@@ -113,6 +131,59 @@ class GruposController {
         } else {
             echo "-1";
         };
+        
+    }
+    function desactivar(){
+        $id_grupo = $_POST['inputId_grupo']; 
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Grupos.php';
+        $objetoGrupo = new Grupos();
+        $response = $objetoGrupo->desactivar($id_grupo);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        };
+        
+        
+    }
+    function activar(){
+        $id_grupo = $_POST['inputId_grupo']; 
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Grupos.php';
+        $objetoGrupo = new Grupos();
+        $response = $objetoGrupo->activar($id_grupo);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        };
+        
+        
+    }
+      function gruposUpdate(){
+     ///1. recibir datos
+       
+        $id_grupo = $_POST['inputId_grupo'];
+       
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Grupos.php';
+        $objetoDocente = new Docentes();
+                $response = $objetoGrupo->update($id_grupo);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        }   
         
     }
 

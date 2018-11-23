@@ -24,11 +24,22 @@ class Docentes {
     }
 
     function read() {
-        return getTabla("maestros");
+        return getTablaWhereNot("maestros","id_status_maestro","0");
     }
     function update($campoClave,$valorClave, $nombre, $status){
          $sql = "UPDATE  maestros SET nombre='".$nombre."',id_status_maestro='".$status."' WHERE ".$campoClave."='" . $valorClave. "'";
         $response = getResultSQL($sql);
+        if (!$response) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    // nuevo codigo 
+    function delete($matricula_maestro){
+         //$sql = "DELETE maestros(matricula_maestro,nombre) VALUES ('" . $matricula_maestro ."')"; DELETE FROM maestros WHERE maestros.matricula_maestro=19  //agregar lo de values/
+        
+        $response = sqlUpdate("maestros", "id_status_maestro", "0", "matricula_maestro", $matricula_maestro);
         if (!$response) {
             return false;
         } else {

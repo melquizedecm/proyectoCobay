@@ -13,6 +13,7 @@ description:
 1. Formulario pra subir grupos
 2. Lista de Grupos.
 -->
+
 <head>
      <?php
     getMeta("Administración de Grupos");
@@ -20,6 +21,7 @@ description:
     ?>
     
     <script type="text/javascript">
+        var temp;
         $(document).ready(function () {
             
             ///////DATABLES ////////
@@ -36,13 +38,12 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputId_grupo" id="inputId_grupo" placeholder="Automatico" readonly ></td>' +
-                        '<td><input type="text" class="form-control" name="inputGrupo" id="inputGrupo"></td>' +
-                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" ></td>' +
+                        '<td><input type="text" class="form-control" name="inputId_grupo" id="inputId_grupo"  ></td>' +
+                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .edit, .active").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
             
@@ -51,14 +52,12 @@ description:
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
                 var id_grupo = document.getElementById("inputId_grupo").value; 
-                var grupo = document.getElementById("inputGrupo").value;
                 var status = document.getElementById("inputStatus").value; 
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
-                            inputGrupo: grupo,
                             inputStatus: status,
                             buttonCreate: true
                         },
@@ -93,37 +92,50 @@ description:
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+                
+                $(this).parents("tr").find("td:first-child").each(function () {
+                    $(this).html('<input type="text" class="form-control" id="temporal" value="' + $(this).text() + '">');
                 });
-                $(this).parents("tr").find(".add, .edit").toggle();
+                temp=document.getElementById("temporal").value;
+ alert(temp)
+                $(this).parents("tr").find(".edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
+                
+                
+                
+                
             });
-            // Delete row on delete button click
-            $(document).on("click", ".delete", function () {
+            
+            
+            /*Actualizar*/
+             $(document).on("click", ".update", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function ()  {
 
-                     $(this).parents("tr").remove();
-                     /*alert($(this).parents("tr").html());*/
-                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
-                     alert($(this).parents("tr").find("td:first-child").html());
-                                $(".add-new").removeAttr("disabled");
 
-                $.post("../../controllers/gruposController.php",
+                    var id_grupo=document.getElementById("temporal").value;
+                    alert(temp);
+                    alert (id_grupo);
+                   
+                //
+                //    
+                //            var name = document.getElementById("input1").value;
+                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
+                
+               $.post("../../controllers/gruposController.php",
                         {
-                           Id_grupo: id_grupo,
-                            buttonDelete: true
+                            inputId_grupoactual:temp,
+                            inputId_gruponuevo:id_grupo,
+                            buttonUpdate: true
                         },
                         function (data) {
                             if (data === "-1") {
-                                alert("Error al borrar el dato");
+                                alert("Error al guardar los datos, revisar la matricula");
                             } else {
-                                alert("Registro eliminado");
+                                alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
                         });
-                                 
-
-                
+                   });
             });
             
             
@@ -131,10 +143,10 @@ description:
             
             $(document).on("click", ".btn-success", function () {
                                      /*alert($(this).parents("tr").html());*/
-                  $(this).parents("tr").remove();
+                  /*$(this).parents("tr").remove();*/
                      /*alert($(this).parents("tr").html());*/
-                     var id_grupo=($(this).parents("tr").find("td:last-child").html());
-                     alert($(this).parents("tr").find("td:last-child").html());
+                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
                                 /*$(".add-new").removeAttr("disabled");*/
 
                 
@@ -143,12 +155,10 @@ description:
                
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
-               /* $.post("../../controllers/gruposController.php",
+               $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
-                            inputGrupo: grupo,
-                            inputStatus: status,
-                            buttonCreate: true
+                            buttonDesactivar: true
                         },
                         function (data) {
                             if (data === "-1") {
@@ -157,7 +167,7 @@ description:
                                 alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
-                        });*/
+                        });
             });
             //fin cambiar estado grupo
             
@@ -166,22 +176,16 @@ description:
             
             
             $(document).on("click", ".btn-danger", function () {
-                                     alert($(this).parents("tr").html());
-
-                
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-              /*  var id_grupo = document.getElementById("inputId_grupo").value; 
-                var grupo = document.getElementById("inputGrupo").value;
-                var status = document.getElementById("inputStatus").value; 
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-                $.post("../../controllers/gruposController.php",
+                                  /*alert($(this).parents("tr").html());*/
+                  /*$(this).parents("tr").remove();*/
+                     /*alert($(this).parents("tr").html());*/
+                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
+                     
+               $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
-                            inputGrupo: grupo,
-                            inputStatus: status,
-                            buttonCreate: true
+                            buttonActivar: true
                         },
                         function (data) {
                             if (data === "-1") {
@@ -190,7 +194,7 @@ description:
                                 alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
-                        });*/
+                        });
             });
             //fin cambiar estado grupo
             
@@ -218,8 +222,7 @@ description:
             <table class="table table-bordered" id="tableGrupo">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Grupo</th>
+                        <th>Semestre y Grupo</th>
                         <th>Estatus</th>
                         <th>Herramientas</th>
                     </tr>
@@ -236,9 +239,8 @@ description:
                     
 
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'id_grupo'} . "</td>"
-                             ."<td>" . $row->{'grupo'} . "</td>";
-                             /*."<td>" . $row->{'status'} . "</td>" solo visualia no es boton*/
+                        echo "<tr><td>" . $row->{'id_grupo'} . "</td>";
+                            
                         if ($row->{'status'} === "ACTIVADO") {
                                 echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
                             } else {
