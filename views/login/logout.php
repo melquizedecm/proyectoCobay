@@ -12,5 +12,6 @@ if (!isset($_SESSION['username'])) {
 else{
     session_destroy();
     header("location: ../login/");
+    exit;
 }
 ?>
