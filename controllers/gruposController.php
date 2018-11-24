@@ -1,9 +1,9 @@
 <?php
 //require_once '../core/config.php';
 /*
- * Program:     docentesController.php
- * Author:      MTI. Melquizedec Moo Medina
- * Description: Programa que permite recibir los datos del docente, 
+ * Program:     GruposController.php
+ * Author:      Christian Eduardo Garcia Chan
+ * Description: Programa que permite recibir los datos del grupo, 
  * los analiza, configura y almacena en la Base de Datos.
  * 
  * Function: 
@@ -21,8 +21,8 @@ if (isset($_POST['buttonCreate'])) {
 elseif (isset($_POST['buttonUpdate'])) {
     require_once '../lib/links.php';
     libnivel2();
-     $docentes=new DocentesController();
-      $docentes->gruposUpdate();
+     $grupos=new GruposController();
+      $grupos->gruposUpdate();
 }
 ///////Consultar tabla de Docente///////
 elseif (isset($_POST['buttonRead'])) {
@@ -169,14 +169,16 @@ class GruposController {
     }
       function gruposUpdate(){
      ///1. recibir datos
+          
        
-        $id_grupo = $_POST['inputId_grupo'];
+        $temp = $_POST['inputId_grupoactual'];
+        $id_grupo = $_POST['inputId_gruponuevo'];
        
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
-        $objetoDocente = new Docentes();
-                $response = $objetoGrupo->update($id_grupo);
+        $objetoGrupo = new Grupos();
+                $response = $objetoGrupo->update($temp,$id_grupo);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {
