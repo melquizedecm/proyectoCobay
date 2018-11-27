@@ -44,7 +44,7 @@ description:
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
-
+-
             // Add row on add button click
             $(document).on("click", ".add", function () {
                 ////////GUARDAR LOS DATOS//////
@@ -98,11 +98,40 @@ description:
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
+                var cont=0;    
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+                    $(this).html('<input name="input'+ cont +'" id="input' + cont + '" value="' + $(this).text() + '" >');
+                    cont = cont + 1;
                 });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
+                $(this).parents("tr").find(".edit").toggle();
+                $(".update").attr("disabled", "disabled");
+            });
+            
+            //actualizar
+           $(document).on("click", ".update", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    var clave = document.getElementById("input0").value;
+                    var nombre = document.getElementById("input1").value;
+                //
+                //    
+                //            var name = document.getElementById("input1").value;
+                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
+                
+               $.post("../../controllers/asignaturasController.php",
+                        {
+                            clave:  clave,
+                            nombre: nombre,
+                            buttonUpdate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar la matricula");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
+                   });
             });
 
 
@@ -113,22 +142,64 @@ description:
             });
             
             
-            //desactivar grupo 
+            //desactivar asignatura 
             
             $(document).on("click", ".btn-success", function () {
                                      /*alert($(this).parents("tr").html());*/
-                  $(this).parents("tr").remove();
+                  /*$(this).parents("tr").remove();*/
                      /*alert($(this).parents("tr").html());*/
-                     var id_grupo=($(this).parents("tr").find("td:last-child").html());
-                     alert($(this).parents("tr").find("td:last-child").html());
-                     
+                     var clave=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
+                                /*$(".add-new").removeAttr("disabled");*/
+
+                
+                /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+               
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
+               $.post("../../controllers/asignaturasController.php",
+                        {
+                            inputClave:clave,
+                            buttonDesactivar: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar el Id");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
             });
+            //fin cambiar estado grupo
+            
+            
             //activar grupo 
             
             
             $(document).on("click", ".btn-danger", function () {
-                                     alert($(this).parents("tr").html());
+                                  /*alert($(this).parents("tr").html());*/
+                  /*$(this).parents("tr").remove();*/
+                     /*alert($(this).parents("tr").html());*/
+                     var clave=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
+                     
+               $.post("../../controllers/asignaturasController.php",
+                        {
+                            inputClave:clave,
+                            buttonActivar: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar el Id");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
             });
+            //fin cambiar estado grupo
         });
     </script>
 </head>
@@ -165,15 +236,17 @@ description:
 
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'id_asignatura'} . "</td>"
-                        . "<td>" . $row->{'asignatura'} . "</td>";
-                        if ($row->{'status'} === "ACTIVADO") {
+                                ."<td>" . $row->{'asignatura'} . "</td>";
+                        if ($row->{'status'} === "ACTIVA") {
                                 echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
                             } else {
                                 echo "<td><button class='btn-danger' id='btn-activar' onclick='activarGrupo(this);'>" . $row->{'status'} . "</button></td>";
                             }
                             echo
-                         "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+
+                        "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar'  data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>
