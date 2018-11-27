@@ -6,9 +6,9 @@
  */
 
 /**
- * Description of Docentes
+ * Description of Grupos
  *
- * @author melqui
+ * Autor= Christian Eduardo Garci Chan
  */
 class Grupos {
     
@@ -37,8 +37,9 @@ class Grupos {
         //agregar por si las dudas
        
     }
-     function update($id_grupo){
-         $sql = "UPDATE  grupos SET id__grupo= ('" . $id_grupo . "') WHERE id_grupo=( '".$id_grupo."' ) ";
+     function update($temp,$id_grupo){
+         $sql = "UPDATE  grupos SET id_grupo= ('" . $id_grupo . "') WHERE id_grupo=( '".$temp."' ) ";
+
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -50,7 +51,7 @@ class Grupos {
     function read() {
           $sql = "SELECT id_grupo,status_grupo.status FROM grupos INNER JOIN status_grupo ON grupos.id_status_grupo = status_grupo.id_status_grupo";
 
-        return getResultSQL($sql);
+            return getResultSQL($sql);
         
     }
     
@@ -74,6 +75,7 @@ class Grupos {
         /*$sql="DELETE  FROM grupos WHERE grupos.id_grupo = ( ".$id_grupo." )";*/
         /*ATE `grupos` SET `id_status_grupo`=0 WHERE id_grupo=1*/
          $sql = "UPDATE  grupos SET id_status_grupo= (" . 0 . ") WHERE id_grupo=( '".$id_grupo."' ) ";
+         
         $response = getResultSQL($sql);
         if (!$response) {
             return false;

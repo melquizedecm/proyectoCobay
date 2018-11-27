@@ -97,7 +97,6 @@ description:
                     $(this).html('<input type="text" class="form-control" id="temporal" value="' + $(this).text() + '">');
                 });
                 temp=document.getElementById("temporal").value;
- alert(temp)
                 $(this).parents("tr").find(".edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
                 
@@ -109,34 +108,34 @@ description:
             
             /*Actualizar*/
              $(document).on("click", ".update", function () {
+             if(confirm("Seguro desea actualizar este grupo?")){
                 $(this).parents("tr").find("td:not(:last-child)").each(function ()  {
 
 
                     var id_grupo=document.getElementById("temporal").value;
-                    alert(temp);
-                    alert (id_grupo);
+                    alert("Se cambiara el valor "+temp+" con el nuevo valor "+id_grupo);
                    
-                //
-                //    
+                   
                 //            var name = document.getElementById("input1").value;
                     //console.log(matAnt+'el nuevo'+matricula+'name'+name);
-                
-               $.post("../../controllers/gruposController.php",
-                        {
-                            inputId_grupoactual:temp,
-                            inputId_gruponuevo:id_grupo,
-                            buttonUpdate: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar la matricula");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
-                   });
-            });
+
+                             $.post("../../controllers/gruposController.php",
+                                     {
+                                         inputId_grupoactual: temp,
+                                         inputId_gruponuevo: id_grupo,
+                                         buttonUpdate: true
+                                     },
+                             function (data) {
+                                 if (data === "-1") {
+                                     alert("Error al guardar los datos, revisar la matricula");
+                                 } else {
+                                     alert("Registro Guardado con éxito");
+                                     location.reload(true);
+                                 }
+                             });
+                         });
+                     }
+                     });
             
             
             //desactivar grupo 
@@ -145,30 +144,32 @@ description:
                                      /*alert($(this).parents("tr").html());*/
                   /*$(this).parents("tr").remove();*/
                      /*alert($(this).parents("tr").html());*/
+                     if(confirm("¿Seguro que desea DESACTIVAR este grupo?")){
                      var id_grupo=($(this).parents("tr").find("td:first-child").html());
-                     alert($(this).parents("tr").find("td:first-child").html());
+                     /*alert($(this).parents("tr").find("td:first-child").html());*/
                                 /*$(".add-new").removeAttr("disabled");*/
 
-                
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-               
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-               $.post("../../controllers/gruposController.php",
-                        {
-                            inputId_grupo:id_grupo,
-                            buttonDesactivar: true
-                        },
+
+                        /////GUARDAR LOS DATOS/////
+                        //1. OBTENER LOS VALORES//
+
+                        //2. ENVIAR POR POTS//
+                        //$.post("url", variables, response);
+                        $.post("../../controllers/gruposController.php",
+                                {
+                                    inputId_grupo: id_grupo,
+                                    buttonDesactivar: true
+                                },
                         function (data) {
                             if (data === "-1") {
-                                alert("Error al guardar los datos, revisar el Id");
+                                alert("Error al DESACTIVAR el grupo, revise su conexión de internet");
                             } else {
-                                alert("Registro Guardado con éxito");
+                                alert("Grupo DESACTIVADO con éxito");
                                 location.reload(true);
                             }
                         });
-            });
+                    }
+                    });
             //fin cambiar estado grupo
             
             
@@ -179,27 +180,28 @@ description:
                                   /*alert($(this).parents("tr").html());*/
                   /*$(this).parents("tr").remove();*/
                      /*alert($(this).parents("tr").html());*/
+                      if(confirm("¿Seguro que desea ACTIVAR este grupo?")){
                      var id_grupo=($(this).parents("tr").find("td:first-child").html());
-                     alert($(this).parents("tr").find("td:first-child").html());
                      
                $.post("../../controllers/gruposController.php",
-                        {
-                            inputId_grupo:id_grupo,
-                            buttonActivar: true
-                        },
+                                {
+                                    inputId_grupo: id_grupo,
+                                    buttonActivar: true
+                                },
                         function (data) {
                             if (data === "-1") {
-                                alert("Error al guardar los datos, revisar el Id");
+                                alert("Error al ACTIVAR el grupo, revise su conexión de internet");
                             } else {
-                                alert("Registro Guardado con éxito");
+                                alert("Grupo DESACTIVADO con éxito");
                                 location.reload(true);
                             }
                         });
-            });
-            //fin cambiar estado grupo
-            
-            
-            
+                    }
+                    });
+                    //fin cambiar estado grupo
+
+
+
             
         });
 
@@ -240,7 +242,6 @@ description:
 
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'id_grupo'} . "</td>";
-                            
                         if ($row->{'status'} === "ACTIVADO") {
                                 echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
                             } else {
