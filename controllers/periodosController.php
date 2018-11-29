@@ -39,7 +39,42 @@ elseif (isset($_POST['buttonDelete']))
     libnivel2();
     $periodos=new PeriodosController();
     $periodos->delete();
-} 
+}
+elseif (isset($_POST['buttonDesactivar'])) 
+{
+    require_once '../lib/links.php';
+    libnivel2();
+    $periodos=new PeriodosController();
+    $periodos->desactivar(); 
+}
+elseif (isset($_POST['buttonActivar'])) 
+{
+    require_once '../lib/links.php';
+    libnivel2();
+    $periodos=new PeriodosController();
+    $periodos->activar(); 
+}
+elseif (isset($_POST['periodoActivo'])) 
+{
+    require_once '../lib/links.php';
+    libnivel2();
+    $periodos=new PeriodosController();
+    $periodos->periodoactivo(); 
+}
+elseif (isset($_POST['periodoActualizado'])) 
+{
+    require_once '../lib/links.php';
+    libnivel2();
+    $periodos=new PeriodosController();
+    $periodos->periodoactualizar(); 
+}
+elseif (isset($_POST['buttonValidar'])) 
+{
+    require_once '../lib/links.php';
+    libnivel2();
+    $periodos=new PeriodosController();
+    $periodos->periodovalidar(); 
+}
 else 
 {
     return False;
@@ -130,6 +165,99 @@ class PeriodosController
             }
             return json_encode($result);
         }
+    }
+    
+    function desactivar()
+    {
+        $id_periodo = $_POST['inputId']; 
+        //2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Periodos.php';
+        $objetoPeriodo = new Periodos();
+        $response = $objetoPeriodo->desactivar($id_periodo);
+        //3.  enviar una respuestaç
+        if ($response) 
+        {
+            $this->read();
+        } 
+        else 
+        {
+            echo "-1";
+        };
+    }
+    
+    function activar()
+    {
+        $id_periodo = $_POST['inputId']; 
+        //2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Periodos.php';
+        $objetoPeriodo = new Periodos();
+        $response = $objetoPeriodo->activar($id_periodo);
+        //3.  enviar una respuestaç
+        
+        if ($response) 
+        {
+            $this->read();
+        } 
+        else 
+        {
+            echo "-1";
+        };
+    }
+    
+    function periodoactivo()
+    {
+        require_once '../lib/consultas.php';
+        require_once '../models/Periodos.php';
+        $objetoPeriodo = new Periodos();
+        $response = $objetoPeriodo->periodoactivo();
+        
+        if ($response) 
+        {
+            $this->read();
+        } 
+        else 
+        {
+            echo "-1";
+        };
+    }
+    
+    function periodoactualizar()
+    {
+        $id_periodo = $_POST['inputId'];
+        $periodo = $_POST['inputPeriodo'];
+        require_once '../lib/consultas.php';
+        require_once '../models/Periodos.php';
+        $objetoPeriodo = new Periodos();
+        $response = $objetoPeriodo->actualizar($id_periodo, $periodo);
+        
+        if ($response) 
+        {
+            $this->read();
+        } 
+        else 
+        {
+            echo "-1";
+        };
+    }
+    
+    function periodovalidar()
+    {
+        $periodo = $_POST['inputPeriodo'];
+        require_once '../lib/consultas.php';
+        require_once '../models/Periodos.php';
+        $objetoPeriodo = new Periodos();
+        $response = $objetoPeriodo->validar($periodo);
+        
+        if ($response) 
+        {
+            $this->read();
+        } 
+        else 
+        {
+            echo "-1";
+        };
     }
 }
 

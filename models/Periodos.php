@@ -20,8 +20,73 @@ class Periodos {
         return getResultSQL($sql);
     }
     
-    function delete()
+    function periodoactivo()
     {
-        
+        $sql = "UPDATE periodos SET id_status_periodo= (" . 0 . ") WHERE id_status_periodo=( ". 1 ." ) ";
+        $response = getResultSQL($sql);
+        if (!$response) 
+        {
+            return false;
+        } 
+        else 
+        {
+            return true;
+        } 
+    }
+    
+    function desactivar($id_grupo)
+    {
+        $sql = "UPDATE  periodos SET id_status_periodo= (" . 0 . ") WHERE id_periodo=( ".$id_grupo." ) ";
+        $response = getResultSQL($sql);
+        if (!$response) 
+        {
+            return false;
+        } 
+        else 
+        {
+            return true;
+        } 
+    }
+    
+     function activar($id_grupo)
+    {
+        $sql = "UPDATE periodos SET id_status_periodo= (" . 1 . ") WHERE id_periodo=( ".$id_grupo." ) ";
+        $response = getResultSQL($sql);
+        if (!$response) 
+        {
+            return false;
+        } 
+        else 
+        {
+            return true;
+        } 
+    }
+    
+    function actualizar($id, $periodo)
+    {
+        $sql = "UPDATE periodos SET periodo=('" .$periodo. "') WHERE id_periodo=('".$id."')";
+        $response = getResultSQL($sql);
+        if (!$response) 
+        {
+            return false;
+        } 
+        else 
+        {
+            return true;
+        } 
+    }
+    
+    function validar($periodo)
+    {
+        $sql = "SELECT periodos FROM periodos WHERE periodo=('".$periodo."')";
+        $response = getResultSQL($sql);
+        if (!$response == $periodo) 
+        {
+            return false;
+        } 
+        else 
+        {
+            return true;
+        } 
     }
 }

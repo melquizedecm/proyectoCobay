@@ -25,21 +25,14 @@ require_once ('../../models/Periodos.php');
         ?>        
         <script type="text/javascript">
             
-            /*function activarPeriodo(this)
-            {
-                alert ("periodo");
-            }*/
-
             ///////DATABLES ////////
             $(document).ready(function ()
             {
                 $('#tablaPeriodos').DataTable();
             });
-
+            
             $(document).ready(function ()
             {
-
-
                 //GENERACION DEL CRUD EN LA TABLA
                 $('[data-toggle="tooltip"]').tooltip();
                 var actions = $("table td:last-child").html();
@@ -56,7 +49,7 @@ require_once ('../../models/Periodos.php');
                             '<td>' + actions + '</td>' +
                             '</tr>';
                     $("table").prepend(row);
-                    $("table tbody tr").eq(index + 0).find(".add, .edit, .active").toggle();
+                    $("table tbody tr").eq(index + 0).find(".add").toggle();
                     $('[data-toggle="tooltip"]').tooltip();
                 });
 
@@ -68,28 +61,54 @@ require_once ('../../models/Periodos.php');
                     var id = document.getElementById("inputId").value; //Jalar valor ingresado
                     var periodo = document.getElementById("inputPeriodo").value;
                     var estatus = document.getElementById("inputEstatus").value;
-                    //2. ENVIAR POR POTS//
-                    //$.post("url", variables, response);
-                    $.post("../../controllers/periodosController.php",
+                    
+                    //Validacion de los campos
+                    if(periodo == "")
+                    {
+                        alert("Es nesesario ingresar un periodo!");
+                    }
+                    else
+                    {
+                        /////VALIDACION DE EXISTENCIA DEL PERIODO
+                        $.post("../../controllers/periodosController.php",
                             {
                                 //Datos post
-                                inputId: id,
                                 inputPeriodo: periodo,
-                                inputEstatus: estatus,
-                                buttonCreate: true
+                                buttonValidar: true
                             },
                             function (data)
                             {
                                 if (data === "-1")
                                 {
-                                    alert("Error al guardar los datos, revisar la matricula");
+                                    alert("Ya existe un registro con este periodo");
                                 } 
                                 else
                                 {
-                                    alert("Registro Guardado con éxito");
-                                    location.reload(true);
+                                    //2. ENVIAR POR POTS//
+                                    //$.post("url", variables, response);
+                                    $.post("../../controllers/periodosController.php",
+                                    {
+                                        //Datos post
+                                        inputId: id,
+                                        inputPeriodo: periodo,
+                                        inputEstatus: estatus,
+                                        buttonCreate: true
+                                    },
+                                    function (data)
+                                    {
+                                        if (data === "-1")
+                                    {
+                                        alert("Error al guardar los datos, revisar la matricula");
+                                    } 
+                                    else
+                                    {
+                                        alert("Registro Guardado con éxito");
+                                        location.reload(true);
+                                    }
+                                    });
                                 }
                             });
+                    }
                 });
                 //3. REFRESCAR LOS VALORES///
 
@@ -116,52 +135,119 @@ require_once ('../../models/Periodos.php');
                     {
                         $(this).parent("td").html($(this).val());
                     });
-                    $(this).parents("tr").find(".add, .edit, .active").toggle();
+                    $(this).parents("tr").find(".edit").toggle();
                     $(".add-new").removeAttr("disabled");
                 }
+
 
                 // Edit row on edit button click
                 $(document).on("click", ".edit", function ()
                 {
-                    $(this).parents("tr").find("td:not(:last-child)").each(function ()
+                    $(this).parents("tr").find("td:nth-child(2)").each(function ()
                     {
-                        $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+                        $(this).html('<input type="text" class="form-control" id="inputPeriodo" value="' + $(this).text() + '">');
                     });
-                    $(this).parents("tr").find(".add, .edit").toggle();
+                    $(this).parents("tr").find(".edit").toggle();
                     $(".add-new").attr("disabled", "disabled");
                 });
-
-                // Delete row on delete button click
-                $(document).on("click", ".delete", function ()
+                
+                //Actualizar datos de row en la base de datos
+                $(document).on("click", ".update", function ()
                 {
+                    //Obtenemos los valores de los row
+                    var id=$(this).parents("tr").find("td:first-child").html();
+                    var periodo=document.getElementById("inputPeriodo").value;
                     
-                    //1. OBTENER LOS VALORES//
-                    var id = document.getElementById("inputId").value; //Jalar valor ingresado
+                    //Validacion de los campos
+                    if(periodo == "")
+                    {
+                        alert("Es nesesario ingresar un periodo!");
+                    }
+                    else
+                    {
+                        //1. ENVIAR POR POTS//
+                        $.post("../../controllers/periodosController.php",
+                        {
+                            inputPeriodo: periodo,
+                            buttonValidar: true
+                        },
+                        function (data) 
+                        {
+                            if (data === "-1") 
+                            {
+                                alert("Error al intentar activar el periodo");
+                            } 
+                            else 
+                            {
+                                //1.1 FUNCION DESACTIVAR PERIODO ACTIVO
+                                $.post("../../controllers/periodosController.php",
+                                {
+                                    inputId: id,
+                                    inputPeriodo: periodo,
+                                    periodoActualizado: true
+                                },
+                                function (data) 
+                                {
+                                    if (data === "-1") 
+                                    {
+                                        alert("Error al intentar activar el periodo");
+                                    } 
+                                    else 
+                                    {
+                                        alert("Periodo Actualizado Exitosamente!");
+                                        location.reload(true);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                
+                //ACTIVAR GRUPO
+                $(document).on("click", ".btn-danger", function () 
+                {
+                    var id_periodo=($(this).parents("tr").find("td:first-child").html());
+                    
+                    //1. ENVIAR POR POTS//
+                    //1.1 FUNCION DESACTIVAR PERIODO ACTIVO
+                    $.post("../../controllers/periodosController.php",
+                        {
+                            periodoActivo: true
+                        },
+                        function (data) 
+                        {
+                            if (data === "-1") 
+                            {
+                                alert("Error al intentar activar el periodo");
+                            } 
+                            else 
+                            {
+                                alert("Periodo Activado");
+                                location.reload(true);
+                            }
+                        });
                     
                     //2. ENVIAR POR POTS//
                     //$.post("url", variables, response);
                     $.post("../../controllers/periodosController.php",
+                        {
+                            inputId:id_periodo,
+                            buttonActivar: true
+                        },
+                        function (data) 
+                        {
+                            if (data === "-1") 
                             {
-                                //Datos post
-                                inputId: id,
-                                buttonDelete: true
-                            },
-                            function (data)
+                                alert("Error al guardar los datos, revisar el Id");
+                            } 
+                            else 
                             {
-                                if (data === "-1")
-                                {
-                                    alert("Error al guardar los datos, revisar la matricula");
-                                } 
-                                else
-                                {
-                                    ///despliega la tabla con los datos////
-                                    alert(data);
-                                }
-                            });
-                            
-                    $(this).parents("tr").remove();
-                    $(".add-new").removeAttr("disabled");
+                                location.reload(true);
+                            }
+                        });
                 });
+                //FIN DESACTIVAR GRUPO
+            
             });
         </script>
     </head>
@@ -204,18 +290,19 @@ require_once ('../../models/Periodos.php');
                             
                             if ($row->{'status_periodo'} === "ACTIVADO") 
                             {
-                                echo "<td><button class='btn-success'>" . $row->{'status_periodo'} . "</button></td>";
+                                echo "<td><button class='btn-success' id='btn-success'>" . $row->{'status_periodo'} . "</button></td>";
                             } 
                             else 
                             {
-                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPeriodo(this);'>" . $row->{'status_periodo'} . "</button></td>";
+                                echo "<td><button class='btn-danger' id='btn-danger' onclick='activarPeriodo(this);'>" . $row->{'status_periodo'} . "</button></td>";
                             }
 
                             echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
-                            . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                            . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                            . "</td></tr>";
+                               . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
+                               . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
+                               . "</td></tr>";
                         }
+                        
                         ?>
                         
                     </tbody>
