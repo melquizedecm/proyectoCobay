@@ -89,13 +89,19 @@ class GruposController {
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
-        $response = $objetoGrupo->create($id_grupo,$status);
-//$response=$objetoDocente->create($matricula,$nombre,$status);
-//3.  enviar una respuestaç
+        $Res=$objetoGrupo->validarIdGrupo($id_grupo);
+        
+        if($Res!=$id_grupo && $Res!=" "){
+               $response = $objetoGrupo->create($id_grupo,$status);
         if ($response) {
             $this->read();
         } else {
             echo "-1";
+        }
+            
+        }
+        else {
+     echo "-2";
         }
     }
 
@@ -178,15 +184,21 @@ class GruposController {
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
-                $response = $objetoGrupo->update($temp,$id_grupo);
+
+        $Res = $objetoGrupo->validarIdGrupo($id_grupo);
+
+        if ($Res != $id_grupo && $Res != " ") {
+            $response = $objetoGrupo->update($temp, $id_grupo);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
-        if ($response) {
-            $this->read();
+            if ($response) {
+                $this->read();
+            } else {
+                echo "-1";
+            }
         } else {
-            echo "-1";
-        }   
-        
+            echo "-2";
+        }
     }
 
 }

@@ -38,7 +38,7 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputId_grupo" id="inputId_grupo"  ></td>' +
+                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputId_grupo" id="inputId_grupo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
@@ -46,6 +46,7 @@ description:
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
+                
             
             // Add row on add button click (Agregar base de datos)
             $(document).on("click", ".add", function () {
@@ -64,7 +65,14 @@ description:
                         function (data) {
                             if (data === "-1") {
                                 alert("Error al guardar los datos, revisar el Id");
-                            } else {
+                            }
+                              else if(data==="-2"){
+                                 alert("Este semestre y grupo ya existe");
+
+                                     
+                                 }
+                           
+                            else {
                                 alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
@@ -94,47 +102,45 @@ description:
             $(document).on("click", ".edit", function () {
                 
                 $(this).parents("tr").find("td:first-child").each(function () {
-                    $(this).html('<input type="text" class="form-control" id="temporal" value="' + $(this).text() + '">');
+                    $(this).html('<input type="text" style="text-transform:uppercase" class="form-control" id="temporal" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" value="' + $(this).text() + '">');
                 });
                 temp=document.getElementById("temporal").value;
                 $(this).parents("tr").find(".edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
-                
-                
-                
                 
             });
             
             
             /*Actualizar*/
              $(document).on("click", ".update", function () {
-             if(confirm("Seguro desea actualizar este grupo?")){
-                $(this).parents("tr").find("td:not(:last-child)").each(function ()  {
+              var id_grupo=document.getElementById("temporal").value;
+             if(confirm("Se cambiara el valor "+temp+" con el nuevo valor "+id_grupo+"."+"\n¿Esta seguro de realizar esta acción?")){
+                //apartir de aqui se ejecuta 2 veces el procesos, error en la linea 122
 
+            $(this).parents("tr").find("td:first-child").each(function ()  {
 
-                    var id_grupo=document.getElementById("temporal").value;
-                    alert("Se cambiara el valor "+temp+" con el nuevo valor "+id_grupo);
-                   
-                   
-                //            var name = document.getElementById("input1").value;
-                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
-
-                             $.post("../../controllers/gruposController.php",
-                                     {
-                                         inputId_grupoactual: temp,
-                                         inputId_gruponuevo: id_grupo,
-                                         buttonUpdate: true
-                                     },
-                             function (data) {
-                                 if (data === "-1") {
-                                     alert("Error al guardar los datos, revisar la matricula");
-                                 } else {
-                                     alert("Registro Guardado con éxito");
-                                     location.reload(true);
-                                 }
+                                 $.post("../../controllers/gruposController.php",
+                                         {
+                                             inputId_grupoactual: temp,
+                                             inputId_gruponuevo: id_grupo,
+                                             buttonUpdate: true
+                                         },
+                                 function (data) {
+                                     if (data === "-1") {
+                                         alert("Error al guardar los datos, revisar la matricula");
+                                     }
+                                     else if (data === "-2") {
+                                         alert("Este semestre y grupo ya existe");
+                                     }
+                                     else {
+                                         alert("Registro Guardado con éxito");
+                                         location.reload(true);
+                                     }
+                                 });
+                                 
+                                 
                              });
-                         });
-                     }
+                         }
                      });
             
             
@@ -192,7 +198,7 @@ description:
                             if (data === "-1") {
                                 alert("Error al ACTIVAR el grupo, revise su conexión de internet");
                             } else {
-                                alert("Grupo DESACTIVADO con éxito");
+                                alert("Grupo ACTIVADO con éxito");
                                 location.reload(true);
                             }
                         });
