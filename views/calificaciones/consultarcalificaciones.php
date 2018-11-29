@@ -232,7 +232,7 @@ $(document).ready(function(){
                 <div class="row">
                     <div class="col-sm-9"><h2> <b>TABLA DE CALIFICACIONES</b></h2></div>
                     <div class="col-sm-3">
-                      <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> 
+                 <button type="button" class="btn btn-danger"><i class="fa fa-power-off"></i> Cerrar sesión</button> 
                     </div>
                 </div>
                 <h4>ALUMNO: 
@@ -241,7 +241,7 @@ $(document).ready(function(){
                     //usare de ejemplo la matrícula 17B003000037
                     //consulta a utilizar SELECT nombre FROM `alumnos` WHERE matricula = '17B003000037'
                    
-                    $json = $alumno->ObtenerNombre("17B003000037"); //$usuario que es la variable extraida del login
+                    $json = $alumno->ObtenerNombre("15B003000462"); //$usuario que es la variable extraida del login
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
@@ -249,23 +249,24 @@ $(document).ready(function(){
                     }
                     ?>
                 </h4>
-                <h4>SEMESTRE: 
-                    <?php
-                    $json = $alumno->ObtenerSemestre("17B003000037");
+              <!--  <h4>SEMESTRE: 
+              //abrir php
+                   
+                   /* $json = $alumno->ObtenerSemestre("17B003000037");
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
                         echo $row->{'id_semestre'};
-                    }
-                    ?>
-                </h4>
+                    }*/
+                   //cerrar php
+                </h4>-->
                 <h4>GRUPO: 
                     <?php
-                    $json = $alumno->obtenerGrupo("17B003000037");
+                    $json = $alumno->obtenerGrupo("15B003000462");
                     $datosTabla = json_decode($json);
 
                     foreach ($datosTabla as $row) {
-                        echo $row->{'grupo'};
+                        echo $row->{'id_grupo'};
                     }
                     ?>
                 </h4>
@@ -283,7 +284,7 @@ $(document).ready(function(){
                 </thead>
                 <tbody>
                     <?php
-                    $json = $alumno->llenarTabla("17B003000037");
+                    $json = $alumno->llenarTabla("15B003000462");
                     $datosTabla = json_decode($json);
                     $numeric = 0;
                     foreach ($datosTabla as $row) {
@@ -309,14 +310,6 @@ $(document).ready(function(){
                                 }
                             }
                         }
-
-                        // $numeric=(int)$row->{'ordinario'}+(int)$row->{'parcial_uno'}+(int)$row->{'parcial_dos'} ;
-                        /*    echo "<tr><td>" . $row->{'asignatura'} . "</td>"
-                          . "<td>" . $row->{'parcial_uno'} . " </td>"
-                          . "<td>" . $row->{'parcial_dos'} . " </td>"
-                          . "<td>" . $row->{'ordinario'} . " </td>"
-                          . "<td>" . $numeric . " </td>"
-                          . "</tr>"; */
                     }
                     ?>
 
@@ -325,11 +318,11 @@ $(document).ready(function(){
 					
             </table>
        </div> 
-   <!-- </div>    Clase contendor-->
+  </div>  
     <?php
     getFooter();
     ?>
-   </div>  
+    <!--  </div>   -->
 </body>
 </html>      
 
