@@ -36,6 +36,7 @@ description:
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
+                        '<td><input type="text" class="form-control" name="inputEstatus" id="inputEstatus"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -48,12 +49,14 @@ description:
                 //1. OBTENER LOS VALORES//
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
+                var estatus = document.getElementById("inputEstatus").value;
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/alumnosController.php",
                         {
                             inputMatricula: matricula,
                             inputNombre: nombre,
+                            inputEstatus: estatus,
                             buttonCreate: true
                         },
                         function (data) {
@@ -116,9 +119,7 @@ description:
                             }
                         });
             });
-
         });
-
     </script>
 </head>
 <body>
@@ -130,7 +131,7 @@ description:
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2><center>Altas De <b>Alumnos.</b></h2></div></center>
+                    <div class="col-sm-8"><h2><center> Control <b>Alumnos.</b></h2></div></center>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Nuevo Alumno</button>
                     </div>
@@ -141,7 +142,9 @@ description:
                     <tr>
                         <th>Matricula</th>
                         <th>Nombre</th>
-                        <th></th>
+                        <th>Estado Actual</th>
+                        <th>Mostrar Calificaciones </th>
+                        <th>Herramientas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -152,27 +155,21 @@ description:
 //print $obj->{'foo-bar'};
 
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'matricula'} . "</td>"
+                        echo "<tr>"
+                        . "<td>" . $row->{'matricula'} . "</td>"
                         . "<td>" . $row->{'nombre'} . "</td>"
-                        . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                        . "<td>" . $row->{'status'} . "</td>";
+                             if ($row->{'aviso'} === "SIN PENDIENTES") {
+                                echo "<td><button class='btn-success'>" . $row->{'aviso'} . "</button></td>";
+                            } else {
+                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPeriodo(this);'>" . $row->{'status'} . "</button></td>";
+                            }
+                        echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>
-
-
-<!--   <tr>
-    <td>03</td>
-    <td>270697214582</td>
-    <td>Gemma Canul Gongora</td>
-    <td>
-        <a class="add" title="Agregar" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-        <a class="edit" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-        <a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-    </td>
-</tr>      -->
                 </tbody>
             </table>
         </div>

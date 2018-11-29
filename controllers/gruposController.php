@@ -1,9 +1,9 @@
 <?php
 //require_once '../core/config.php';
 /*
- * Program:     docentesController.php
- * Author:      MTI. Melquizedec Moo Medina
- * Description: Programa que permite recibir los datos del docente, 
+ * Program:     GruposController.php
+ * Author:      Christian Eduardo Garcia Chan
+ * Description: Programa que permite recibir los datos del grupo, 
  * los analiza, configura y almacena en la Base de Datos.
  * 
  * Function: 
@@ -19,7 +19,10 @@ if (isset($_POST['buttonCreate'])) {
 }
 ///////Modificar Datos de Docente///////
 elseif (isset($_POST['buttonUpdate'])) {
-    grupoUpdate();
+    require_once '../lib/links.php';
+    libnivel2();
+     $grupos=new GruposController();
+      $grupos->gruposUpdate();
 }
 ///////Consultar tabla de Docente///////
 elseif (isset($_POST['buttonRead'])) {
@@ -80,21 +83,25 @@ class GruposController {
 ///1. recibir datos
       
         $id_grupo = $_POST['inputId_grupo'];
-         /*$semestre=$_POST['inputSemestre'];*/
-        $grupo = $_POST['inputGrupo'];
         $status=$_POST['inputStatus'];
         
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
-        $response = $objetoGrupo->create($id_grupo,$grupo,$status);
-//$response=$objetoDocente->create($matricula,$nombre,$status);
-//3.  enviar una respuestaç
+        $Res=$objetoGrupo->validarIdGrupo($id_grupo);
+        
+        if($Res!=$id_grupo && $Res!=" "){
+               $response = $objetoGrupo->create($id_grupo,$status);
         if ($response) {
             $this->read();
         } else {
             echo "-1";
+        }
+            
+        }
+        else {
+     echo "-2";
         }
     }
 
@@ -165,6 +172,33 @@ class GruposController {
         };
         
         
+    }
+      function gruposUpdate(){
+     ///1. recibir datos
+          
+       
+        $temp = $_POST['inputId_grupoactual'];
+        $id_grupo = $_POST['inputId_gruponuevo'];
+       
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Grupos.php';
+        $objetoGrupo = new Grupos();
+
+        $Res = $objetoGrupo->validarIdGrupo($id_grupo);
+
+        if ($Res != $id_grupo && $Res != " ") {
+            $response = $objetoGrupo->update($temp, $id_grupo);
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+            if ($response) {
+                $this->read();
+            } else {
+                echo "-1";
+            }
+        } else {
+            echo "-2";
+        }
     }
 
 }
