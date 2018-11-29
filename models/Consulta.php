@@ -35,7 +35,7 @@ class Consulta{
     }
 
     function leerGrupo($matricula) {
-        $sql = "SELECT grupos.grupo FROM grupos,excel,alumnos WHERE alumnos.matricula='" . $matricula . "' AND alumnos.matricula=excel.matricula AND grupos.id_grupo=excel.id_grupo";
+        $sql = "SELECT grupos.id_grupo FROM grupos,excel,alumnos WHERE alumnos.matricula='" . $matricula . "' AND alumnos.matricula=excel.matricula AND grupos.id_grupo=excel.id_grupo";
         $response = getResultSQL($sql);
         return $response;
     }
