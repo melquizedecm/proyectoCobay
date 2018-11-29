@@ -109,7 +109,7 @@ class AsignaturasController {
     }
     function asignaturaUpdate(){
      ///1. recibir datos
-        $temp = $_POST['inputId_grupoactual'];
+        $temp = $_POST['claveactual'];
         $clave = $_POST['clave'];
         $nombre = $_POST['nombre'];
         
@@ -161,5 +161,39 @@ class AsignaturasController {
         
         
     }
+    /*function gruposUpdate(){
+     ///1. recibir datos
+          
+       
+        $temp = $_POST['inputId_grupoactual'];
+        $id_grupo = $_POST['inputId_gruponuevo'];
+       
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Grupos.php';
+        $objetoGrupo = new Grupos();
+
+        $Res = $objetoGrupo->validarIdGrupo($id_grupo);
+
+        if ($Res != $id_grupo && $Res != " ") {
+            $c=0;
+            $c++;
+            if($c>1){
+            $response = $objetoGrupo->update($temp, $id_grupo);
+            
+//$response=$objetoDocente->create($matricula,$nombre,$status);
+//3.  enviar una respuestaç
+            if ($response) {
+                $this->read();
+            } else {
+                echo "-1";
+            }
+        } else {
+            echo "-2";
+        }
+    }
+
+    }
+    */
 
 }

@@ -122,7 +122,7 @@ description:
                 //    
                 //            var name = document.getElementById("input1").value;
                     //console.log(matAnt+'el nuevo'+matricula+'name'+name);
-                $(this).parents("tr").find("td:not(:nth-child(3)):not(:last-child)").each(function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
                $.post("../../controllers/asignaturasController.php",
                         {
                             claveactual: temp,

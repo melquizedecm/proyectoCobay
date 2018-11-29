@@ -23,8 +23,8 @@ class Asignaturas {
         $sql = "SELECT id_asignatura,asignatura,status_asignatura.status FROM asignaturas INNER JOIN status_asignatura ON asignaturas.id_status_asignatura = status_asignatura.id_status_asignatura";
         return getResultSQL($sql);
     }
-    function update($campoClave,$valorClave, $nombre){
-         $sql = "UPDATE  asignaturas SET asignatura='".$nombre."' WHERE ".$campoClave."='" . $valorClave. "'";
+    function update($temp,$clave, $nombre){
+         $sql = "UPDATE  asignaturas SET id_asignatura=('".$clave."') WHERE id_asignatura=('" . $temp. "')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
