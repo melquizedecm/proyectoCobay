@@ -27,7 +27,7 @@ class Administrativo {
         return getTabla("administrativos");
     }
 
-    function update($campoClave, $valorClave, $matricula, $password, $cargo, $nombre) {
+    function update($campoClave, $valorClave, $password, $cargo, $nombre) {
         $sql = "UPDATE  administrativos SET matricula='" . $matricula . "',password='" . $password . "',cargo='" . $cargo . "',nombre='" . $nombre . "' WHERE " . $campoClave . "='" . $valorClave . "'";
         $response = getResultSQL($sql);
         if (!$response) {

@@ -38,7 +38,7 @@ description:
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
                         '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword" ></td>' +
                         '<td><input type="text" class="form-control" name="inputCargo" id="inputCargo"></td>' +
-                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre ></td>' +
+                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -73,46 +73,86 @@ description:
                                 location.reload(true);
                             }
                         });
-
-                ///3. REFRESCAR LA TABLA O LA PAGINA////
-
-
-
-                var empty = false;
-                var input = $(this).parents("tr").find('input[type="text"]');
-                input.each(function () {
-                    if (!$(this).val()) {
-                        $(this).addClass("error");
-                        empty = true;
-                    } else {
-                        $(this).removeClass("error");
-                    }
-                });
-                $(this).parents("tr").find(".error").first().focus();
-                if (!empty) {
-                    input.each(function () {
-                        $(this).parent("td").html($(this).val());
-                    });
-                    $(this).parents("tr").find(".add, .edit").toggle();
-                    $(".add-new").removeAttr("disabled");
+            });
+            //3. REFRESCAR LOS VALORES///
+            var empty = false;
+            var input = $(this).parents("tr").find('input[type="text"]');
+            input.each(function () {
+                if (!$(this).val()) {
+                    $(this).addClass("error");
+                    empty = true;
+                } else {
+                    $(this).removeClass("error");
                 }
             });
-
-
-            // Edit row on edit button click
-            $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+            $(this).parents("tr").find(".error").first().focus();
+            if (!empty) {
+                input.each(function () {
+                    $(this).parent("td").html($(this).val());
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
+                $(".add-new").removeAttr("disabled");
+                $(".update").removeAttr("enabled");
+            }
+            var cont = 0;
+// Edit row on edit button click
+            $(document).on("click", ".edit", function () {
+                var cont = 0;
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    $(this).html('<input name="input' + cont + '" id="input' + cont + '" value="' + $(this).text() + '" >');
+                    cont = cont + 1;
+                });
+                $(this).parents("tr").find(".edit").toggle();
+                $(".update").attr("disabled", "disabled");
             });
+            //actualizar
+            $(document).on("click", ".update", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    var matricula = document.getElementById("input0").value;
+                    var nombre = document.getElementById("input1").value;
+                    //
+                    //    
+                    //            var name = document.getElementById("input1").value;
+                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
 
-
+                    $.post("../../controllers/docentesController.php",
+                            {
+                                matricula: matricula,
+                                nombre: nombre,
+                                buttonUpdate: true
+                            },
+                            function (data) {
+                                if (data === "-1") {
+                                    alert("Error al guardar los datos, revisar la matricula");
+                                } else {
+                                    alert("Registro Guardado con éxito");
+                                    location.reload(true);
+                                }
+                            });
+                });
+            });
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();
+                /alert($(this).parents("tr").html());/
+                var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
                 $(".add-new").removeAttr("disabled");
+                // pongo el nuevo codigo
+                $.post("../../controllers/docentesController.php",
+                        {
+                            matricula_maestro: matriculaMaestro,
+                            buttonDelete: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al borrar el dato");
+
+                            } else {
+                                alert(data);
+                                alert("Registro eliminado");
+                                location.reload(true);
+                            }
+                        });
             });
         });
 
@@ -129,15 +169,15 @@ description:
                 <div class="row">
                     <div class="col-sm-8"><h2><center><b>Administración De Usuarios</b></h2></div></center>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Nuevo Usuario</button>
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Añadir Nuevo</button>
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered" id="tableUsuarios">
+            <table class="table table-bordered" id="tableAdministrativo">
                 <thead>
                     <tr>
-                        <th>Matricula</th>
-                        <th>Password</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
                         <th>Cargo</th>
                         <th>Nombre</th>
                         <th>Herramientas</th>
@@ -149,16 +189,17 @@ description:
                     $datosTabla = json_decode($json);
 
 //print $obj->{'foo-bar'};
-
+                    $cont = 0;
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'matricula'} . "</td>"
-                        . "<td>" . $row->{'password'} . "</td>"
-                        . "<td>" . $row->{'cargo'} . "</td>"
-                        . "<td>" . $row->{'nombre'} . "</td>"
+                        $cont++;
+                        echo "<tr data-fila=".$cont."><td id='matricula".$cont."'>" . $row->{'matricula'} . "</td>"
+                        . "<td id='password" . $cont . "'>" . $row->{'password'} . "</td>"
+                        . "<td id='cargo" . $cont . "'>" . $row->{'cargo'} . "</td>"
+                        . "<td id='nombre" . $cont . "'>" . $row->{'nombre'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE873;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>

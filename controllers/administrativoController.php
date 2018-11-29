@@ -104,7 +104,7 @@ function administrativoUpdate() {
         require_once '../lib/consultas.php';
         require_once '../models/Administrativo.php';
         $objetoAdministrativo = new Administrativo();
-        $response = $objetoAdministrativo->update("administrativos", $matricula, $password, $cargo, $nombre);
+        $response = $objetoAdministrativo->update("matricula", $matricula, $password, $cargo, $nombre);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {
