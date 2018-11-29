@@ -188,8 +188,8 @@ class GruposController {
         $Res = $objetoGrupo->validarIdGrupo($id_grupo);
 
         if ($Res != $id_grupo && $Res != " ") {
-            $response = $objetoGrupo->update($temp, $id_grupo);
-//$response=$objetoDocente->create($matricula,$nombre,$status);
+                        $response = $objetoGrupo->update($temp, $id_grupo);
+            //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
             if ($response) {
                 $this->read();
