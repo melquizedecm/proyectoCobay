@@ -21,6 +21,7 @@ description:
     estilosPaginas();
     ?>
     <script type="text/javascript">
+        var temp;
         $(document).ready(function () {
 
             ///////DATABLES ////////
@@ -37,19 +38,21 @@ description:
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputClave" id="inputClave"></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
+                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly="readonly"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
-
+-
             // Add row on add button click
             $(document).on("click", ".add", function () {
                 ////////GUARDAR LOS DATOS//////
                 ///1. OBTENER LOS VALORES/////
                 var clave = document.getElementById("inputClave").value;
                 var nombre = document.getElementById("inputNombre").value;
+                var status = document.getElementById("inputStatus").value; 
 
 
                 ///2. ENVIAR POR POST    /////
@@ -57,6 +60,7 @@ description:
                         {
                             inputClave: clave,
                             inputNombre: nombre,
+                            inputStatus: status,
                             buttonCreate: true
                         },
                         function (data) {
@@ -95,11 +99,47 @@ description:
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
+                var cont=0;
+                
+                $(this).parents("tr").find("td:not(:nth-child(3)):not(:last-child)").each(function () {
+                    
+                    $(this).html('<input name="input'+ cont +'" id="input' + cont + '" value="' + $(this).text() + '" >');
+                    cont = cont + 1;
+                    
+                 });
+                temp=document.getElementById("input0").value;
+                $(this).parents("tr").find(".edit").toggle();
+                $(".update").attr("disabled", "disabled");
+            });
+            
+            //actualizar
+           $(document).on("click", ".update", function () {
+                
+                    var clave = document.getElementById("input0").value;
+                    var nombre = document.getElementById("input1").value;
+               if(confirm("¿Esta seguro de realizar esta acción?")){
+                //
+                //    
+                //            var name = document.getElementById("input1").value;
+                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
+               $.post("../../controllers/asignaturasController.php",
+                        {
+                            claveactual: temp,
+                            clave:  clave,
+                            nombre: nombre,
+                            buttonUpdate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar la matricula");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
+                   });
+                   }
             });
 
 
@@ -108,6 +148,66 @@ description:
                 $(this).parents("tr").remove();
                 $(".add-new").removeAttr("disabled");
             });
+            
+            
+            //desactivar asignatura 
+            
+            $(document).on("click", ".btn-success", function () {
+                                     /*alert($(this).parents("tr").html());*/
+                  /*$(this).parents("tr").remove();*/
+                     /*alert($(this).parents("tr").html());*/
+                     var clave=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
+                                /*$(".add-new").removeAttr("disabled");*/
+
+                
+                /////GUARDAR LOS DATOS/////
+                //1. OBTENER LOS VALORES//
+               
+                //2. ENVIAR POR POTS//
+                //$.post("url", variables, response);
+               $.post("../../controllers/asignaturasController.php",
+                        {
+                            inputClave:clave,
+                            buttonDesactivar: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar el Id");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
+            });
+            //fin cambiar estado grupo
+            
+            
+            //activar grupo 
+            
+            
+            $(document).on("click", ".btn-danger", function () {
+                                  /*alert($(this).parents("tr").html());*/
+                  /*$(this).parents("tr").remove();*/
+                     /*alert($(this).parents("tr").html());*/
+                     var clave=($(this).parents("tr").find("td:first-child").html());
+                     alert($(this).parents("tr").find("td:first-child").html());
+                     
+               $.post("../../controllers/asignaturasController.php",
+                        {
+                            inputClave:clave,
+                            buttonActivar: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar el Id");
+                            } else {
+                                alert("Registro Guardado con éxito");
+                                location.reload(true);
+                            }
+                        });
+            });
+            //fin cambiar estado grupo
         });
     </script>
 </head>
@@ -130,7 +230,7 @@ description:
                     <tr>
                         <th>Clave</th>
                         <th>Nombre</th>
-
+                        <th>Estatus</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -144,10 +244,17 @@ description:
 
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'id_asignatura'} . "</td>"
-                        . "<td>" . $row->{'asignatura'} . "</td>"
-                        . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                                ."<td>" . $row->{'asignatura'} . "</td>";
+                        if ($row->{'status'} === "ACTIVA") {
+                                echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
+                            } else {
+                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarGrupo(this);'>" . $row->{'status'} . "</button></td>";
+                            }
+                            echo
+
+                        "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                        . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar'  data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>
