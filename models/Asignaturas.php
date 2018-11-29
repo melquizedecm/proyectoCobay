@@ -24,7 +24,7 @@ class Asignaturas {
         return getResultSQL($sql);
     }
     function update($temp,$clave, $nombre){
-         $sql = "UPDATE  asignaturas SET asignatura=('".$nombre."') WHERE id_asignatura=('" . $temp. "')";
+         $sql = "UPDATE  asignaturas SET asignatura = ('".$nombre."') WHERE id_asignatura=('" . $temp. "')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
