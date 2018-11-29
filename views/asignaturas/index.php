@@ -37,7 +37,7 @@ description:
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputClave" id="inputClave"></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
-                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" ></td>' +
+                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);

@@ -10,7 +10,7 @@ class Asignaturas {
     
 
     function create($clave, $nombre,$status) {
-        $sql = "INSERT INTO asignaturas(id_asignatura,asignatura) VALUES ('" . $clave . "','" . $nombre . "','.$status.')";
+        $sql = "INSERT INTO asignaturas(id_asignatura,asignatura,id_status_asignatura) VALUES ('" . $clave . "','" . $nombre . "','.1.')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -23,8 +23,8 @@ class Asignaturas {
         $sql = "SELECT id_asignatura,asignatura,status_asignatura.status FROM asignaturas INNER JOIN status_asignatura ON asignaturas.id_status_asignatura = status_asignatura.id_status_asignatura";
         return getResultSQL($sql);
     }
-    function update($campoClave,$valorClave, $nombre, $status){
-         $sql = "UPDATE  asignaturas SET asignatura='".$nombre."',id_status_asignatura='".$status."' WHERE ".$campoClave."='" . $valorClave. "'";
+    function update($campoClave,$valorClave, $nombre){
+         $sql = "UPDATE  asignaturas SET asignatura='".$nombre."' WHERE ".$campoClave."='" . $valorClave. "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
