@@ -109,6 +109,7 @@ class AsignaturasController {
     }
     function asignaturaUpdate(){
      ///1. recibir datos
+        $temp = $_POST['inputId_grupoactual'];
         $clave = $_POST['clave'];
         $nombre = $_POST['nombre'];
         
@@ -116,7 +117,7 @@ class AsignaturasController {
         require_once '../lib/consultas.php';
         require_once '../models/Asignaturas.php';
         $objetoAsignaturas = new Asignaturas();
-        $response = $objetoAsignaturas->update("id_asignatura",$clave, $nombre);
+        $response = $objetoAsignaturas->update($temp,$clave, $nombre);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
         if ($response) {

@@ -21,6 +21,7 @@ description:
     estilosPaginas();
     ?>
     <script type="text/javascript">
+        var temp;
         $(document).ready(function () {
 
             ///////DATABLES ////////
@@ -37,7 +38,7 @@ description:
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputClave" id="inputClave"></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
-                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly></td>' +
+                        '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly="readonly"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -98,27 +99,33 @@ description:
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                var cont=0;    
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                var cont=0;
+                
+                $(this).parents("tr").find("td:not(:nth-child(3)):not(:last-child)").each(function () {
+                    
                     $(this).html('<input name="input'+ cont +'" id="input' + cont + '" value="' + $(this).text() + '" >');
                     cont = cont + 1;
-                });
+                    
+                 });
+                temp=document.getElementById("input0").value;
                 $(this).parents("tr").find(".edit").toggle();
                 $(".update").attr("disabled", "disabled");
             });
             
             //actualizar
            $(document).on("click", ".update", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                
                     var clave = document.getElementById("input0").value;
                     var nombre = document.getElementById("input1").value;
+               if(confirm("¿Esta seguro de realizar esta acción?")){
                 //
                 //    
                 //            var name = document.getElementById("input1").value;
                     //console.log(matAnt+'el nuevo'+matricula+'name'+name);
-                
+                $(this).parents("tr").find("td:not(:nth-child(3)):not(:last-child)").each(function () {
                $.post("../../controllers/asignaturasController.php",
                         {
+                            claveactual: temp,
                             clave:  clave,
                             nombre: nombre,
                             buttonUpdate: true
@@ -132,6 +139,7 @@ description:
                             }
                         });
                    });
+                   }
             });
 
 
