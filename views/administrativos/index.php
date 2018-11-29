@@ -24,9 +24,10 @@ description:
         $(document).ready(function () {
 
             ///////DATABLES ////////
-            $('#tableAdministrativos').DataTable();
+            $(document).ready(function () {
+                $('#tableAdministrativo').DataTable();
+            });
 
-            ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
             // Append table with add row form on add new button click
@@ -35,25 +36,27 @@ description:
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
-                        '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword"></td>' +
+                        '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword" ></td>' +
                         '<td><input type="text" class="form-control" name="inputCargo" id="inputCargo"></td>' +
-                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
+                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .delete , .update").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
-            // Add row on add button click (Agregar base de datos)
+
+            // Add row on add button click
             $(document).on("click", ".add", function () {
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-                var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
+                ////////GUARDAR LOS DATOS//////
+                ///1. OBTENER LOS VALORES/////
+                var matricula = document.getElementById("inputMatricula").value;
                 var password = document.getElementById("inputPassword").value;
                 var cargo = document.getElementById("inputCargo").value;
                 var nombre = document.getElementById("inputNombre").value;
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
+
+
+                ///2. ENVIAR POR POST    /////
                 $.post("../../controllers/administrativoController.php",
                         {
                             inputMatricula: matricula,
@@ -92,20 +95,64 @@ description:
                 $(".update").removeAttr("enabled");
             }
             var cont = 0;
-            // Edit row on edit button click
+// Edit row on edit button click
             $(document).on("click", ".edit", function () {
+                var cont = 0;
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input name="input' + cont + '" type="text" class="form-control" value="' + $(this).text() + '">');
+                    $(this).html('<input name="input' + cont + '" id="input' + cont + '" value="' + $(this).text() + '" >');
                     cont = cont + 1;
                 });
-                $(this).parents("tr").find(".add, .edit").toggle();
+                $(this).parents("tr").find(".edit").toggle();
                 $(".update").attr("disabled", "disabled");
             });
+            //actualizar
+            $(document).on("click", ".update", function () {
+                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                    var matricula = document.getElementById("input0").value;
+                    var nombre = document.getElementById("input1").value;
+                    //
+                    //    
+                    //            var name = document.getElementById("input1").value;
+                    //console.log(matAnt+'el nuevo'+matricula+'name'+name);
 
+                    $.post("../../controllers/docentesController.php",
+                            {
+                                matricula: matricula,
+                                nombre: nombre,
+                                buttonUpdate: true
+                            },
+                            function (data) {
+                                if (data === "-1") {
+                                    alert("Error al guardar los datos, revisar la matricula");
+                                } else {
+                                    alert("Registro Guardado con éxito");
+                                    location.reload(true);
+                                }
+                            });
+                });
+            });
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();
+                /alert($(this).parents("tr").html());/
+                var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
                 $(".add-new").removeAttr("disabled");
+                // pongo el nuevo codigo
+                $.post("../../controllers/docentesController.php",
+                        {
+                            matricula_maestro: matriculaMaestro,
+                            buttonDelete: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al borrar el dato");
+
+                            } else {
+                                alert(data);
+                                alert("Registro eliminado");
+                                location.reload(true);
+                            }
+                        });
             });
         });
 
@@ -122,18 +169,18 @@ description:
                 <div class="row">
                     <div class="col-sm-8"><h2><center><b>Administración De Usuarios</b></h2></div></center>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Nuevo Usuario</button>
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Añadir Nuevo</button>
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered" id="tableUsuarios">
+            <table class="table table-bordered" id="tableAdministrativo">
                 <thead>
                     <tr>
-                        <th>Matricula</th>
-                        <th>Password</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
                         <th>Cargo</th>
                         <th>Nombre</th>
-                         <th>Herramientas</th>
+                        <th>Herramientas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,16 +189,17 @@ description:
                     $datosTabla = json_decode($json);
 
 //print $obj->{'foo-bar'};
-
+                    $cont = 0;
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'matricula'} . "</td>"
-                        . "<td>" . $row->{'password'} . "</td>"
-                        ."<td>" . $row->{'cargo'} . "</td>"
-                        ."<td>" . $row->{'nombre'} . "</td>"
+                        $cont++;
+                        echo "<tr data-fila=".$cont."><td id='matricula".$cont."'>" . $row->{'matricula'} . "</td>"
+                        . "<td id='password" . $cont . "'>" . $row->{'password'} . "</td>"
+                        . "<td id='cargo" . $cont . "'>" . $row->{'cargo'} . "</td>"
+                        . "<td id='nombre" . $cont . "'>" . $row->{'nombre'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE873;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>
