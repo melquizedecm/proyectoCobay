@@ -8,10 +8,14 @@
 include("../core/config.php");
 require_once '../lib/links.php';
 libnivel2();
-require_once '../lib/consultas.php';
+require_once '../lib/mensajes.php';
+require_once '../models/Calificaciones.php';
+
+
+
+
+$objCalificaciones = new Calificaciones();
 $link = conectar();
-
-
 if (substr($_FILES['excel']['name'], -3) == "csv") {
     $fecha = date("Y-m-d");
     $carpeta = "tmp_excel/";
@@ -24,24 +28,30 @@ if (substr($_FILES['excel']['name'], -3) == "csv") {
     $fp = fopen("$carpeta$excel", "r");
 
     //fgetcsv. obtiene los valores que estan en el csv y los extrae.
-    $id_plantel = "";
-    $id_periodo = "";
-    $id_plan = "";
-    $id_semestre = "";
-    $matricula_maestro = "";
-    $id_grupo = "";
-    $id_asignatura = "";
-    $asignatura = "";
-    $matricula = "";
-    $nombre = "";
-    $parcial_uno = "";
-    $parcial_dos = "";
-    $ordinario = "";
-    $data = fgetcsv($fp, 1000, ",");
-    
-    while ($data = fgetcsv($fp, 1000, ",")) {
-        //si la linea es igual a 1 no guardamos por que serian los titulos de la hoja del excel.
-        if ($row != 1) {
+    /* $id_plantel = "";
+      $id_periodo = "";
+      $id_plan = "";
+      $id_semestre = "";
+      $matricula_maestro = "";
+      $id_grupo = "";
+      $id_asignatura = "";
+      $asignatura = "";
+      $matricula = "";
+      $nombre = "";
+      $parcial_uno = "";
+      $parcial_dos = "";
+      $ordinario = ""; */
+}
+while ($data = fgetcsv($fp, 1000, ",")) {
+    //si la linea es igual a 1 no guardamos por que serian los titulos de la hoja del excel.
+    if ($row != 1) {
+        $valor = $objCalificaciones->excelValido($data);
+        if ($valor != "") {
+
+            $mensaje = "004";
+            imprimirMensaje($mensaje, $valor);
+        } else {
+
             $id_plantel = $data[0];
             $periodo = $data[1];
             $plan = $data[2];
@@ -55,38 +65,9 @@ if (substr($_FILES['excel']['name'], -3) == "csv") {
             $parcial_uno = $data[10];
             $parcial_dos = $data[11];
             $ordinario = $data[12];
-            $error=[];
-            //SECCION PARA CONFIGURAR DATOS
-            
-            $respuesta = getFilaSql("planteles", "id_plantel", $id_plantel);
-            ($respuesta==true)? '':array_push($error, "1"); 
-            $respuesta = getFilaSql("periodos", "periodo", $periodo);
-            ($respuesta==true)? '':array_push($error, "2"); 
-            $respuesta = getFilaSql("planes", "plan", $plan);
-            ($respuesta==true)? '':array_push($error, "3");
-            $respuesta = getFilaSql("semestres", "id_semestre", $id_semestre);
-            ($respuesta==true)? '':array_push($error, "4");
-            $respuesta = getFilaSql("maestros", "matricula_maestro", $matricula_maestro);
-            ($respuesta==true)? '':array_push($error, "5");
-            $respuesta = getFilaSql("planes", "plan", $plan);
-            ($respuesta==true)? '':array_push($error, "6");
-            $respuesta = getFilaSql("grupos", "grupo", $grupo);
-            ($respuesta==true)? '':array_push($error, "7");
-            $respuesta = getFilaSql("asignaturas", "id_asignatura", $id_asignatura);
-            ($respuesta==true)? '':array_push($error, "8");
-            $respuesta = getFilaSql("asignaturas", "asignatura", $asignatura);
-            ($respuesta==true)? '':array_push($error, "9");
-            $respuesta = getFilaSql("alumnos", "matricula", $matricula);
-            ($respuesta==true)? '':array_push($error, "10");
-            $respuesta = getFilaSql("alumnos", "nombre", $nombre);
-            ($respuesta==true)? '':array_push($error, "11");
-            
-           foreach( $error as $valor){
-               if($valor!=""){
-                   header("Location: ../views/calificaciones/index.php?error=".$valor);
-               } 
-            }
-            
+            $error = [];
+
+
 
             $insertar = "INSERT INTO calificaciones (id_calificaciones,parcial_uno,parcial_dos,ordinario) 
 						   VALUES ('','$parcial_uno','$parcial_dos','$ordinario')";
@@ -110,14 +91,17 @@ if (substr($_FILES['excel']['name'], -3) == "csv") {
                 echo 'error no se actualizo' . $link->error;
             }
         }
-
-        $row++;
     }
-
-    fclose($fp);
-
-    echo "<div>La importacion de archivo subio satisfactoriamente</div >";
-
-    exit;
+    $row++;
 }
+
+fclose($fp);
+
+echo "<div>La importacion de archivo subio satisfactoriamente</div >";
+
+exit;
 ?>
+
+
+
+

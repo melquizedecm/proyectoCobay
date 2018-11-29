@@ -52,10 +52,23 @@ description:
             $(document).on("click", ".add", function () {
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
+                
                 var id_grupo = document.getElementById("inputId_grupo").value; 
                 var status = document.getElementById("inputStatus").value; 
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
+                var tamaño=id_grupo.length;
+                if(tamaño>5){
+                    alert("Maximo 5 carácteres");
+                                location.reload(true);
+                }
+                else{
+                if(id_grupo===""){
+                      alert("No se aceptan campos vacios ");
+                                location.reload(true);
+                    }
+                    else{
+                       if(confirm("Esta por agregar el grupo "+id_grupo+"\n¿Los datos son correctos?")){
                 $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
@@ -77,6 +90,10 @@ description:
                                 location.reload(true);
                             }
                         });
+                    }
+
+                    }
+                }
             });
             //3. REFRESCAR LOS VALORES///
             var empty = false;
@@ -113,7 +130,13 @@ description:
             
             /*Actualizar*/
              $(document).on("click", ".update", function () {
-              var id_grupo=document.getElementById("temporal").value;
+            var id_grupo=document.getElementById("temporal").value;
+
+              if(id_grupo===""){
+                      alert("No se aceptan campos vacios ");
+                                location.reload(true);
+                    }
+                    else{
              if(confirm("Se cambiara el valor "+temp+" con el nuevo valor "+id_grupo+"."+"\n¿Esta seguro de realizar esta acción?")){
                 //apartir de aqui se ejecuta 2 veces el procesos, error en la linea 122
 
@@ -140,6 +163,8 @@ description:
                                  
                                  
                              });
+                         }
+                         
                          }
                      });
             
