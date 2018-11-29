@@ -10,7 +10,7 @@
  *  3.- Su calificacion respecto a la matera
  *  4.- Su semestre y grupo
  */
-//require_once '../lib/links.php';}
+//require_once '../lib/links.php';
 
 
 class consultarcalificacionController {
