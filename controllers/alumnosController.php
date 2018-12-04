@@ -37,7 +37,24 @@ elseif (isset($_POST['buttonDelete'])) {
     libnivel2();
     $alumnos = new alumnosController();
     $alumnos->delete();
-} else {
+}
+elseif (isset($_POST['buttonDesactivar'])) {
+    require_once '../lib/links.php';
+    libnivel2();
+    $Des=new alumnosController();
+    $Des->desactivar();
+    
+    
+}
+elseif (isset($_POST['buttonActivar'])) {
+    require_once '../lib/links.php';
+    libnivel2();
+    $ac=new alumnosController();
+    $ac->activar();
+    
+    
+}
+else {
     return False;
 }
 
@@ -82,7 +99,8 @@ class alumnosController {
         $response = $objetoAlumno->read();
         $result = array();
         if (!$response) {
-            $link->error;
+            //$link->error;
+            echo "a".$response;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
@@ -107,6 +125,36 @@ class alumnosController {
         } else {
             echo "-1";
         }
+    }
+    
+    function desactivar(){
+        $matricula = $_POST['input_matricula']; 
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Alumnos.php';
+        $objetoAviso = new Alumno();
+        $response = $objetoAviso->desactivar($matricula);
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        };
+    }
+    
+       function activar(){
+        $matricula = $_POST['input_matricula']; 
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Alumnos.php';
+        $objetoAviso = new Alumno();
+        $response = $objetoAviso->activar($matricula);
+        if ($response) {
+            $this->read();
+        } else {
+            echo "-1";
+        };
+        
+        
     }
 
 }
