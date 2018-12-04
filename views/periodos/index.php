@@ -25,11 +25,6 @@ require_once ('../../models/Periodos.php');
         ?>        
         <script type="text/javascript">
             
-
-      /*    function activarPeriodo(this) {
-                alert("periodo");
-            }*/
-
             ///////DATABLES ////////
             $(document).ready(function ()
             {
