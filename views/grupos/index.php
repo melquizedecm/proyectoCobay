@@ -22,6 +22,7 @@ description:
     
     <script type="text/javascript">
         var temp;
+
         $(document).ready(function () {
             
             ///////DATABLES ////////
@@ -38,46 +39,82 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputId_grupo" id="inputId_grupo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
+                        '<td><input type="text" class="form-control"  name="inputId_grupo" id="inputId_grupo" placeholder="Automatico" readonly></td>' +
+                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputGrupo" id="inputGrupo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
-                $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
-                $('[data-toggle="tooltip"]').tooltip();
-            });
                 
+                $("table").prepend(row);
+
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
+                
+                $('[data-toggle="tooltip"]').tooltip();
+                
+            });
             
+            function NumText(string){//solo letras y numeros
+    var out = '';
+    //Se añaden las letras validas
+    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+	
+    for (var i=0; i<string.length; i++){
+       if (filtro.indexOf(string.charAt(i)) != -1){
+	     out += string.charAt(i);
+         }
+         else{
+             out="alerta"
+             return out;
+        }
+     }
+    return out;
+}
+            
+
             // Add row on add button click (Agregar base de datos)
             $(document).on("click", ".add", function () {
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
-                
-                var id_grupo = document.getElementById("inputId_grupo").value; 
+
+                var id_grupo = document.getElementById("inputId_grupo").value;
+                var grupo = document.getElementById("inputGrupo").value; 
                 var status = document.getElementById("inputStatus").value; 
+                var comp=NumText(grupo);
+                if(comp==="alerta"){
+                    alert("Solo se aceptan letras y numeros");
+                                         $('td:nth-child(1)').toggle();
+
+                                location.reload(true);
+
+                }
+                else
+                {
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
-                var tamaño=id_grupo.length;
+                var tamaño=grupo.length;
                 if(tamaño>5){
                     alert("Maximo 5 carácteres");
-                                location.reload(true);
+                     $('td:nth-child(1)').toggle();
+                        location.reload(true);
                 }
                 else{
-                if(id_grupo===""){
+                if(grupo===""){
                       alert("No se aceptan campos vacios ");
+                                $('td:nth-child(1)').toggle();
                                 location.reload(true);
                     }
                     else{
-                       if(confirm("Esta por agregar el grupo "+id_grupo+"\n¿Los datos son correctos?")){
+                       if(confirm("Esta por agregar el grupo "+grupo+"\n¿Los datos son correctos?")){
                 $.post("../../controllers/gruposController.php",
                         {
                             inputId_grupo:id_grupo,
+                            inputGrupo:grupo,
                             inputStatus: status,
                             buttonCreate: true
                         },
                         function (data) {
                             if (data === "-1") {
-                                alert("Error al guardar los datos, revisar el Id");
+                                alert("Error al guardar los datos, revise su conexión de internet");
                             }
                               else if(data==="-2"){
                                  alert("Este semestre y grupo ya existe");
@@ -90,10 +127,15 @@ description:
                                 location.reload(true);
                             }
                         });
+                        
                     }
+               $('td:nth-child(1)').toggle();
 
                     }
-                }
+                }//if de comprovacion de extension 
+            }//if de validacion de caracteres especiales
+               $('td:nth-child(1)').toggle();
+
             });
             //3. REFRESCAR LOS VALORES///
             var empty = false;
@@ -112,13 +154,16 @@ description:
                     $(this).parent("td").html($(this).val());
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
+                $('td:nth-child(1)').toggle();//desaparece la vista de el primer valor, tambien se puede usar first-child pero 
+                //aqui solo muestra cual de todos quieres, este comienza desde 1
+
                 $(".add-new").removeAttr("disabled");
             }
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
                 
-                $(this).parents("tr").find("td:first-child").each(function () {
+                $(this).parents("tr").find("td:nth-child(2)").each(function () {
                     $(this).html('<input type="text" style="text-transform:uppercase" class="form-control" id="temporal" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" value="' + $(this).text() + '">');
                 });
                 temp=document.getElementById("temporal").value;
@@ -130,22 +175,31 @@ description:
             
             /*Actualizar*/
              $(document).on("click", ".update", function () {
-            var id_grupo=document.getElementById("temporal").value;
+            var grupo=document.getElementById("temporal").value;
+            var comp=NumText(grupo);
+                if(comp==="alerta"){
+                    alert("Solo se aceptan letras y numeros");
+                                location.reload(true);
 
-              if(id_grupo===""){
+                }
+            else if(grupo===temp){
+            location.reload(true);
+        }
+        else{
+              if(grupo===""){
                       alert("No se aceptan campos vacios ");
                                 location.reload(true);
                     }
                     else{
-             if(confirm("Se cambiara el valor "+temp+" con el nuevo valor "+id_grupo+"."+"\n¿Esta seguro de realizar esta acción?")){
+             if(confirm("Se cambiara el valor "+temp+" con el nuevo valor "+grupo+"."+"\n¿Esta seguro de realizar esta acción?")){
                 //apartir de aqui se ejecuta 2 veces el procesos, error en la linea 122
 
-            $(this).parents("tr").find("td:first-child").each(function ()  {
+            $(this).parents("tr").find("td:nth-child(2)").each(function ()  {
 
                                  $.post("../../controllers/gruposController.php",
                                          {
-                                             inputId_grupoactual: temp,
-                                             inputId_gruponuevo: id_grupo,
+                                             inputGrupoactual: temp,
+                                             inputGruponuevo: grupo,
                                              buttonUpdate: true
                                          },
                                  function (data) {
@@ -166,6 +220,8 @@ description:
                          }
                          
                          }
+                     }//PRIMERIF
+
                      });
             
             
@@ -272,7 +328,8 @@ description:
                     
 
                     foreach ($datosTabla as $row) {
-                        echo "<tr><td>" . $row->{'id_grupo'} . "</td>";
+                        echo "<tr><td>" . $row->{'id_grupo'} . "</td>"
+                        ."<td>" . $row->{'grupo'} . "</td>";
                         if ($row->{'status'} === "ACTIVADO") {
                                 echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
                             } else {
