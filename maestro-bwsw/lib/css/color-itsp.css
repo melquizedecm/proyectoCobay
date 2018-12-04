@@ -1,0 +1,28 @@
+.navbar-itsp a {
+  color: white;
+}
+
+.title a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.navbar-itsp a:hover {
+  color: white;
+}
+
+.navbar-itsp {
+  background-color: #4CAF50;
+}
+
+.navbar-itsp footer {
+  background-color: #4CAF50;
+}
+
+.navbar-itsp footer a {
+  background-color: #4CAF50;
+}
+
+.navbar-itsp footer a:hover {
+  background-color: #4CAF50;
+}

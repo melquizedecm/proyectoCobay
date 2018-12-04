@@ -19,7 +19,6 @@ description:
     getMeta("Alta de Alumnos");
     estilosPaginas();
     ?>
-
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -112,14 +111,57 @@ description:
                         },
                         function (data) {
                             if (data === "-1") {
-                                alert("Error al guardar los datos, revisar la matricula" + matricula);
+                                alert("Error al guardar los datos, revisar la matricula: " + matricula);
                             } else {
-                                alert("Cambio Realizado");
                                 location.reload(true);
                             }
                         });
             });
         });
+
+        //desactivar grupo 
+        $(document).on("click", ".btn-success", function () {
+            if (confirm("¿Esta seguro de la Acción?")) {
+                var matricula = ($(this).parents("tr").find("td:first-child").html());
+                $.post("../../controllers/alumnosController.php",
+                        {
+                            input_matricula: matricula,
+                            buttonDesactivar: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error de conexión.");
+                            } else {
+                                location.reload(true);
+                            }
+                        });
+            }
+        });
+        //fin cambiar estado grupo
+
+        //activar grupo 
+        $(document).on("click", ".btn-danger", function () {
+            /*alert($(this).parents("tr").html());*/
+            /*$(this).parents("tr").remove();*/
+            /*alert($(this).parents("tr").html());*/
+            if (confirm("¿Esta seguro de la Acción?")) {
+                var matricula = ($(this).parents("tr").find("td:first-child").html());
+
+                $.post("../../controllers/alumnosController.php",
+                        {
+                            input_matricula: matricula,
+                            buttonActivar: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error en la conexión.");
+                            } else {
+                                location.reload(true);
+                            }
+                        });
+            }
+        });
+        //fin cambiar estado grupo
     </script>
 </head>
 <body>
@@ -152,21 +194,20 @@ description:
                     $json = $Alumnos->read();
                     $datosTabla = json_decode($json);
 
-//print $obj->{'foo-bar'};
-
                     foreach ($datosTabla as $row) {
                         echo "<tr>"
                         . "<td>" . $row->{'matricula'} . "</td>"
                         . "<td>" . $row->{'nombre'} . "</td>"
                         . "<td>" . $row->{'status'} . "</td>";
-                             if ($row->{'aviso'} === "SIN PENDIENTES") {
-                                echo "<td><button class='btn-success'>" . $row->{'aviso'} . "</button></td>";
-                            } else {
-                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPeriodo(this);'>" . $row->{'status'} . "</button></td>";
-                            }
+                        if ($row->{'aviso'} === "SIN PENDIENTES") {
+                            echo "<td><button class='btn-success'>" . $row->{'aviso'} . "</button></td>";
+                        } else {
+                            echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPeriodo(this);'>" . $row->{'aviso'} . "</button></td>";
+                        }
                         echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td> </tr>";
                     }
                     ?>

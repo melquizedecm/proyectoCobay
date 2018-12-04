@@ -37,4 +37,14 @@ class Administrativo {
         }
     }
 
+ function delete($matricula, $password, $cargo, $nombre){
+        $sql = "DELETE FROM administrativos (matricula='" . $matricula . "',password='" . $password . "',cargo='" . $cargo . "',nombre='" . $nombre . "') WHERE matricula='".$matricula."'";
+        
+        $response = getResultSQL($sql);
+        if (!$response) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
