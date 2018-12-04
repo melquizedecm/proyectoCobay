@@ -34,24 +34,30 @@ description:
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
+            var c=0;
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control"  name="inputId_grupo" id="inputId_grupo" placeholder="Automatico" readonly></td>' +
+                        '<input type="hidden" name="inputId_grupo" id="inputId_grupo" placeholder="Automatico" readonly ">' +
                         '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputGrupo" id="inputGrupo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
-                
+               // if (c!=0){
                 $("table").prepend(row);
-
+                /*c=c+1;
+                }else{c++;}*/
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 
                 $('[data-toggle="tooltip"]').tooltip();
                 
             });
+            
+            
+            
+            
             
             function NumText(string){//solo letras y numeros
     var out = '';
@@ -311,6 +317,7 @@ description:
             <table class="table table-bordered" id="tableGrupo">
                 <thead>
                     <tr>
+                        <th style="display: none ">ID </th>
                         <th>Semestre y Grupo</th>
                         <th>Estatus</th>
                         <th>Herramientas</th>
