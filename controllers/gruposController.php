@@ -83,7 +83,7 @@ class GruposController {
 ///1. recibir datos
       
         $id_grupo = $_POST['inputId_grupo'];
-        $grupo = $_POST['inputGrupo'];
+        $grupo=$_POST['inputGrupo'];
         $status=$_POST['inputStatus'];
         
 //2. guardar datos en el modelo
