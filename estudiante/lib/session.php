@@ -7,7 +7,7 @@
  * 3. SI COINCIDEN ACCEDER, SINO MANDAR A INDEX
  */
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username2'])) {
     header("location: ../login/");
 }
 ?>
