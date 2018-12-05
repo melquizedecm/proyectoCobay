@@ -83,16 +83,17 @@ class GruposController {
 ///1. recibir datos
       
         $id_grupo = $_POST['inputId_grupo'];
+        $grupo=$_POST['inputGrupo'];
         $status=$_POST['inputStatus'];
         
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
-        $Res=$objetoGrupo->validarIdGrupo($id_grupo);
+        $Res=$objetoGrupo->validarIdGrupo($grupo);
         
-        if($Res!=$id_grupo && $Res!=" "){
-               $response = $objetoGrupo->create($id_grupo,$status);
+        if($Res!=$grupo && $Res!=" "){
+               $response = $objetoGrupo->create($id_grupo,$grupo,$status);
         if ($response) {
             $this->read();
         } else {
@@ -177,18 +178,18 @@ class GruposController {
      ///1. recibir datos
           
        
-        $temp = $_POST['inputId_grupoactual'];
-        $id_grupo = $_POST['inputId_gruponuevo'];
+        $temp = $_POST['inputGrupoactual'];
+        $grupo = $_POST['inputGruponuevo'];
        
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
 
-        $Res = $objetoGrupo->validarIdGrupo($id_grupo);
+        $Res = $objetoGrupo->validarIdGrupo($grupo);
 
-        if ($Res != $id_grupo && $Res != " ") {
-            $response = $objetoGrupo->update($temp, $id_grupo);
+        if ($Res != $grupo && $Res != " ") {
+            $response = $objetoGrupo->update($temp, $grupo);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
             if ($response) {

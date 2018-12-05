@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$matricula =  addslashes($_POST['inputMatricula']);
+$matricula = addslashes($_POST['inputMatricula']);
 $contraseña = addslashes($_POST['inputPassword']);
 
 $_SESSION['username'] = $matricula;
@@ -19,7 +19,8 @@ $filas = mysqli_num_rows($resultado);
 if ($filas > 0) {
     header("location:http://localhost/proyectoCobay/views/Menu/");
 } else {
-    echo"Error en la autentificación";
+    header("location:http://localhost/proyectoCobay/views/login/index.php?fallo=true");
+    exit();
 }
 mysqli_free_result($resultado);
 mysqli_close($conexion);

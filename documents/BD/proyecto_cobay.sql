@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2018 at 03:53 PM
+-- Generation Time: Dec 04, 2018 at 03:23 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.10
 
@@ -40,10 +40,11 @@ CREATE TABLE `administrativos` (
 --
 
 INSERT INTO `administrativos` (`matricula`, `password`, `cargo`, `nombre`) VALUES
-('0001', 'admin', 'jefe', 'aaron'),
-('2', 'admin', 'Administrador', 'Alberto'),
+('15B003000462', '1234', 'Who', 'Whos'),
+('324b21', 'clones', 'ciencia', 'cosima'),
 ('admin', 'admin', 'Administrador', 'Adan'),
-('admin2', 'admin2', 'Co-Administrador', 'Armando');
+('admin2', 'admin2', 'Co-Administrador', 'Armando'),
+('ejemplo', 'ejemplo', 'probando', 'x');
 
 -- --------------------------------------------------------
 
@@ -93,8 +94,7 @@ CREATE TABLE `alumno_status` (
 INSERT INTO `alumno_status` (`id_status`, `status`) VALUES
 (0, 'BAJA'),
 (1, 'REGULAR'),
-(2, 'IRREGULAR'),
-(3, 'PEDIENTE');
+(2, 'IRREGULAR');
 
 -- --------------------------------------------------------
 
@@ -113,7 +113,7 @@ CREATE TABLE `asignaturas` (
 --
 
 INSERT INTO `asignaturas` (`id_asignatura`, `asignatura`, `Id_status_asignatura`) VALUES
-('17-B211010721A', 'INFORMATICA I', 0),
+('17-B211010721A', 'INFORMATICA I', 1),
 ('17-B211010721B', 'QUIMICA', 0),
 ('17-B211010721C', 'CALCULO', 0),
 ('17-B211010721E', 'ETICA', 0),
@@ -147,33 +147,14 @@ INSERT INTO `avisos` (`id_avisos`, `aviso`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `calificaciones`
---
-
-CREATE TABLE `calificaciones` (
-  `id_calificaciones` int(25) NOT NULL,
-  `parcial_uno` int(3) NOT NULL,
-  `parcial_dos` int(3) NOT NULL,
-  `ordinario` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Dumping data for table `calificaciones`
---
-
-INSERT INTO `calificaciones` (`id_calificaciones`, `parcial_uno`, `parcial_dos`, `ordinario`) VALUES
-(0, 35, 35, 30);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `excel`
 --
 
 CREATE TABLE `excel` (
   `id_excel` int(11) NOT NULL,
   `id_plantel` int(11) NOT NULL,
-  `id_grupo` varchar(5) COLLATE utf8_spanish2_ci NOT NULL,
+  `id_periodo` int(11) NOT NULL,
+  `id_grupo` int(11) NOT NULL,
   `matricula` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -181,13 +162,13 @@ CREATE TABLE `excel` (
 -- Dumping data for table `excel`
 --
 
-INSERT INTO `excel` (`id_excel`, `id_plantel`, `id_grupo`, `matricula`) VALUES
-(1, 1, 'AV', '17B003000004'),
-(3, 1, 'AV', '15B003000462'),
-(4, 1, 'AV', '17B003000027'),
-(5, 8, 'AV', '17B003000061'),
-(6, 1, 'AV', '17B003000037'),
-(7, 2, 'AV', '17B003000056');
+INSERT INTO `excel` (`id_excel`, `id_plantel`, `id_periodo`, `id_grupo`, `matricula`) VALUES
+(1, 1, 1, 1, '17B003000004'),
+(3, 1, 2, 1, '15B003000462'),
+(4, 1, 3, 1, '17B003000027'),
+(5, 8, 1, 1, '17B003000061'),
+(6, 1, 4, 1, '17B003000037'),
+(7, 2, 5, 1, '17B003000056');
 
 -- --------------------------------------------------------
 
@@ -198,24 +179,25 @@ INSERT INTO `excel` (`id_excel`, `id_plantel`, `id_grupo`, `matricula`) VALUES
 CREATE TABLE `excel_asignatura` (
   `id_excel_asignatura` int(25) NOT NULL,
   `id_asignatura` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `id_calificaciones` int(25) NOT NULL,
   `matricula_maestro` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `id_excel` int(11) NOT NULL,
   `id_plan` int(11) NOT NULL,
-  `id_periodo` int(11) NOT NULL
+  `parcial_uno` int(3) NOT NULL,
+  `parcial_dos` int(3) NOT NULL,
+  `ordinario` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Dumping data for table `excel_asignatura`
 --
 
-INSERT INTO `excel_asignatura` (`id_excel_asignatura`, `id_asignatura`, `id_calificaciones`, `matricula_maestro`, `id_excel`, `id_plan`, `id_periodo`) VALUES
-(1, '17-B211010721U', 0, '11003000080', 1, 7, 6),
-(3, '17-B211010721C', 0, '11003000080', 3, 7, 6),
-(4, '17-B211010721E', 0, '11003000085', 4, 7, 6),
-(5, '17-B211010721A', 0, '11003000080', 5, 7, 6),
-(6, '17-B211010721H', 0, '11003000080', 6, 7, 6),
-(7, '17-B211010721I', 0, '11003000080', 7, 7, 6);
+INSERT INTO `excel_asignatura` (`id_excel_asignatura`, `id_asignatura`, `matricula_maestro`, `id_excel`, `id_plan`, `parcial_uno`, `parcial_dos`, `ordinario`) VALUES
+(1, '17-B211010721U', '11003000080', 1, 7, 0, 0, 0),
+(3, '17-B211010721C', '11003000080', 3, 7, 0, 0, 0),
+(4, '17-B211010721E', '11003000085', 4, 7, 0, 0, 0),
+(5, '17-B211010721A', '11003000080', 5, 7, 0, 0, 0),
+(6, '17-B211010721H', '11003000080', 6, 7, 0, 0, 0),
+(7, '17-B211010721I', '11003000080', 7, 7, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -224,7 +206,8 @@ INSERT INTO `excel_asignatura` (`id_excel_asignatura`, `id_asignatura`, `id_cali
 --
 
 CREATE TABLE `grupos` (
-  `id_grupo` varchar(5) COLLATE utf8_spanish2_ci NOT NULL,
+  `id_grupo` int(11) NOT NULL,
+  `grupo` varchar(5) COLLATE utf8_spanish2_ci NOT NULL,
   `id_status_grupo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -232,19 +215,9 @@ CREATE TABLE `grupos` (
 -- Dumping data for table `grupos`
 --
 
-INSERT INTO `grupos` (`id_grupo`, `id_status_grupo`) VALUES
-('AV', 0),
-('BM', 0),
-('BV', 0),
-('CM', 0),
-('CV', 0),
-('DM', 0),
-('DV', 0),
-('EM', 0),
-('EV', 0),
-('FM', 0),
-('FV', 0),
-('AM', 1);
+INSERT INTO `grupos` (`id_grupo`, `grupo`, `id_status_grupo`) VALUES
+(1, '1AM', 1),
+(2, '1BM', 1);
 
 -- --------------------------------------------------------
 
@@ -264,12 +237,15 @@ CREATE TABLE `maestros` (
 --
 
 INSERT INTO `maestros` (`matricula_maestro`, `password`, `nombre`, `id_status_maestro`) VALUES
-('11003000080', '', 'MONTERO CASTRO SAKURA ', 1),
+('11003000080', '', 'MONTERO SAKURA ', 1),
 ('11003000081', '', 'ALVAREZ MARLY', 1),
 ('11003000082', '', 'CANUL GEMMA', 1),
-('11003000083', '', 'GARCIA MAURA', 1),
-('11003000084', '', 'SOSA ALICIA', 0),
-('11003000085', '', 'BRAGA JOSE', 2);
+('11003000083', '', 'GARCIA LEZAMA MAURA', 1),
+('11003000084', '', 'SOSA ALICIA', 1),
+('11003000085', '', 'BRAGA JOSE', 2),
+('15B003000462', '', 'GLENDY CRUZ ', 0),
+('15B0030004623', '', 'Glendy Cruz Canul', 0),
+('admin', '', '123', 0);
 
 -- --------------------------------------------------------
 
@@ -484,19 +460,14 @@ ALTER TABLE `avisos`
   ADD PRIMARY KEY (`id_avisos`);
 
 --
--- Indexes for table `calificaciones`
---
-ALTER TABLE `calificaciones`
-  ADD PRIMARY KEY (`id_calificaciones`);
-
---
 -- Indexes for table `excel`
 --
 ALTER TABLE `excel`
   ADD PRIMARY KEY (`id_excel`),
   ADD KEY `id_plantel` (`id_plantel`,`matricula`),
   ADD KEY `matricula` (`matricula`),
-  ADD KEY `id_grupo` (`id_grupo`);
+  ADD KEY `id_grupo` (`id_grupo`),
+  ADD KEY `id_periodo` (`id_periodo`);
 
 --
 -- Indexes for table `excel_asignatura`
@@ -504,11 +475,9 @@ ALTER TABLE `excel`
 ALTER TABLE `excel_asignatura`
   ADD PRIMARY KEY (`id_excel_asignatura`),
   ADD KEY `id_asig` (`id_asignatura`,`id_excel`),
-  ADD KEY `id_calificaciones` (`id_calificaciones`),
   ADD KEY `id_excel` (`id_excel`),
   ADD KEY `matricula_d` (`matricula_maestro`),
-  ADD KEY `id_plan` (`id_plan`),
-  ADD KEY `id_periodo` (`id_periodo`);
+  ADD KEY `id_plan` (`id_plan`);
 
 --
 -- Indexes for table `grupos`
@@ -580,12 +549,6 @@ ALTER TABLE `status_grupo`
 --
 
 --
--- AUTO_INCREMENT for table `calificaciones`
---
-ALTER TABLE `calificaciones`
-  MODIFY `id_calificaciones` int(25) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `excel`
 --
 ALTER TABLE `excel`
@@ -596,6 +559,12 @@ ALTER TABLE `excel`
 --
 ALTER TABLE `excel_asignatura`
   MODIFY `id_excel_asignatura` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `grupos`
+--
+ALTER TABLE `grupos`
+  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `periodos`
@@ -637,6 +606,7 @@ ALTER TABLE `asignaturas`
 --
 ALTER TABLE `excel`
   ADD CONSTRAINT `excel_ibfk_10` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`),
+  ADD CONSTRAINT `excel_ibfk_11` FOREIGN KEY (`id_periodo`) REFERENCES `periodos` (`id_periodo`),
   ADD CONSTRAINT `excel_ibfk_4` FOREIGN KEY (`id_plantel`) REFERENCES `planteles` (`id_plantel`),
   ADD CONSTRAINT `excel_ibfk_9` FOREIGN KEY (`matricula`) REFERENCES `alumnos` (`matricula`);
 
@@ -645,9 +615,7 @@ ALTER TABLE `excel`
 --
 ALTER TABLE `excel_asignatura`
   ADD CONSTRAINT `excel_asignatura_ibfk_1` FOREIGN KEY (`id_asignatura`) REFERENCES `asignaturas` (`id_asignatura`),
-  ADD CONSTRAINT `excel_asignatura_ibfk_2` FOREIGN KEY (`id_calificaciones`) REFERENCES `calificaciones` (`id_calificaciones`),
   ADD CONSTRAINT `excel_asignatura_ibfk_3` FOREIGN KEY (`id_excel`) REFERENCES `excel` (`id_excel`),
-  ADD CONSTRAINT `excel_asignatura_ibfk_5` FOREIGN KEY (`id_periodo`) REFERENCES `periodos` (`id_periodo`),
   ADD CONSTRAINT `excel_asignatura_ibfk_6` FOREIGN KEY (`id_plan`) REFERENCES `planes` (`id_plan`),
   ADD CONSTRAINT `excel_asignatura_ibfk_7` FOREIGN KEY (`matricula_maestro`) REFERENCES `maestros` (`matricula_maestro`);
 
