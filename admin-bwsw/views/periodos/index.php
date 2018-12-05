@@ -36,6 +36,7 @@ require_once ('../../models/Periodos.php');
                 //GENERACION DEL CRUD EN LA TABLA
                 $('[data-toggle="tooltip"]').tooltip();
                 var actions = $("table td:last-child").html();
+               
 
                 //Append table with add row form on add new button click
                 $(".add-new").click(function ()
@@ -149,6 +150,7 @@ require_once ('../../models/Periodos.php');
                     });
                     $(this).parents("tr").find(".edit").toggle();
                     $(".add-new").attr("disabled", "disabled");
+                    $(".update").attr("style");
                 });
                 
                 //Actualizar datos de row en la base de datos
@@ -299,7 +301,7 @@ require_once ('../../models/Periodos.php');
 
                             echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                                . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                               . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
+                               . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip' style='display:None'><i class = 'material-icons'>&#xE863;</i></a>"
                                . "</td></tr>";
                         }
                         
