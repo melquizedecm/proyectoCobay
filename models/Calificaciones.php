@@ -30,7 +30,7 @@ class Calificaciones {
         $asignatura = $data[7];
         $matricula = $data[8];
         $nombre = $data[9];
-        echo $nombre;
+        //echo $nombre;
         $parcial_uno = $data[10];
         $parcial_dos = $data[11];
         $ordinario = $data[12];
@@ -47,8 +47,8 @@ class Calificaciones {
         $respuesta = getFilaSql("planes", "plan", $plan);
         ($respuesta == true) ? '' : array_push($error, "3");
         //semestre
-        $respuesta = getFilaSql("grupos", "id_grupo", $grupo);
-        ($respuesta == true) ? '' : array_push($error, "4");
+        //$respuesta = getFilaSql("grupos", "id_grupo", $grupo);
+        //($respuesta == true) ? '' : array_push($error, "4");
         //matricula de maestro
         $respuesta = getFilaSql("maestros", "matricula_maestro", $matricula_maestro);
         ($respuesta == true) ? '' : array_push($error, "5");
@@ -68,7 +68,7 @@ class Calificaciones {
         $respuesta = "SELECT * FROM alumnos WHERE nombre='".$nombre."'";
         $res1 = getFila($respuesta);
         
-        echo $res1['nombre'];
+        //echo $res1['nombre'];
         ($res1['nombre'] == $nombre) ? '' : array_push($error, "10");
         $banderaError = "";
         foreach ($error as $valor) {

@@ -23,7 +23,7 @@ function imprimirMensaje($message, $valor) {
         //plan
         ($valor == "3") ? $messageContent = "Error con el plan del excel" : '';
         //semestre
-        ($valor == "4") ? $messageContent = "Error con el grupo del excel" : '';
+        //($valor == "4") ? $messageContent = "Error con el grupo del excel" : '';
         //matricula profe
         ($valor == "5") ? $messageContent = "Error con la matricula maestro del excel" : '';
         //grupo
