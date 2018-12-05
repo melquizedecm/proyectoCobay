@@ -2,7 +2,7 @@
 require_once ('../../lib/links.php');
 libnivel3();
 require_once ('../../controllers/planesController.php');
-$planes = new PlanesController();
+$planes = new planesController();
 require_once ('../../models/Planes.php');
 ?>
 <!DOCTYPE html>
@@ -14,13 +14,14 @@ description:
 2. Lista de planes
 -->
 
-<head lang ="en">
+<head>
     <?php
     getMeta("Administración de Planes");
     estilosPaginas();
     ?>
 
     <script type="text/javascript">
+        var temp;
         $(document).ready(function () {
 
             ///////DATABLES ////////
@@ -38,13 +39,13 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputID_Plan" id="inputid_plan" placeholder="Automatico" readonly></td>' +
+                        '<td><input type="text" class="form-control" name="inputId_plan" id="inputid_plan" placeholder="Automatico" readonly></td>' +
                         '<td><input type="text" class="form-control" name="inputPlan" id="inputplan"></td>' +
-                        '<td><input type="text" class="form-control" name="inputEstatus" id="inputestatus"></td>' +
+                        '<td><input type="text" class="form-control" name="inputEstatus" id="inputestatus" placeholder="Automatico" readonly></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .edit, .active").toggle();
+                $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
 
@@ -54,19 +55,17 @@ description:
                 //1. OBTENER LOS VALORES//
                 var id_plan = document.getElementById("inputid_plan").value;
                 var plan = document.getElementById("inputplan").value; //(JALAR EL VALOR INGRESADO)
-                var estatus = document.getElementById("inputestatus").value;
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/planesController.php",
                         {
-                            inputID_Plan: id_plan,
+                            inputId_plan: id_plan,
                             inputPlan: plan,
-                            inputEstatus: estatus,
                             buttonCreate: true
                         },
                 function (data) {
                     if (data === "-1") {
-                        alert("Error al guardar los datos, revisar la matricula");
+                        alert("Error al guardar los datos");
                     } else {
                         alert("Registro Guardado con éxito");
                         location.reload(true);
@@ -95,22 +94,96 @@ description:
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+                $(this).parents("tr").find("td:nth-child(2)").each(function () {
+                    $(this).html('<input type="text" class="form-control" id="temporal" value="' + $(this).text() + '">');
                 });
-                $(this).parents("tr").find(".add, .edit").toggle();
+                temp = document.getElementById("temporal").value;
+                $(this).parents("tr").find(".edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
             });
-            // Delete row on delete button click
-            $(document).on("click", ".delete", function () {
-                $(this).parents("tr").remove();
-                $(".add-new").removeAttr("disabled");
+
+
+            /*Actualizar*/
+            $(document).on("click", ".update", function () {
+                var id_plan = document.getElementById("temporal").value;
+                if (confirm("Se cambiara el valor " + temp + " con el nuevo valor " + id_plan)) {
+                    $(this).parents("tr").find("td:first-child").each(function () {
+
+                        $.post("../../controllers/planesController.php",
+                                {
+                                    inputId_planactual: temp,
+                                    inputId_plannuevo: id_plan,
+                                    buttonUpdate: true
+                                },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos");
+                            } else if (data === "-2") {
+                                         alert("El plan ya EXiste");
+                                     }
+                            else {
+                                alert("Registro Guardado con éxito ");
+                                location.reload(true);
+                            }
+                        });
+                    });
+                }
             });
+            //desactivar  
+
+            $(document).on("click", ".btn-success", function () {
+                if (confirm("¿Seguro que desea DESACTIVAR el plan?")) {
+                    var id_plan = ($(this).parents("tr").find("td:first-child").html());
+
+                    $.post("../../controllers/planesController.php",
+                            {
+                                inputId_plan: id_plan,
+                                buttonDesactivar: true
+                            },
+                    function (data) {
+                        if (data === "-1") {
+                            alert("Error al DESACTIVAR el plan, revise su conexión de internet");
+                        } else {
+                            alert("plan DESACTIVADO con éxito");
+                            location.reload(true);
+                        }
+                    });
+                }
+            });
+            //fin cambiar estado 
+
+
+            //activar 
+
+
+            $(document).on("click", ".btn-danger", function () {
+                if (confirm("¿Seguro que desea ACTIVAR el plan?")) {
+                    var id_plan = ($(this).parents("tr").find("td:first-child").html());
+                    $.post("../../controllers/planesController.php",
+                            {
+                                inputId_plan: id_plan,
+                                buttonActivar: true
+                            },
+                    function (data) {
+                        if (data === "-1") {
+                            alert("Error al ACTIVAR el grupo, revise su conexión de internet");
+                        } else {
+                            alert("Plan ACTIVADO con éxito");
+                            location.reload(true);
+                        }
+                    });
+                }
+            });
+            //fin cambiar estado
+
+
+
+
         });
 
     </script>
 </head>
-<body>
+
     <?php
     getHeader();
     ?>
@@ -143,17 +216,17 @@ description:
 
                     foreach ($datosTabla as $row) {
                         echo "<tr>"
-                        ."<td>" . $row->{'id_plan'} . "</td>"
+                        . "<td>" . $row->{'id_plan'} . "</td>"
                         . "<td>" . $row->{'plan'} . "</td>";
-                        if ($row->{'status_plan'} === "ACTIVO")
-                        {
+
+                        if ($row->{'status_plan'} === "ACTIVADO") {
                             echo "<td><button class='btn-success'>" . $row->{'status_plan'} . "</button></td>";
                         } else {
                             echo "<td><button class='btn-danger' id='btn-activar' onclick='activarPlan(this);'>" . $row->{'status_plan'} . "</button></td>";
                         }
                         echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                        . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+                        /*. "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"*/
                         . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                         . "</td></tr>";
                     }
@@ -161,9 +234,9 @@ description:
                 </tbody>
             </table>
         </div>
-    </div>    
+    </div> 
     <?php
     getFooter();
     ?>
-</body>
+
 </html>  
