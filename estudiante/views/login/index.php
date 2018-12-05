@@ -129,7 +129,9 @@ Description:
     <div class="login-box">
         <img src="img/logo.png" class="avatar" alt="Avatar Image">
         <h1>Alumno</h1>
+        <form action="../calificaciones/index.php" method="post">
         <form action="../../controllers/loginController.php" method="post">
+            
             <!-- USERNAME INPUT -->
             <label for="username" >Matrícula</label>
             <input type="text" id="inputMatricula" placeholder="Ingrese Matrícula" name="inputMatricula">
@@ -143,6 +145,7 @@ Description:
             }
             ?>
 
+        </form>
         </form>
     </div>
 
