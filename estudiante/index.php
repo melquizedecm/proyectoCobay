@@ -1,2 +1,2 @@
 <?php
-header("Location: views/Menu/");
+header("Location: views/login/");
