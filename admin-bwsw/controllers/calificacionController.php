@@ -33,20 +33,7 @@ if (substr($_FILES['excel']['name'], -3) == "csv") {
 
     $fp = fopen("$carpeta$excel", "r");
 
-    //fgetcsv. obtiene los valores que estan en el csv y los extrae.
-    /* $id_plantel = "";
-      $id_periodo = "";
-      $id_plan = "";
-      $id_semestre = "";
-      $matricula_maestro = "";
-      $id_grupo = "";
-      $id_asignatura = "";
-      $asignatura = "";
-      $matricula = "";
-      $nombre = "";
-      $parcial_uno = "";
-      $parcial_dos = "";
-      $ordinario = ""; */
+    
 }
 
 ///////2 Y 3. OBTENER LOS DATOS Y VALIDARLOS///////
@@ -94,7 +81,7 @@ while ($data = fgetcsv($fp, 1000, ",")) {
                 $res2 = $link->query($sql2);
                 if ($res2->num_rows > 0) {
                     $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
-                    $id_excel_asignatura = $filaExcel['id_excel_asignatura'];
+                    $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
                     ////////actualizar///////
                     
                     
@@ -105,7 +92,7 @@ while ($data = fgetcsv($fp, 1000, ",")) {
                     $insertarExcel = mysqli_query($link, $insertarsq2);
                     $res2 = $link->query($sql2);
                     $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
-                    $id_excel_asignatura = $filaExcel['id_excel_asignatura'];
+                    $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
                     ////////actualizar///////
                     
                 }
@@ -114,7 +101,27 @@ while ($data = fgetcsv($fp, 1000, ",")) {
 						   VALUES ('" . $id_plantel . "','" . $id_periodo . "','" . $id_grupo . "','" . $matricula . "')";
                 $insertarExcel = mysqli_query($link, $insertarsql);
                 $res1 = $link->query($sql1);
-                
+                $filaExcel = $res1->fetch_array(MYSQLI_BOTH);
+                $id_excel = $filaExcel['id_excel'];
+                $sql2 = "SELECT excel_asignatura.id_asignatura, excel_asignatura.matricula_maestro, excel_asignatura.id_plan FROM excel_asignatura WHERE excel_asignatura.id_excel='" . $id_excel . "'";
+                $res2 = $link->query($sql2);
+                if ($res2->num_rows > 0) {
+                    $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
+                    $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
+                    ////////actualizar///////
+                    
+                    
+                } else {
+                                        
+                    $insertarsq2 = "INSERT INTO excel_asignatura (id_asignatura,matricula_maestro,id_excel,id_plan,parcial_uno,parcial_dos,ordinario) 
+                    VALUES ('" . $id_asignatura . "','" . $matricula_maestro . "','" . $id_excel . "','" . $id_plan . "','" . $parcial_uno . "','" . $parcial_dos. "','" . $ordinario . "')";
+                    $insertarExcel = mysqli_query($link, $insertarsq2);
+                    $res2 = $link->query($sql2);
+                    $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
+                    $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
+                    ////////actualizar///////
+                    
+                }
             }
         }
     }
