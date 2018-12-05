@@ -128,7 +128,7 @@ Description:
 
     <div class="login-box">
         <img src="img/logo.png" class="avatar" alt="Avatar Image">
-        <h1>Administrador</h1>
+        <h1>Docente</h1>
         <form action="../../controllers/loginController.php" method="post">
             <!-- USERNAME INPUT -->
             <label for="username" >Matrícula</label>
@@ -137,7 +137,11 @@ Description:
             <label for="password">Contraseña</label>
             <input type="password"id="inputPassword" placeholder="Ingrese contraseña" name="inputPassword">
             <input type="submit" value="Iniciar Sesión" id="buttonLogin">
-
+            <?php
+            if (isset($_GET["fallo"]) && $_GET["fallo"] == 'true') {
+                echo "<div style='color:red'> Matrícula o Contraseña incorrecta </div>";
+            }
+            ?>
 
         </form>
     </div>

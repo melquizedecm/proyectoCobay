@@ -17,9 +17,9 @@ $resultado = mysqli_query($conexion, $consulta);
 $filas = mysqli_num_rows($resultado);
 
 if ($filas > 0) {
-    header("location:http://localhost/proyectoCobay/views/Menu/");
+    header("location:http://localhost/proyectoCobay/admin-bwsw/views/Menu/");
 } else {
-    header("location:http://localhost/proyectoCobay/views/login/index.php?fallo=true");
+    header("location:http://localhost/proyectoCobay/admin-bwsw/views/login/index.php?fallo=true");
     exit();
 }
 mysqli_free_result($resultado);
