@@ -1,2 +1,2 @@
 <?php
-header("Location: estudiante/views/Menu/");
+header("Location: estudiante/views/login/");
