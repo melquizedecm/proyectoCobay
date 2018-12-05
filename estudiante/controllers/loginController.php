@@ -20,7 +20,7 @@ if ($filas > 0) {
     $_SESSION['username2'] = $matricula;
     header("location:http://localhost/proyectoCobay/estudiante/views/calificaciones/");
 } else {
-    echo header("location:http://localhost/proyectoCobay/estudiante/views/login/index.php?fallo=true");
+     header("location:http://localhost/proyectoCobay/estudiante/views/login/index.php?fallo=true");
     exit();
 }
 mysqli_free_result($resultado);
