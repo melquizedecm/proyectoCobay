@@ -16,7 +16,7 @@ require_once ('../../models/Consulta.php');
 
 //---------------------------- Variable con la cual se obtendrá la matricula -------------------------------------------------------
 
-$usuario =$_POST['inputMatricula']; 
+$usuario = $_POST['inputMatricula']; 
 
 ?>
 <!DOCTYPE html>
@@ -224,7 +224,7 @@ $(document).ready(function(){
 </head>
 <body>
     <?php
-   getHeader();
+   getHeaderAlumno();
     ?>
     <div class="container">
       <div class="table-wrapper"> 
@@ -309,8 +309,6 @@ $(document).ready(function(){
                         }
                     }
                     ?>
-
-                    
                 </tbody>
 					
             </table>
