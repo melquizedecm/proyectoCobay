@@ -89,4 +89,15 @@ class Periodos {
             return true;
         } 
     }
+    
+    function esActivo($periodo){
+        $sql="SELECT periodos.periodo FROM periodos WHERE periodos.periodo='".$periodo."' AND periodos.id_status_periodo='1'";
+        $response=  getResultSQL($sql);
+        if(!$response){
+            return FALSE;
+        }
+        else
+            return TRUE;
+    }
+    
 }
