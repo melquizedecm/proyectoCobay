@@ -30,7 +30,6 @@ class Calificaciones {
         $asignatura = $data[7];
         $matricula = $data[8];
         $nombre = $data[9];
-        echo $nombre;
         $parcial_uno = $data[10];
         $parcial_dos = $data[11];
         $ordinario = $data[12];
@@ -68,8 +67,10 @@ class Calificaciones {
         $respuesta = "SELECT * FROM alumnos WHERE nombre='".$nombre."'";
         $res1 = getFila($respuesta);
         
-        echo $res1['nombre'];
+        
         ($res1['nombre'] == $nombre) ? '' : array_push($error, "10");
+        
+       
         $banderaError = "";
         foreach ($error as $valor) {
             if ($valor != "") {
