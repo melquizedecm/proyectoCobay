@@ -79,4 +79,20 @@ class consultarcalificacionController {
             return json_encode($result);
         }
     }
+    function obtenerEstatus($matricula){
+        $objeto = new Consulta();
+        $response = $objeto->obtenerEstatus($matricula);
+        $result = array();
+        if (!$response) {
+            echo $response->error;
+        } else {
+            $i = 0;
+            while ($row = $response->fetch_assoc()) {
+                $result[$i] = $row;
+                $i++;
+            }
+            return json_encode($result);
+        }
+    }
+    
 }
