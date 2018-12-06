@@ -13,7 +13,7 @@ libnivel3();
 require_once ('../../controllers/consultarcalificacionController.php');
 $alumno = new consultarcalificacionController();
 require_once ('../../models/Consulta.php');
-
+$EsRegular;
 //---------------------------- Variable con la cual se obtendrá la matricula -------------------------------------------------------
 
 //$usuario = $_POST['inputMatricula'];
@@ -157,22 +157,18 @@ require_once ('../../models/Consulta.php');
         ?>
         <div class="container">
            
-            
             <div class="table-wrapper"> 
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-9"><h2> <b>TABLA DE CALIFICACIONES</b></h2></div>
+
                         <div class="col-sm-3">
                 <!--     <button type="button" class="btn btn-danger"> <i class="fa fa-power-off"></i> Cerrar sesión</button> -->
                         </div>
                     </div>
                     <h4>ALUMNO: 
                         <?php
-                       //          $json = $alumno->obtenerEstatus("17B003000061");
-            
-
-                        
-                        
+                        //          $json = $alumno->obtenerEstatus("17B003000061");
                         //mostramos el nombre del alumno
                         $json = $alumno->ObtenerNombre("17B003000061"); //$usuario que es la variable extraida del login
                         $datosTabla = json_decode($json);
@@ -182,17 +178,6 @@ require_once ('../../models/Consulta.php');
                         }
                         ?>
                     </h4>
-                    <!--  <h4>SEMESTRE: 
-                    //abrir php
-                         
-                         /* $json = $alumno->ObtenerSemestre("17B003000037");
-                          $datosTabla = json_decode($json);
-      
-                          foreach ($datosTabla as $row) {
-                              echo $row->{'id_semestre'};
-                          }*/
-                         //cerrar php
-                      </h4>-->
                     <h4>GRUPO: 
                         <?php
                         $json = $alumno->obtenerGrupo("17B003000061");
@@ -200,6 +185,21 @@ require_once ('../../models/Consulta.php');
 
                         foreach ($datosTabla as $row) {
                             echo $row->{'id_grupo'};
+                        }
+                        //Validamos que el alumno sea regular
+                        $json = $alumno->obtenerEstatus("17B003000061");
+                        if ($json) {
+                            $datosTabla = json_decode($json);
+                            foreach ($datosTabla as $row) {
+                                if ($row->{'id_status'} != 1) { //Si el alumno es irregular
+                                echo '<br><h3><b> ¡Reprobaste! Por lo tanto tus calificaciones no seran mostradas en la tabla</b></h3></br>';
+                                    $EsRegular = false;
+                                } else {
+                                    $EsRegular=true;
+                                }
+                            }
+                        } else {
+                            echo 'Ha ocurrido un error';
                         }
                         ?>
                     </h4>
@@ -217,50 +217,59 @@ require_once ('../../models/Consulta.php');
                     </thead>
                     <tbody>
                         <?php
-                        $json = $alumno->llenarTabla("17B003000061");
-                        $datosTabla = json_decode($json);
-                        $numeric = 0;
-                        foreach ($datosTabla as $row) {
+                        if ($EsRegular) {
 
-                            echo "<tr><td>" . $row->{'asignatura'} . "</td>";
-                            if ($row->{'parcial_uno'} == 35 && $row->{'parcial_dos'} == 35) { //si en los 2 parciales obtuvo 35 se agregará automaticamente el resto para sumar 100
-                                $numeric = (int) $row->{'ordinario'} + (int) $row->{'parcial_uno'} + (int) $row->{'parcial_dos'};
-                                echo "<td>" . $row->{'parcial_uno'} . " </td>"
-                                . "<td>" . $row->{'parcial_dos'} . " </td>"
-                                . "<td>" . $row->{'ordinario'} . " </td>"
-                                . "<td>" . $numeric . " </td>"
-                                . "</tr>";
-                            } else {
-                                if ($row->{'parcial_uno'} != null && $row->{'parcial_dos'} != null && $row->{'ordinario'} != null) { //Si los campos estan llenos
+
+                            $json = $alumno->llenarTabla("17B003000061");
+                            $datosTabla = json_decode($json);
+                            $numeric = 0;
+                            foreach ($datosTabla as $row) {
+
+                                echo "<tr><td>" . $row->{'asignatura'} . "</td>";
+                                if ($row->{'parcial_uno'} == 35 && $row->{'parcial_dos'} == 35) { //si en los 2 parciales obtuvo 35 se agregará automaticamente el resto para sumar 100
                                     $numeric = (int) $row->{'ordinario'} + (int) $row->{'parcial_uno'} + (int) $row->{'parcial_dos'};
                                     echo "<td>" . $row->{'parcial_uno'} . " </td>"
                                     . "<td>" . $row->{'parcial_dos'} . " </td>"
                                     . "<td>" . $row->{'ordinario'} . " </td>"
                                     . "<td>" . $numeric . " </td>"
                                     . "</tr>";
-                                    if ($numeric < 70) {
-                                        //no mostrara nada
+                                } else {
+                                    if ($row->{'parcial_uno'} != null && $row->{'parcial_dos'} != null && $row->{'ordinario'} != null) { //Si los campos estan llenos
+                                        $numeric = (int) $row->{'ordinario'} + (int) $row->{'parcial_uno'} + (int) $row->{'parcial_dos'};
+                                        echo "<td>" . $row->{'parcial_uno'} . " </td>"
+                                        . "<td>" . $row->{'parcial_dos'} . " </td>"
+                                        . "<td>" . $row->{'ordinario'} . " </td>"
+                                        . "<td>" . $numeric . " </td>"
+                                        . "</tr>";
+                                        if ($numeric < 70) {
+                                            //no mostrara nada
+                                        }
                                     }
                                 }
                             }
+                        } else {
+                            
                         }
                         ?>
                     </tbody>
 
                 </table>
                 <?php
-             
-                $json = $alumno->obtenerEstatus("17B003000061");
-                $datosTabla = json_decode($json);
-                foreach ($datosTabla as $row) {
-                    if ($row->{'id_status'} == 2) { //Si el alumno es irregular
-                        echo 'No se pueden ver las calificaciones';
-                    } else {
-                        if ($row->{'id_status'} == 1) {
-                            echo 'Mostramos calificaciones';
+               /* $json = $alumno->obtenerEstatus("17B003000114");
+                if ($json) {
+                    $datosTabla = json_decode($json);
+                    foreach ($datosTabla as $row) {
+                        if ($row->{'id_status'} == 2) { //Si el alumno es irregular
+                            echo 'No se pueden ver las calificaciones';
+                        } else {
+                            if ($row->{'id_status'} == 1) {
+                                echo 'Mostramos calificaciones';
+                            }
                         }
                     }
-                }
+                } else {
+                    echo 'Ha ocurrido un error';
+                }*/
                 ?>
             </div> 
         </div>  

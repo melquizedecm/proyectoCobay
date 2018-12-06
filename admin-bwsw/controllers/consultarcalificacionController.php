@@ -80,20 +80,20 @@ class consultarcalificacionController {
         }
     }
     
-    function obtenerEstatus($matricula){
+   function obtenerEstatus($matricula) {
         $objeto = new Consulta();
         $response = $objeto->obtenerEstatus($matricula);
         $result = array();
-        if (!$response) {
-            $response->error;
-        } else {
+        if ($response->num_rows > 0) {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
                 $result[$i] = $row;
                 $i++;
             }
             return json_encode($result);
+        } else {
+            return FALSE;
         }
     }
-    
+
 }
