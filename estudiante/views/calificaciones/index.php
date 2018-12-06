@@ -137,7 +137,7 @@ require_once ('../../models/Consulta.php');
     <body>
         <?php
         getHeaderAlumno();
-        //Algunas matriculas: 17B003000061 estatus 2, 15B003000462 estatus:0, 17B003000114 estatus 1. donde 0=BAJA, 1=REGULAR,2=REGULAR,3=PENDIENTE.
+        //Algunas matriculas: 17B003000061 estatus 2, 15B003000462 estatus:0, 17B003000114 estatus 1. donde 0=BAJA, 1=REGULAR,2=iREGULAR,3=PENDIENTE.
         //validamos que el alumno sea regular.
      //    $json = $alumno->obtenerEstatus("17B003000061");
             

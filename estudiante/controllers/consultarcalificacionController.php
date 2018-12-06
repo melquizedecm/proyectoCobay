@@ -84,7 +84,7 @@ class consultarcalificacionController {
         $response = $objeto->obtenerEstatus($matricula);
         $result = array();
         if (!$response) {
-            $response->error;
+            echo $response->error;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
