@@ -248,22 +248,19 @@ require_once ('../../models/Consulta.php');
                     </tbody>
 
                 </table>
-                <?php 
-                         $json = $alumno->obtenerEstatus("17B003000061");
-            
-//            $json = $alumno->obtenerEstatus("17B003000061");
-//            $datosTabla = json_decode($json);
-//
-//            foreach ($datosTabla as $row) {
-//
-//                if ($row->{'id_status'} == 2) { //Si el alumno es irregular
-//                    echo 'No';
-//                } else {
-//                    if ($row->{'id_status'} == 1){
-//                    echo 'Mostramos calificaciones';
-//                    }
-//                }
-//            }
+                <?php
+             
+                $json = $alumno->obtenerEstatus("17B003000061");
+                $datosTabla = json_decode($json);
+                foreach ($datosTabla as $row) {
+                    if ($row->{'id_status'} == 2) { //Si el alumno es irregular
+                        echo 'No se pueden ver las calificaciones';
+                    } else {
+                        if ($row->{'id_status'} == 1) {
+                            echo 'Mostramos calificaciones';
+                        }
+                    }
+                }
                 ?>
             </div> 
         </div>  
