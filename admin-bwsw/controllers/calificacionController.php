@@ -77,12 +77,17 @@ while ($data = fgetcsv($fp, 1000, ",")) {
 
                 $filaExcel = $res1->fetch_array(MYSQLI_BOTH);
                 $id_excel = $filaExcel['id_excel'];
-                $sql2 = "SELECT excel_asignatura.id_asignatura, excel_asignatura.matricula_maestro, excel_asignatura.id_plan FROM excel_asignatura WHERE excel_asignatura.id_excel='" . $id_excel . "'";
+                $sql2 = "SELECT excel_asignatura.id_excel_asignatura, excel_asignatura.id_asignatura, excel_asignatura.matricula_maestro, excel_asignatura.id_plan FROM excel_asignatura WHERE excel_asignatura.id_excel='" . $id_excel . "' AND excel_asignatura.id_asignatura='".$id_asignatura."' AND excel_asignatura.matricula_maestro='".$matricula_maestro."' AND excel_asignatura.id_plan='".$id_plan."'";
                 $res2 = $link->query($sql2);
                 if ($res2->num_rows > 0) {
                     $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
                     $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
                     ////////actualizar///////
+                    $sqlUpdate="UPDATE excel_asignatura SET parcial_uno='100',parcial_dos='100', ordinario='100' WHERE id_excel_asignatura='".$id_excel_asignatura."'";
+                    $res3= getResultSQL($sqlUpdate);
+                    if ($res3){
+                        echo "guardado...";
+                    }
                     
                     
                 } else {
@@ -90,10 +95,7 @@ while ($data = fgetcsv($fp, 1000, ",")) {
                     $insertarsq2 = "INSERT INTO excel_asignatura (id_asignatura,matricula_maestro,id_excel,id_plan,parcial_uno,parcial_dos,ordinario) 
                     VALUES ('" . $id_asignatura . "','" . $matricula_maestro . "','" . $id_excel . "','" . $id_plan . "','" . $parcial_uno . "','" . $parcial_dos. "','" . $ordinario . "')";
                     $insertarExcel = mysqli_query($link, $insertarsq2);
-                    $res2 = $link->query($sql2);
-                    $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
-                    $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
-                    ////////actualizar///////
+                    
                     
                 }
             } else {
@@ -108,18 +110,18 @@ while ($data = fgetcsv($fp, 1000, ",")) {
                 if ($res2->num_rows > 0) {
                     $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
                     $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
-                    ////////actualizar///////
-                    
+                     $sqlUpdate="UPDATE excel_asignatura SET parcial_uno='100',parcial_dos='100', ordinario='100' WHERE id_excel_asignatura='".$id_excel_asignatura."'";
+                    $res3= getResultSQL($sqlUpdate);
+                    if ($res3){
+                        echo "guardado...";
+                    }
                     
                 } else {
                                         
                     $insertarsq2 = "INSERT INTO excel_asignatura (id_asignatura,matricula_maestro,id_excel,id_plan,parcial_uno,parcial_dos,ordinario) 
                     VALUES ('" . $id_asignatura . "','" . $matricula_maestro . "','" . $id_excel . "','" . $id_plan . "','" . $parcial_uno . "','" . $parcial_dos. "','" . $ordinario . "')";
                     $insertarExcel = mysqli_query($link, $insertarsq2);
-                    $res2 = $link->query($sql2);
-                    $filaExcel2 = $res2->fetch_array(MYSQLI_BOTH);
-                    $id_excel_asignatura = $filaExcel2['id_excel_asignatura'];
-                    ////////actualizar///////
+                    
                     
                 }
             }
