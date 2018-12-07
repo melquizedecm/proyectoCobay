@@ -1,288 +1,285 @@
 <?php
-require_once '../../lib/links.php';
-libnivel3();
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- * author: Jacob Luna
- * Program: Subir Calificaciones
+ * Author: José Luis Rivera
+ * Program: Consultar Calificaciones
  * Description:
- * 1. Formulario para subir excel
- * 2. Lista de alumnos con su calificación
+ * 1. Formulario para que el alumno vea sus calificaciones del semestre actual
  * 
  */
+
+//importamos los archivos del modelo y del controlador
+
+require_once ('../../lib/links.php');
+libnivel3();
+require_once ('../../controllers/consultarcalificacionController.php');
+$alumno = new consultarcalificacionController();
+require_once ('../../models/Consulta.php');
+$EsRegular;
+//---------------------------- Variable con la cual se obtendrá la matricula -------------------------------------------------------
+
+//$usuario = $_POST['inputMatricula'];
 ?>
 <!DOCTYPE html>
-<head>
-  
-<?php
-getMeta("Asignar calificaciones");
-estilosPaginas();
-?>
-<script type="text/javascript">
+<html>
+    <head>
+        <?php
+        getMeta("Tabla de calificaciones");
+        estilosPaginas();
+        ?>
+        <style type="text/css">
 
-    function cargarHojaExcel()
-    {
-        if (document.frmcargararchivo.excel.value == "")
-        {
-            alert("Seleccione un archivo");
-            document.frmcargararchivo.excel.focus();
-            return false;
-        }
-
-        document.frmcargararchivo.action = "../../controllers/calificacionController.php";
-        document.frmcargararchivo.submit();
-    }
-
-    $(document).ready(function () {
-        //GENERACION DE LA TABLA
-        $('[data-toggle="tooltip"]').tooltip();
-        var actions = $("table td:last-child").html();
-        // Append table with add row form on add new button click
-        $(".add-new").click(function () {
-            $(this).attr("disabled", "disabled");
-            var index = $("table tbody tr:last-child").index();
-            var row = '<tr>' +
-                    '<td></td>' +
-                    '<td><input type="text" class="form-control" name="inputname" id="inputname"></td>' +
-                    '<td><input type="text" class="form-control" name="inputmatricula" id="inputmatricula"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial_1" id="inputparcial_1"></td>' +
-                    '<td><input type="text" class="form-control" name="inputparcial_2" id="inputparcial_2"></td>' +
-                    '<td><input type="text" class="form-control" name="inputordinario" id="inputordinario"></td>' +
-                    '<td><input type="text" class="form-control" name="inputpromedio" id="inputpromedio"></td>' +
-                    '</tr>';
-            $("table").append(row);
-            $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        
-        
-        
-        // Add row on add button click
-        $(document).on("click", ".add", function () {
-             /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
-                var nombre = document.getElementById("inputname").value; //(JALAR EL VALOR INGRESADO)
-                var matricula = document.getElementById("inputmatricula").value;
-                var parcial1 = document.getElementById("inputparcial_1").value;
-                var parcial2 = document.getElementById("inputparcial_2").value;
-                var promedio = document.getElementById("inputpromedio").value;
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-                $.post("../../controllers/calificacionController.php",
-                        {
-                            inputname: nombre,
-                            inputmatricula: matricula,
-                            inputparcial_1: parcial1,
-                            inputparcial_2: parcial2,
-                            inputpromedio: promedio,
-                            buttonCreate: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar la matricula");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
-        });
-        
-         //3. REFRESCAR LOS VALORES///
-            var empty = false;
-            var input = $(this).parents("tr").find('input[type="text"]');
-            input.each(function () {
-                if (!$(this).val()) {
-                    $(this).addClass("error");
-                    empty = true;
-                } else {
-                    $(this).removeClass("error");
-                }
-            });
-            $(this).parents("tr").find(".error").first().focus();
-            if (!empty) {
-                input.each(function () {
-                    $(this).parent("td").html($(this).val());
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").removeAttr("disabled");
+            body {
+                color: #404E67;
+                background: #66CDAA; 
+                font-family: 'Open Sans', sans-serif;
             }
-// Edit row on edit button click
-        $(document).on("click", ".edit", function () {
-            $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-            });
-            $(this).parents("tr").find(".add, .edit").toggle();
-            $(".add-new").attr("disabled", "disabled");
-        });
-// Delete row on delete button click
-        $(document).on("click", ".delete", function () {
-            $(this).parents("tr").remove();
-            $(".add-new").removeAttr("disabled");
-        });
-    });
-</script>
-</head>
-    <?php
-    getHeader();
-    ?>
-    <div class="container">
-            <?php
-            if(isset($_GET['error'])){
-                echo "Hubo un error ".$_GET['error'];
+            .table-wrapper {
+                width: 700px;
+                margin: 30px auto;
+                background: #fff;
+                padding: 20px;	
+                box-shadow: 0 1px 1px rgba(0,0,0,.05);
             }
-            ?>
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
+            .table-title {
+                padding-bottom: 10px;
+                margin: 0 0 10px;
+            }
+            .table-title h2 {
+                margin: 6px 0 0;
+                font-size: 22px;
+            }
+            .table-title .add-new {
+                float: right;
+                height: 30px;
+                font-weight: bold;
+                font-size: 12px;
+                text-shadow: none;
+                min-width: 100px;
+                border-radius: 50px;
+                line-height: 13px;
+            }
+            .table-title .add-new i {
+                margin-right: 4px;
+            }
+            table.table {
+                table-layout: fixed;
+            }
+            table.table tr th, table.table tr td {
+                border-color: #e9e9e9;
+            }
+            table.table th i {
+                font-size: 13px;
+                margin: 0 5px;
+                cursor: pointer;
+            }
+            table.thead{
 
-                    <div class="col-sm-8"><center><h2>Calificaciones de alumnos <b></b></h2></center></div>
+                background: #57C472;
+            }
+            table.table th:last-child {
+                width: 100px;
+            }
+            table.table td a {
+                cursor: pointer;
+                display: inline-block;
+                margin: 0 5px;
+                min-width: 24px;
+            }    
+            table.table td a.add {
+                color: #27C46B;
+            }
+            table.table td a.edit {
+                color: #FFC107;
+            }
+            table.table td a.delete {
+                color: #E34724;
+            }
+            table.table td i {
+                font-size: 19px;
+            }
+            table.table td a.add i {
+                font-size: 24px;
+                margin-right: -1px;
+                position: relative;
+                top: 3px;
+            }    
+            table.table .form-control {
+                height: 32px;
+                line-height: 32px;
+                box-shadow: none;
+                border-radius: 2px;
+            }
+            table.table .form-control.error {
+                border-color: #f50000;
+            }
+            table.table td .add {
+                display: none;
+            }
 
-                </div>
-                <div class="row">
-                    <div class="col-sm-6" >
-                        <form name="frmcargararchivo" method="post" enctype="multipart/form-data" class="md-form">
-                            <div class="file-field">
+            thead{
+                background-color: #01A75D;
+                color: white;
+            }
 
-                                <div class="btn btn-primary btn-sm float-left">
-                                    <span>Elije tu archivo</span>
-                                    <input type="file" name="excel">
-                                </div>
+            tr:nth-child(ever){
+                background-color: #ddd;	
+            }
+            tr:hover td{
+                background-color:#F5F7FA;
+                color: black; 
 
-                            </div>
-                            <div>
-                                <input type="button" value="subir" class="btn btn-info" onclick="cargarHojaExcel();" />
-                            </div>
-                        </form>
-                    </div>     
 
-                    
-                    <div class="col-sm-2" >
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Buscar Lista de Alumnos</button>
+            }
 
-                        <!-- Modal -->
-                        <div id="myModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
+        </style>
 
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Selección de Lista</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table table class="table table-bordered" class="fa fa-plus">
-                                            <th>
-                                                <select name="Semestre">
-                                                    <option>Semestre</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                    <option>6</option>
+    </head>
 
-                                                </select>
-                                            </th>
-                                            <th>
-                                                <select name="Grupo">
-                                                    <option>Grupo</option>
-                                                    <option>A</option>
-                                                    <option>B</option>
-                                                    <option>C</option>
-                                                    <option>D</option>
-                                                    <option>E</option>
-                                                    <option>F</option>
+    <body>
+        <?php
+        getHeaderAlumno();
+        //Algunas matriculas: 17B003000061 estatus 2, 15B003000462 estatus:0, 17B003000114 estatus 1. donde 0=BAJA, 1=REGULAR,2=iREGULAR,3=PENDIENTE.
+        //validamos que el alumno sea regular.
+     //    $json = $alumno->obtenerEstatus("17B003000061");
+            
+//            $json = $alumno->obtenerEstatus("17B003000061");
+//            $datosTabla = json_decode($json);
+//
+//            foreach ($datosTabla as $row) {
+//
+//                if ($row->{'id_status'} == 2) { //Si el alumno es irregular
+//                    echo 'No';
+//                } else {
+//                    if ($row->{'id_status'} == 1){
+//                    echo 'Mostramos calificaciones';
+//                    }
+//                }
+//            }
+        ?>
+        <div class="container">
+           
+            <div class="table-wrapper"> 
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-9"><h2> <b>TABLA DE CALIFICACIONES</b></h2></div>
 
-                                                </select>
-                                            </th>
-                                            <th>
-                                                <select name="Materia">
-                                                    <option>Materia</option>
-                                                    <option>ingles</option>
-                                                    <option>Matematicas</option>
-                                                    
-
-                                                </select>
-                                            </th>
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
-                                    </div>
-                                </div>
-
-                            </div>
+                        <div class="col-sm-3">
+                <!--     <button type="button" class="btn btn-danger"> <i class="fa fa-power-off"></i> Cerrar sesión</button> -->
                         </div>
                     </div>
+                    <h4>ALUMNO: 
+                        <?php
+                        //          $json = $alumno->obtenerEstatus("17B003000061");
+                        //mostramos el nombre del alumno
+                        $json = $alumno->ObtenerNombre("17B003000061"); //$usuario que es la variable extraida del login
+                        $datosTabla = json_decode($json);
+
+                        foreach ($datosTabla as $row) {
+                            echo $row->{'nombre'};
+                        }
+                        ?>
+                    </h4>
+                    <h4>GRUPO: 
+                        <?php
+                        $json = $alumno->obtenerGrupo("17B003000061");
+                        $datosTabla = json_decode($json);
+
+                        foreach ($datosTabla as $row) {
+                            echo $row->{'id_grupo'};
+                        }
+                        //Validamos que el alumno sea regular
+                        $json = $alumno->obtenerEstatus("17B003000061");
+                        if ($json) {
+                            $datosTabla = json_decode($json);
+                            foreach ($datosTabla as $row) {
+                                if ($row->{'id_status'} != 1) { //Si el alumno es irregular
+                                echo '<br><h3><b> ¡Reprobaste! Por lo tanto tus calificaciones no seran mostradas en la tabla</b></h3></br>';
+                                    $EsRegular = false;
+                                } else {
+                                    $EsRegular=true;
+                                }
+                            }
+                        } else {
+                            echo 'Ha ocurrido un error';
+                        }
+                        ?>
+                    </h4>
+
                 </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ASIGNATURA</th>
+                            <th>PARCIAL 1</th>
+                            <th>PARCIAL 2</th>
+                            <th>ORDINARIO</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($EsRegular) {
 
 
-            </div>
+                            $json = $alumno->llenarTabla("17B003000061");
+                            $datosTabla = json_decode($json);
+                            $numeric = 0;
+                            foreach ($datosTabla as $row) {
 
+                                echo "<tr><td>" . $row->{'asignatura'} . "</td>";
+                                if ($row->{'parcial_uno'} == 35 && $row->{'parcial_dos'} == 35) { //si en los 2 parciales obtuvo 35 se agregará automaticamente el resto para sumar 100
+                                    $numeric = (int) $row->{'ordinario'} + (int) $row->{'parcial_uno'} + (int) $row->{'parcial_dos'};
+                                    echo "<td>" . $row->{'parcial_uno'} . " </td>"
+                                    . "<td>" . $row->{'parcial_dos'} . " </td>"
+                                    . "<td>" . $row->{'ordinario'} . " </td>"
+                                    . "<td>" . $numeric . " </td>"
+                                    . "</tr>";
+                                } else {
+                                    if ($row->{'parcial_uno'} != null && $row->{'parcial_dos'} != null && $row->{'ordinario'} != null) { //Si los campos estan llenos
+                                        $numeric = (int) $row->{'ordinario'} + (int) $row->{'parcial_uno'} + (int) $row->{'parcial_dos'};
+                                        echo "<td>" . $row->{'parcial_uno'} . " </td>"
+                                        . "<td>" . $row->{'parcial_dos'} . " </td>"
+                                        . "<td>" . $row->{'ordinario'} . " </td>"
+                                        . "<td>" . $numeric . " </td>"
+                                        . "</tr>";
+                                        if ($numeric < 70) {
+                                            //no mostrara nada
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            
+                        }
+                        ?>
+                    </tbody>
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombre</th>
-                        <th>Matricula</th>
-                        <th>Parcial 1</th>
-                        <th>Parcial 2</th>
-                        <th>Ordinario</th>
-                        <th>Promedio</th>
+                </table>
+                <?php
+               /* $json = $alumno->obtenerEstatus("17B003000114");
+                if ($json) {
+                    $datosTabla = json_decode($json);
+                    foreach ($datosTabla as $row) {
+                        if ($row->{'id_status'} == 2) { //Si el alumno es irregular
+                            echo 'No se pueden ver las calificaciones';
+                        } else {
+                            if ($row->{'id_status'} == 1) {
+                                echo 'Mostramos calificaciones';
+                            }
+                        }
+                    }
+                } else {
+                    echo 'Ha ocurrido un error';
+                }*/
+                ?>
+            </div> 
+        </div>  
+        <?php
+        $recibir=$_SESSION['username2'];
+        echo $recibir;
+        getFooter();
+        ?>
+    </body>
+</html>      
 
-                    </tr>
-                </thead>
-                <tbody>
-
-
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Carlos Rodriguez</td>
-                        <td>4160020B</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-                        <td>100</td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Carlos Castro</td>
-                        <td>4160003B</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Aaron Pech</td>
-                        <td>4160016B</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-                        <td>100</td>
-
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Nerstor Reina</td>
-                        <td>4160013B</td>
-                        <td>35</td>
-                        <td>35</td>
-                        <td>30</td>
-                        <td>100</td>
-
-                    </tr> 
-                </tbody>
-            </table>
-        </div>
-    </div>
-     <?php
-    getFooter();
-    ?>
-</body>
 

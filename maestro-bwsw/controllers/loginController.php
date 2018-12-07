@@ -4,7 +4,7 @@ session_start();
 $matricula = addslashes($_POST['inputMatricula']);
 $contraseña = addslashes($_POST['inputPassword']);
 
-$_SESSION['username3'] = $matricula;
+
 
 //Conectando a la base de datos
 $conexion = mysqli_connect("localhost", "root", "", "proyecto_cobay");
@@ -17,6 +17,7 @@ $resultado = mysqli_query($conexion, $consulta);
 $filas = mysqli_num_rows($resultado);
 
 if ($filas > 0) {
+    $_SESSION['username3'] = $matricula;
     header("location:http://localhost/proyectoCobay/maestro-bwsw/views/docentes/");
 } else {
     header("location:http://localhost/proyectoCobay/maestro-bwsw/views/login/index.php?fallo=true");

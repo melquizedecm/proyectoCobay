@@ -55,4 +55,10 @@ class Consulta{
         return $response;
     }
 
+    function obtenerEstatus($matricula) {
+        $sql = "SELECT `id_status`FROM `alumnos` WHERE matricula='" . $matricula . "'";
+        $response = getResultSQL($sql);
+        return $response;
+    }
+
 }

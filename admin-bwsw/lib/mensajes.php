@@ -36,7 +36,8 @@ function imprimirMensaje($message, $valor) {
         ($valor == "9") ? $messageContent = "Error con la matricula del alumno del excel" : '';
         //nombre alumno
         ($valor == "10") ? $messageContent = "Error con el nombre del alumno del excel" : '';
-
+        //periodo activo o inactivo
+        ($valor=="11")? $messageContent="Error el periodo no es activo":'';
 
         if ($messageType == "001") {
             $messageClass = "alert alert-success";
