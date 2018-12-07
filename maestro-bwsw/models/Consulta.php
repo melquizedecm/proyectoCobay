@@ -54,5 +54,11 @@ class Consulta{
         $response = getResultSQL($sql);
         return $response;
     }
+    function obtenerEstatus($matricula){
+        $sql = "SELECT alumno_status.id_status FROM alumno_status,alumnos "
+               . "WHERE alumnos.matricula='".$matricula."' AND alumno_status.id_status=alumnos.id_status";
+        $response = getResultSQL($sql);
+        return $response;
+    }
 
 }
