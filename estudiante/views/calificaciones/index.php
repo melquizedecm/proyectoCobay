@@ -8,6 +8,7 @@
  */
 
 //importamos los archivos del modelo y del controlador
+
 require_once ('../../lib/links.php');
 libnivel3();
 require_once ('../../controllers/consultarcalificacionController.php');
@@ -274,6 +275,8 @@ $EsRegular;
             </div> 
         </div>  
         <?php
+        $recibir=$_SESSION['username2'];
+        echo $recibir;
         getFooter();
         ?>
     </body>

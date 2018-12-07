@@ -133,7 +133,7 @@ Description:
         
         
         <form action="../../controllers/loginController.php" method="post">
-         <form action="../calificaciones/index.php" method="post">  
+         
             <!-- USERNAME INPUT -->
             <label for="username" >Matrícula</label>
             <input type="text" id="inputMatricula" placeholder="Ingrese Matrícula" name="inputMatricula">
@@ -148,7 +148,7 @@ Description:
             ?>
 
         </form>
-        </form>
+      
     </div>
 
 </body>
