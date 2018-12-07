@@ -27,8 +27,8 @@ class Administrativo {
         return getTabla("administrativos");
     }
 
-    function update($campoClave, $valorClave, $password, $cargo, $nombre) {
-        $sql = "UPDATE  administrativos SET matricula='" . $matricula . "',password='" . $password . "',cargo='" . $cargo . "',nombre='" . $nombre . "' WHERE " . $campoClave . "='" . $valorClave . "'";
+    function update($matricula, $password, $cargo, $nombre) {
+        $sql = "UPDATE  administrativos SET matricula=('" . $matricula . "'), password=('" . $password . "'), cargo=('" . $cargo . "'), nombre=('" . $nombre . "') WHERE matricula=('" . $matricula. "')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -37,8 +37,8 @@ class Administrativo {
         }
     }
 
- function delete($matricula, $password, $cargo, $nombre){
-        $sql = "DELETE FROM administrativos (matricula='" . $matricula . "',password='" . $password . "',cargo='" . $cargo . "',nombre='" . $nombre . "') WHERE matricula='".$matricula."'";
+ function delete($matricula){
+        $sql = "DELETE FROM administrativos WHERE matricula='".$matricula."'";
         
         $response = getResultSQL($sql);
         if (!$response) {
