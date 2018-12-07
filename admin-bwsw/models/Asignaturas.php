@@ -23,8 +23,8 @@ class Asignaturas {
         $sql = "SELECT id_asignatura,asignatura,status_asignatura.status FROM asignaturas INNER JOIN status_asignatura ON asignaturas.id_status_asignatura = status_asignatura.id_status_asignatura";
         return getResultSQL($sql);
     }
-    function update($temp,$clave, $nombre){
-         $sql = "UPDATE  asignaturas SET asignatura = ('".$nombre."') WHERE id_asignatura=('" . $temp. "')";
+    function update($temp, $nombre){
+         $sql = "UPDATE  asignaturas SET asignatura = ('".$nombre."') WHERE asignatura=('" . $temp. "')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -62,6 +62,18 @@ class Asignaturas {
         
         
         
+    }
+    function validarIdAsignatura($clave) {
+        $result = getFilaSql("asignaturas", "id_asignatura", $clave);
+        $valor=$result['id_asignatura'];
+        return $valor;
+      
+    }
+    function validarAsignatura($nombre) {
+        $result = getFilaSql("asignaturas", "asignatura", $nombre);
+        $valor=$result['asignatura'];
+        return $valor;
+      
     }
 
 }
