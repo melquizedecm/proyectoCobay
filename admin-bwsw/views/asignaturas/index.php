@@ -49,7 +49,7 @@ description:
             function NumText(string) {//solo letras y numeros
                 var out = '';
                 //Se añaden las letras validas
-                var filtro = 'aábcdeéfghiíjklmnñoópqrstuúvwxyzAÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚVWXYZ1234567890-';//Caracteres validos
+                var filtro = 'aábcdeéfghiíjklmnñoópqrstuúvwxyzAÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚVWXYZ1234567890- ';//Caracteres validos
 
                 for (var i = 0; i < string.length; i++) {
                     if (filtro.indexOf(string.charAt(i)) != -1) {
@@ -220,29 +220,31 @@ description:
                 /*alert($(this).parents("tr").html());*/
                 /*$(this).parents("tr").remove();*/
                 /*alert($(this).parents("tr").html());*/
-                var clave = ($(this).parents("tr").find("td:first-child").html());
-                alert($(this).parents("tr").find("td:first-child").html());
-                /*$(".add-new").removeAttr("disabled");*/
+                if (confirm("¿Seguro que desea DESACTIVAR esta asignatura?")) {
+                    var clave = ($(this).parents("tr").find("td:first-child").html());
+                    //alert($(this).parents("tr").find("td:first-child").html());
+                    /*$(".add-new").removeAttr("disabled");*/
 
 
-                /////GUARDAR LOS DATOS/////
-                //1. OBTENER LOS VALORES//
+                    /////GUARDAR LOS DATOS/////
+                    //1. OBTENER LOS VALORES//
 
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-                $.post("../../controllers/asignaturasController.php",
-                        {
-                            inputClave: clave,
-                            buttonDesactivar: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar el Id");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
+                    //2. ENVIAR POR POTS//
+                    //$.post("url", variables, response);
+                    $.post("../../controllers/asignaturasController.php",
+                            {
+                                inputClave: clave,
+                                buttonDesactivar: true
+                            },
+                            function (data) {
+                                if (data === "-1") {
+                                    alert("Error al DESACTIVAR la asignatura, revise su conexión de internet");
+                                } else {
+                                    alert("Asignatura DESACTIVADA con éxito");
+                                    location.reload(true);
+                                }
+                            });
+                }
             });
             //fin cambiar estado grupo
 
@@ -254,22 +256,24 @@ description:
                 /*alert($(this).parents("tr").html());*/
                 /*$(this).parents("tr").remove();*/
                 /*alert($(this).parents("tr").html());*/
-                var clave = ($(this).parents("tr").find("td:first-child").html());
-                alert($(this).parents("tr").find("td:first-child").html());
+                if (confirm("¿Seguro que desea ACTIVAR esta asignatura?")) {
+                    var clave = ($(this).parents("tr").find("td:first-child").html());
 
-                $.post("../../controllers/asignaturasController.php",
-                        {
-                            inputClave: clave,
-                            buttonActivar: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar el Id");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
+
+                    $.post("../../controllers/asignaturasController.php",
+                            {
+                                inputClave: clave,
+                                buttonActivar: true
+                            },
+                            function (data) {
+                                if (data === "-1") {
+                                    alert("Error al ACTIVAR la asignatura, revise su conexión de internet");
+                                } else {
+                                    alert("Asignatura ACTIVADA con éxito");
+                                    location.reload(true);
+                                }
+                            });
+                }
             });
             //fin cambiar estado grupo
         });
