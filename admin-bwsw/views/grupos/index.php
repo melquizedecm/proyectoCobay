@@ -2,7 +2,7 @@
 require_once ('../../lib/links.php');
 libnivel3();
 require_once ('../../controllers/gruposController.php');
-$grupos= new gruposController();
+$grupos = new gruposController();
 require_once ('../../models/Grupos.php');
 ?>
 <!DOCTYPE html>
@@ -15,16 +15,16 @@ description:
 -->
 
 <head>
-     <?php
+    <?php
     getMeta("Administración de Grupos");
     estilosPaginas();
     ?>
-    
+
     <script type="text/javascript">
         var temp;
 
         $(document).ready(function () {
-            
+
             ///////DATABLES ////////
             $(document).ready(function () {
                 $('#tableGrupo').DataTable();
@@ -34,7 +34,7 @@ description:
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
-            var c=0;
+            var c = 0;
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
                 $(this).attr("disabled", "disabled");
@@ -45,37 +45,33 @@ description:
                         '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly ></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
-               // if (c!=0){
+                // if (c!=0){
                 $("table").prepend(row);
                 /*c=c+1;
-                }else{c++;}*/
+                 }else{c++;}*/
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
-                
+
                 $('[data-toggle="tooltip"]').tooltip();
-                
+
             });
-            
-            
-            
-            
-            
-            function NumText(string){//solo letras y numeros
-    var out = '';
-    //Se añaden las letras validas
-    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
-	
-    for (var i=0; i<string.length; i++){
-       if (filtro.indexOf(string.charAt(i)) != -1){
-	     out += string.charAt(i);
-         }
-         else{
-             out="alerta"
-             return out;
-        }
-     }
-    return out;
-}
-            
+
+
+            function NumText(string) {//solo letras y numeros
+                var out = '';
+                //Se añaden las letras validas
+                var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+
+                for (var i = 0; i < string.length; i++) {
+                    if (filtro.indexOf(string.charAt(i)) != -1) {
+                        out += string.charAt(i);
+                    } else {
+                        out = "alerta"
+                        return out;
+                    }
+                }
+                return out;
+            }
+
 
             // Add row on add button click (Agregar base de datos)
             $(document).on("click", ".add", function () {
@@ -83,64 +79,58 @@ description:
                 //1. OBTENER LOS VALORES//
 
                 var id_grupo = document.getElementById("inputId_grupo").value;
-                var grupo = document.getElementById("inputGrupo").value; 
-                var status = document.getElementById("inputStatus").value; 
-                var comp=NumText(grupo);
-                if(comp==="alerta"){
+                var grupo = document.getElementById("inputGrupo").value;
+                var status = document.getElementById("inputStatus").value;
+                var comp = NumText(grupo);
+                if (comp === "alerta") {
                     alert("Solo se aceptan letras y numeros");
-                                         $('td:nth-child(1)').toggle();
+                    $('td:nth-child(1)').toggle();
 
-                                location.reload(true);
+                    location.reload(true);
 
-                }
-                else
+                } else
                 {
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-                var tamaño=grupo.length;
-                if(tamaño>5){
-                    alert("Maximo 5 carácteres");
-                     $('td:nth-child(1)').toggle();
+                    //2. ENVIAR POR POTS//
+                    //$.post("url", variables, response);
+                    var tamaño = grupo.length;
+                    if (tamaño > 5) {
+                        alert("Maximo 5 carácteres");
+                        $('td:nth-child(1)').toggle();
                         location.reload(true);
-                }
-                else{
-                if(grupo===""){
-                      alert("No se aceptan campos vacios ");
-                                $('td:nth-child(1)').toggle();
-                                location.reload(true);
-                    }
-                    else{
-                       if(confirm("Esta por agregar el grupo "+grupo+"\n¿Los datos son correctos?")){
-                $.post("../../controllers/gruposController.php",
-                        {
-                            inputId_grupo:id_grupo,
-                            inputGrupo:grupo,
-                            inputStatus: status,
-                            buttonCreate: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revise su conexión de internet");
-                            }
-                              else if(data==="-2"){
-                                 alert("Este semestre y grupo ya existe");
+                    } else {
+                        if (grupo === "") {
+                            alert("No se aceptan campos vacios ");
+                            $('td:nth-child(1)').toggle();
+                            location.reload(true);
+                        } else {
+                            if (confirm("Esta por agregar el grupo " + grupo + "\n¿Los datos son correctos?")) {
+                                $.post("../../controllers/gruposController.php",
+                                        {
+                                            inputId_grupo: id_grupo,
+                                            inputGrupo: grupo,
+                                            inputStatus: status,
+                                            buttonCreate: true
+                                        },
+                                        function (data) {
+                                            if (data === "-1") {
+                                                alert("Error al guardar los datos, revise su conexión de internet");
+                                            } else if (data === "-2") {
+                                                alert("Este semestre y grupo ya existe");
 
-                                     
-                                 }
-                           
-                            else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
-                        
-                    }
-               $('td:nth-child(1)').toggle();
 
-                    }
-                }//if de comprovacion de extension 
-            }//if de validacion de caracteres especiales
-               $('td:nth-child(1)').toggle();
+                                            } else {
+                                                alert("Registro Guardado con éxito");
+                                                location.reload(true);
+                                            }
+                                        });
+
+                            }
+                            $('td:nth-child(1)').toggle();
+
+                        }
+                    }//if de comprovacion de extension 
+                }//if de validacion de caracteres especiales
+                $('td:nth-child(1)').toggle();
 
             });
             //3. REFRESCAR LOS VALORES///
@@ -168,140 +158,135 @@ description:
 
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                
+
                 $(this).parents("tr").find("td:nth-child(2)").each(function () {
                     $(this).html('<input type="text" style="text-transform:uppercase" class="form-control" id="temporal" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" value="' + $(this).text() + '">');
                 });
-                temp=document.getElementById("temporal").value;
+                temp = document.getElementById("temporal").value;
                 $(this).parents("tr").find(".edit").toggle();
                 $(".add-new").attr("disabled", "disabled");
-                
+
             });
-            
-            
+
+
             /*Actualizar*/
-             $(document).on("click", ".update", function () {
-            var grupo=document.getElementById("temporal").value;
-            var comp=NumText(grupo);
-                if(comp==="alerta"){
+            $(document).on("click", ".update", function () {
+                var grupo = document.getElementById("temporal").value;
+                var comp = NumText(grupo);
+                if (comp === "alerta") {
                     alert("Solo se aceptan letras y numeros");
-                                location.reload(true);
+                    location.reload(true);
 
-                }
-            else if(grupo===temp){
-            location.reload(true);
-        }
-        else{
-              if(grupo===""){
-                      alert("No se aceptan campos vacios ");
-                                location.reload(true);
+                } else if (grupo === temp) {
+                    location.reload(true);
+                } else {
+                    if (grupo === "") {
+                        alert("No se aceptan campos vacios ");
+                        location.reload(true);
+                    } else {
+                        if (confirm("Se cambiara el valor " + temp + " con el nuevo valor " + grupo + "." + "\n¿Esta seguro de realizar esta acción?")) {
+                            //apartir de aqui se ejecuta 2 veces el procesos, error en la linea 122
+
+                            $(this).parents("tr").find("td:nth-child(2)").each(function () {
+
+                                $.post("../../controllers/gruposController.php",
+                                        {
+                                            inputGrupoactual: temp,
+                                            inputGruponuevo: grupo,
+                                            buttonUpdate: true
+                                        },
+                                        function (data) {
+                                            if (data === "-1") {
+                                                alert("Error al guardar los datos, revisar la matricula");
+                                            } else if (data === "-2") {
+                                                alert("Este semestre y grupo ya existe");
+                                            } else {
+                                                alert("Registro Guardado con éxito");
+                                                location.reload(true);
+                                            }
+                                        });
+
+
+                            });
+                        }
+
                     }
-                    else{
-             if(confirm("Se cambiara el valor "+temp+" con el nuevo valor "+grupo+"."+"\n¿Esta seguro de realizar esta acción?")){
-                //apartir de aqui se ejecuta 2 veces el procesos, error en la linea 122
+                }//PRIMERIF
 
-            $(this).parents("tr").find("td:nth-child(2)").each(function ()  {
+            });
 
-                                 $.post("../../controllers/gruposController.php",
-                                         {
-                                             inputGrupoactual: temp,
-                                             inputGruponuevo: grupo,
-                                             buttonUpdate: true
-                                         },
-                                 function (data) {
-                                     if (data === "-1") {
-                                         alert("Error al guardar los datos, revisar la matricula");
-                                     }
-                                     else if (data === "-2") {
-                                         alert("Este semestre y grupo ya existe");
-                                     }
-                                     else {
-                                         alert("Registro Guardado con éxito");
-                                         location.reload(true);
-                                     }
-                                 });
-                                 
-                                 
-                             });
-                         }
-                         
-                         }
-                     }//PRIMERIF
 
-                     });
-            
-            
             //desactivar grupo 
-            
+
             $(document).on("click", ".btn-success", function () {
-                                     /*alert($(this).parents("tr").html());*/
-                  /*$(this).parents("tr").remove();*/
-                     /*alert($(this).parents("tr").html());*/
-                     if(confirm("¿Seguro que desea DESACTIVAR este grupo?")){
-                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
-                     /*alert($(this).parents("tr").find("td:first-child").html());*/
-                                /*$(".add-new").removeAttr("disabled");*/
+                /*alert($(this).parents("tr").html());*/
+                /*$(this).parents("tr").remove();*/
+                /*alert($(this).parents("tr").html());*/
+                if (confirm("¿Seguro que desea DESACTIVAR este grupo?")) {
+                    var id_grupo = ($(this).parents("tr").find("td:first-child").html());
+                    /*alert($(this).parents("tr").find("td:first-child").html());*/
+                    /*$(".add-new").removeAttr("disabled");*/
 
 
-                        /////GUARDAR LOS DATOS/////
-                        //1. OBTENER LOS VALORES//
+                    /////GUARDAR LOS DATOS/////
+                    //1. OBTENER LOS VALORES//
 
-                        //2. ENVIAR POR POTS//
-                        //$.post("url", variables, response);
-                        $.post("../../controllers/gruposController.php",
-                                {
-                                    inputId_grupo: id_grupo,
-                                    buttonDesactivar: true
-                                },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al DESACTIVAR el grupo, revise su conexión de internet");
-                            } else {
-                                alert("Grupo DESACTIVADO con éxito");
-                                location.reload(true);
-                            }
-                        });
-                    }
-                    });
+                    //2. ENVIAR POR POTS//
+                    //$.post("url", variables, response);
+                    $.post("../../controllers/gruposController.php",
+                            {
+                                inputId_grupo: id_grupo,
+                                buttonDesactivar: true
+                            },
+                            function (data) {
+                                if (data === "-1") {
+                                    alert("Error al DESACTIVAR el grupo, revise su conexión de internet");
+                                } else {
+                                    alert("Grupo DESACTIVADO con éxito");
+                                    location.reload(true);
+                                }
+                            });
+                }
+            });
             //fin cambiar estado grupo
-            
-            
+
+
             //activar grupo 
-            
-            
+
+
             $(document).on("click", ".btn-danger", function () {
-                                  /*alert($(this).parents("tr").html());*/
-                  /*$(this).parents("tr").remove();*/
-                     /*alert($(this).parents("tr").html());*/
-                      if(confirm("¿Seguro que desea ACTIVAR este grupo?")){
-                     var id_grupo=($(this).parents("tr").find("td:first-child").html());
-                     
-               $.post("../../controllers/gruposController.php",
-                                {
-                                    inputId_grupo: id_grupo,
-                                    buttonActivar: true
-                                },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al ACTIVAR el grupo, revise su conexión de internet");
-                            } else {
-                                alert("Grupo ACTIVADO con éxito");
-                                location.reload(true);
-                            }
-                        });
-                    }
-                    });
-                    //fin cambiar estado grupo
+                /*alert($(this).parents("tr").html());*/
+                /*$(this).parents("tr").remove();*/
+                /*alert($(this).parents("tr").html());*/
+                if (confirm("¿Seguro que desea ACTIVAR este grupo?")) {
+                    var id_grupo = ($(this).parents("tr").find("td:first-child").html());
+
+                    $.post("../../controllers/gruposController.php",
+                            {
+                                inputId_grupo: id_grupo,
+                                buttonActivar: true
+                            },
+                            function (data) {
+                                if (data === "-1") {
+                                    alert("Error al ACTIVAR el grupo, revise su conexión de internet");
+                                } else {
+                                    alert("Grupo ACTIVADO con éxito");
+                                    location.reload(true);
+                                }
+                            });
+                }
+            });
+            //fin cambiar estado grupo
 
 
 
-            
+
         });
 
     </script>
 </head>
 <body>
-     <?php
+    <?php
     getHeader();
     ?>
     <div class="container">
@@ -325,30 +310,29 @@ description:
                 </thead>
                 <tbody>
                     <?php
-                    
                     $json = $grupos->read();
                     $datosTabla = json_decode($json);
 
-                    //print $obj->{'foo-bar'};
-                     
-                    
-                    
+//print $obj->{'foo-bar'};
+
+
+
 
                     foreach ($datosTabla as $row) {
                         echo "<tr><td>" . $row->{'id_grupo'} . "</td>"
-                        ."<td>" . $row->{'grupo'} . "</td>";
+                        . "<td>" . $row->{'grupo'} . "</td>";
                         if ($row->{'status'} === "ACTIVADO") {
-                                echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
-                            } else {
-                                echo "<td><button class='btn-danger' id='btn-activar' onclick='activarGrupo(this);'>" . $row->{'status'} . "</button></td>";
-                            }
-                            echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
-    . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-   /* . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"*/
-    . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
-    . "</td> </tr>";
-}
-?>
+                            echo "<td><button class='btn-success'>" . $row->{'status'} . "</button></td>";
+                        } else {
+                            echo "<td><button class='btn-danger' id='btn-activar' onclick='activarGrupo(this);'>" . $row->{'status'} . "</button></td>";
+                        }
+                        echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                        . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
+                        /* . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>" */
+                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
+                        . "</td> </tr>";
+                    }
+                    ?>
 
 
 <!--   <tr>
@@ -365,8 +349,8 @@ description:
             </table>
         </div>
     </div> 
-     <?php
-getFooter();
+    <?php
+    getFooter();
     ?>
 </body>
 </html>
