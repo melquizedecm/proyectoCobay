@@ -175,7 +175,7 @@ $EsRegular;
                             $datosTabla = json_decode($json);
                             foreach ($datosTabla as $row) {
                                 if ($row->{'id_status'} != 1) { //Si el alumno es irregular
-                                echo '<br><h3><b> ¡Reprobaste! Por lo tanto tus calificaciones no seran mostradas en la tabla</b></h3></br>';
+                                echo '<br><h3><b> Favor de pasar a subdirección</b></h3></br>';
                                     $EsRegular = false;
                                 } else {
                                     $EsRegular=true;
