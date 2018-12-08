@@ -35,7 +35,11 @@ elseif (isset($_POST['buttonReadId'])) {
 }
 ///////Eliminar Datos de Administrativo///////
 elseif (isset($_POST['buttonDelete'])) {
-    administrativoDelete();
+     require_once '../lib/links.php';
+    libnivel2();
+    $administrativo = new AdministrativoController();
+    $administrativo->delete();
+    
 } else {
     return False;
 }
@@ -95,15 +99,15 @@ class administrativoController {
 
 function administrativoUpdate() {
         ///1. recibir datos
-        $matricula = $_POST['matricula'];
-        $password = $_POST['password'];
-        $cargo = $_POST['cargo'];
-        $nombre = $_POST['nombre'];
+        $matricula = $_POST['inputMatricula'];
+        $password = $_POST['inputPassword'];
+        $cargo = $_POST['inputCargo'];
+        $nombre = $_POST['inputNombre'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Administrativo.php';
         $objetoAdministrativo = new Administrativo();
-        $response = $objetoAdministrativo->update("matricula", $matricula, $password, $cargo, $nombre);
+        $response = $objetoAdministrativo->update($matricula, $password, $cargo, $nombre);
 //3.  enviar una respuestaç
         if ($response) {
             $this->read();
@@ -114,15 +118,13 @@ function administrativoUpdate() {
 
  function delete() {
         ///1. recibir datos
-        $matricula = $_POST['matricula'];
-        $password = $_POST['password'];
-        $cargo = $_POST['cargo'];
-        $nombre = $_POST['nombre'];
+        $matricula = $_POST['inputMatricula'];
+
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Administrativo.php';
         $objetoAdministrativo = new Administrativo();
-        $response = $objetoAdministrativo->delete($matricula, $password, $cargo, $nombre);
+        $response = $objetoAdministrativo->delete($matricula);
 
 //3.  enviar una respuestaç
         if ($response) {

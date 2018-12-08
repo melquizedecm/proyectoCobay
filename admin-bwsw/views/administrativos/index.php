@@ -21,15 +21,16 @@ description:
     ?>
 
     <script type="text/javascript">
+        var usuario, contraseña, cargo, nombre;
         $(document).ready(function () {
 
             ///////DATABLES ////////
             $(document).ready(function () {
                 $('#tableAdministrativo').DataTable();
             });
-
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
+            var c = 0;
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
                 $(this).attr("disabled", "disabled");
@@ -45,7 +46,21 @@ description:
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
+            function NumText(string) {//solo letras y numeros
+                var out = '';
+                //Se añaden las letras validas
+                var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890'; //Caracteres validos
 
+                for (var i = 0; i < string.length; i++) {
+                    if (filtro.indexOf(string.charAt(i)) != -1) {
+                        out += string.charAt(i);
+                    } else {
+                        out = "alerta"
+                        return out;
+                    }
+                }
+                return out;
+            }
             // Add row on add button click
             $(document).on("click", ".add", function () {
                 ////////GUARDAR LOS DATOS//////
@@ -54,25 +69,40 @@ description:
                 var password = document.getElementById("inputPassword").value;
                 var cargo = document.getElementById("inputCargo").value;
                 var nombre = document.getElementById("inputNombre").value;
-
-
-                ///2. ENVIAR POR POST    /////
-                $.post("../../controllers/administrativoController.php",
-                        {
-                            inputMatricula: matricula,
-                            inputPassword: password,
-                            inputCargo: cargo,
-                            inputNombre: nombre,
-                            buttonCreate: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar la matricula");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
+                var comp = NumText(matricula);
+                var comp2 = Numtext(password);
+                if (comp === "alerta" && comp2 === "alerta") {
+                    alert("Solo se aceptan letras y números");
+                    location.reload(true);
+                } else {
+                    if (matricula === "" || password === "" || cargo === "" || nombre === "") {
+                        alert("No se aceptan campos vacios");
+                        location.reload(true);
+                    } else {
+                        if (confirm("¿Esta seguro de realizar los cambios?")) {
+                            $.post("../../controllers/administrativoController.php",
+                                    {
+                                        inputMatricula: matricula,
+                                        inputPassword: password,
+                                        inputCargo: cargo,
+                                        inputNombre: nombre,
+                                        buttonCreate: true
+                                    },
+                                    function (data) {
+                                        if (data === "-1") {
+                                            alert("Error al guardar los datos, revise su conexión de internet");
+                                        } else if (data === "-2") {
+                                            alert("Datos Existentes");
+                                        } else {
+                                            alert("Datos guardados con éxito");
+                                            location.reload(true);
+                                        }
+                                    });
+                        }
+                    }
+                }
+            }
+            ///2. ENVIAR POR POST    /////
             });
             //3. REFRESCAR LOS VALORES///
             var empty = false;
@@ -92,12 +122,12 @@ description:
                 });
                 $(this).parents("tr").find(".add, .edit").toggle();
                 $(".add-new").removeAttr("disabled");
-                $(".update").removeAttr("enabled");
+                //$(".update").removeAttr("enabled");
             }
-            var cont = 0;
+            //var cont = 0;
 // Edit row on edit button click
             $(document).on("click", ".edit", function () {
-                var cont = 0;
+                //var cont = 0;
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
                     $(this).html('<input name="input' + cont + '" id="input' + cont + '" value="' + $(this).text() + '" >');
                     cont = cont + 1;
@@ -108,18 +138,22 @@ description:
             //actualizar
             $(document).on("click", ".update", function () {
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    var matricula = document.getElementById("input0").value;
-                    var nombre = document.getElementById("input1").value;
+                    var matricula = document.getElementById("inputMatricula").value;
+                    var password = document.getElementById("inputPassword").value;
+                    var cargo = document.getElementById("inputCargo").value;
+                    var nombre = document.getElementById("inputNombre").value;
                     //
                     //    
                     //            var name = document.getElementById("input1").value;
                     //console.log(matAnt+'el nuevo'+matricula+'name'+name);
 
-                    $.post("../../controllers/docentesController.php",
+                    $.post("../../controllers/administrativoController.php",
                             {
-                                matricula: matricula,
-                                nombre: nombre,
-                                buttonUpdate: true
+                                inputMatricula: matricula,
+                                inputPassword: password,
+                                inputCargo: cargo,
+                                inputNombre: nombre,
+                                buttonCreate: true
                             },
                             function (data) {
                                 if (data === "-1") {
@@ -133,20 +167,17 @@ description:
             });
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
-                $(this).parents("tr").remove();
-                /alert($(this).parents("tr").html());/
-                var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
+                var matricula = ($(this).parents("tr").find("td:first-child").html());
                 $(".add-new").removeAttr("disabled");
                 // pongo el nuevo codigo
-                $.post("../../controllers/docentesController.php",
+                $.post("../../controllers/administrativoController.php",
                         {
-                            matricula_maestro: matriculaMaestro,
+                            inputMatricula: matricula,
                             buttonDelete: true
                         },
                         function (data) {
                             if (data === "-1") {
                                 alert("Error al borrar el dato");
-
                             } else {
                                 alert(data);
                                 alert("Registro eliminado");
@@ -159,9 +190,9 @@ description:
     </script>
 </head>
 <body>
-    <?php
-    getHeader();
-    ?>
+<?php
+getHeader();
+?>
 
     <div class="container">
         <div class="table-wrapper">
@@ -184,25 +215,25 @@ description:
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    $json = $administrativo->read();
-                    $datosTabla = json_decode($json);
+<?php
+$json = $administrativo->read();
+$datosTabla = json_decode($json);
 
 //print $obj->{'foo-bar'};
-                    $cont = 0;
-                    foreach ($datosTabla as $row) {
-                        $cont++;
-                        echo "<tr data-fila=".$cont."><td id='matricula".$cont."'>" . $row->{'matricula'} . "</td>"
-                        . "<td id='password" . $cont . "'>" . $row->{'password'} . "</td>"
-                        . "<td id='cargo" . $cont . "'>" . $row->{'cargo'} . "</td>"
-                        . "<td id='nombre" . $cont . "'>" . $row->{'nombre'} . "</td>"
-                        . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
-                        . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                        . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
-                        . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
-                        . "</td> </tr>";
-                    }
-                    ?>
+$cont = 0;
+foreach ($datosTabla as $row) {
+    $cont++;
+    echo "<tr data-fila=" . $cont . "><td id='matricula" . $cont . "'>" . $row->{'matricula'} . "</td>"
+    . "<td id='password" . $cont . "'>" . $row->{'password'} . "</td>"
+    . "<td id='cargo" . $cont . "'>" . $row->{'cargo'} . "</td>"
+    . "<td id='nombre" . $cont . "'>" . $row->{'nombre'} . "</td>"
+    . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+    . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
+    . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
+    . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
+    . "</td> </tr>";
+}
+?>
 
 
 <!--   <tr>
@@ -219,8 +250,8 @@ description:
             </table>
         </div>
     </div>     
-    <?php
-    getFooter();
-    ?>
+<?php
+getFooter();
+?>
 </body>
 </html>   

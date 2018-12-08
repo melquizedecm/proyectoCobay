@@ -15,9 +15,7 @@ require_once ('../../controllers/consultarcalificacionController.php');
 $alumno = new consultarcalificacionController();
 require_once ('../../models/Consulta.php');
 $EsRegular;
-//---------------------------- Variable con la cual se obtendrá la matricula -------------------------------------------------------
 
-//$usuario = $_POST['inputMatricula'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,6 +23,7 @@ $EsRegular;
         <?php
         getMeta("Tabla de calificaciones");
         estilosPaginas();
+                $recibir=$_SESSION['username2'];
         ?>
         <style type="text/css">
 
@@ -138,23 +137,6 @@ $EsRegular;
     <body>
         <?php
         getHeaderAlumno();
-        //Algunas matriculas: 17B003000061 estatus 2, 15B003000462 estatus:0, 17B003000114 estatus 1. donde 0=BAJA, 1=REGULAR,2=iREGULAR,3=PENDIENTE.
-        //validamos que el alumno sea regular.
-     //    $json = $alumno->obtenerEstatus("17B003000061");
-            
-//            $json = $alumno->obtenerEstatus("17B003000061");
-//            $datosTabla = json_decode($json);
-//
-//            foreach ($datosTabla as $row) {
-//
-//                if ($row->{'id_status'} == 2) { //Si el alumno es irregular
-//                    echo 'No';
-//                } else {
-//                    if ($row->{'id_status'} == 1){
-//                    echo 'Mostramos calificaciones';
-//                    }
-//                }
-//            }
         ?>
         <div class="container">
            
@@ -171,7 +153,7 @@ $EsRegular;
                         <?php
                         //          $json = $alumno->obtenerEstatus("17B003000061");
                         //mostramos el nombre del alumno
-                        $json = $alumno->ObtenerNombre("17B003000061"); //$usuario que es la variable extraida del login
+                        $json = $alumno->ObtenerNombre($recibir); //$usuario que es la variable extraida del login
                         $datosTabla = json_decode($json);
 
                         foreach ($datosTabla as $row) {
@@ -181,19 +163,19 @@ $EsRegular;
                     </h4>
                     <h4>GRUPO: 
                         <?php
-                        $json = $alumno->obtenerGrupo("17B003000061");
+                        $json = $alumno->obtenerGrupo( $recibir);
                         $datosTabla = json_decode($json);
 
                         foreach ($datosTabla as $row) {
                             echo $row->{'id_grupo'};
                         }
                         //Validamos que el alumno sea regular
-                        $json = $alumno->obtenerEstatus("17B003000061");
+                        $json = $alumno->obtenerEstatus( $recibir);
                         if ($json) {
                             $datosTabla = json_decode($json);
                             foreach ($datosTabla as $row) {
                                 if ($row->{'id_status'} != 1) { //Si el alumno es irregular
-                                echo '<br><h3><b> ¡Reprobaste! Por lo tanto tus calificaciones no seran mostradas en la tabla</b></h3></br>';
+                                echo '<br><h3><b> Favor de pasar a subdirección</b></h3></br>';
                                     $EsRegular = false;
                                 } else {
                                     $EsRegular=true;
@@ -221,7 +203,7 @@ $EsRegular;
                         if ($EsRegular) {
 
 
-                            $json = $alumno->llenarTabla("17B003000061");
+                            $json = $alumno->llenarTabla( $recibir);
                             $datosTabla = json_decode($json);
                             $numeric = 0;
                             foreach ($datosTabla as $row) {
@@ -255,28 +237,9 @@ $EsRegular;
                     </tbody>
 
                 </table>
-                <?php
-               /* $json = $alumno->obtenerEstatus("17B003000114");
-                if ($json) {
-                    $datosTabla = json_decode($json);
-                    foreach ($datosTabla as $row) {
-                        if ($row->{'id_status'} == 2) { //Si el alumno es irregular
-                            echo 'No se pueden ver las calificaciones';
-                        } else {
-                            if ($row->{'id_status'} == 1) {
-                                echo 'Mostramos calificaciones';
-                            }
-                        }
-                    }
-                } else {
-                    echo 'Ha ocurrido un error';
-                }*/
-                ?>
             </div> 
         </div>  
         <?php
-        $recibir=$_SESSION['username2'];
-        echo $recibir;
         getFooter();
         ?>
     </body>
