@@ -52,7 +52,6 @@ description:
                 $("table tbody tr").eq(index + 0).find(".add, .edit").toggle();
 
                 $('[data-toggle="tooltip"]').tooltip();
-
             });
 
 
