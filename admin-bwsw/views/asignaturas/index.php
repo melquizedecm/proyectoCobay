@@ -36,7 +36,7 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputClave" id="inputClave"></td>' +
+                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputClave" id="inputClave" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputNombre" id="inputNombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly="readonly"></td>' +
                         '<td>' + actions + '</td>' +
