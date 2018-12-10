@@ -99,15 +99,18 @@ class administrativoController {
 
 function administrativoUpdate() {
         ///1. recibir datos
+        //inputMatriculaact:matriculaact,
+
         $matricula = $_POST['inputMatricula'];
         $password = $_POST['inputPassword'];
         $cargo = $_POST['inputCargo'];
         $nombre = $_POST['inputNombre'];
+        $usuarioact=$_POST['input0'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Administrativo.php';
         $objetoAdministrativo = new Administrativo();
-        $response = $objetoAdministrativo->update($matricula, $password, $cargo, $nombre);
+        $response = $objetoAdministrativo->update($matricula, $password, $cargo, $nombre,$usuarioact);
 //3.  enviar una respuestaç
         if ($response) {
             $this->read();

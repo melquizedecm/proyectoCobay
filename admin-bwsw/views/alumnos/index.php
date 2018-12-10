@@ -20,6 +20,8 @@ description:
     estilosPaginas();
     ?>
     <script type="text/javascript">
+        var ActualMatricula;
+        var ActualNombre;
         $(document).ready(function () {
 
             ///////DATABLES ////////
@@ -87,23 +89,9 @@ description:
                 $(".add-new").removeAttr("disabled");
                 $(".update").removeAttr("enabled");
             }
-            var cont = 0;
-            // Edit row on edit button click
-            $(document).on("click", ".edit", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input name="input' + cont + '" type="text" class="form-control" value="' + $(this).text() + '">');
-                    cont = cont + 1;
-                });
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".update").attr("disabled", "disabled");
-            });
-
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
-                //$(this).parents("tr").remove();
-                //$(".add-new").removeAttr("disabled");
                 var matricula = $(this).parents("tr").find("td:first-child").html();
-                //alert(matricula);
                 $.post("../../controllers/alumnosController.php",
                         {
                             inputMatricula: matricula,
@@ -141,12 +129,8 @@ description:
 
         //activar grupo 
         $(document).on("click", ".btn-danger", function () {
-            /*alert($(this).parents("tr").html());*/
-            /*$(this).parents("tr").remove();*/
-            /*alert($(this).parents("tr").html());*/
             if (confirm("¿Esta seguro de la Acción?")) {
                 var matricula = ($(this).parents("tr").find("td:first-child").html());
-
                 $.post("../../controllers/alumnosController.php",
                         {
                             input_matricula: matricula,
@@ -156,6 +140,46 @@ description:
                             if (data === "-1") {
                                 alert("Error en la conexión.");
                             } else {
+                                location.reload(true);
+                            }
+                        });
+            }
+        });
+
+        // Edit row on edit button click
+        $(document).on("click", ".edit", function () {
+            //busca
+            $(this).parents("tr").find("td:nth-child(1)").each(function () {
+                $(this).html('<input type="text" style="text-transform:uppercase" class="form-control" id="Matricula" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" value="' + $(this).text() + '">');
+            });
+            //busca 
+            $(this).parents("tr").find("td:nth-child(2)").each(function () {
+                $(this).html('<input type="text" style="text-transform:uppercase" class="form-control" id="Nombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" value="' + $(this).text() + '">');
+            });
+            ActualMatricula = document.getElementById("Matricula").value;
+            ActualNombre = document.getElementById("Nombre").value;
+            $(this).parents("tr").find(".edit").toggle();
+            $(".add-new").attr("disabled", "disabled");
+
+        });
+
+        /*Actualizar*/
+            $(document).on("click", ".update", function () {
+            var nuevaMatricula = document.getElementById("Matricula").value;
+            var nuevoNombre = document.getElementById("Nombre").value;
+            if (confirm("Se modificaran los datos, esta seguro de esto?")) {
+                $.post("../../controllers/alumnosController.php",
+                        {
+                            Matricula: ActualMatricula,
+                            imputMatriculaNueva: nuevaMatricula,
+                            inputNombreNuevo: nuevoNombre,
+                            buttonUpdate: true
+                        },
+                        function (data) {
+                            if (data === "-1") {
+                                alert("Error al guardar los datos, revisar la matricula");
+                            } else {
+                                alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
                         });

@@ -36,7 +36,7 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputClave" id="inputClave"></td>' +
+                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputClave" id="inputClave" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputNombre" id="inputNombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td><input type="text" class="form-control" name="inputStatus" id="inputStatus" placeholder="Automatico" readonly="readonly"></td>' +
                         '<td>' + actions + '</td>' +
@@ -49,7 +49,7 @@ description:
             function NumText(string) {//solo letras y numeros
                 var out = '';
                 //Se añaden las letras validas
-                var filtro = 'aábcdeéfghiíjklmnñoópqrstuúvwxyzAÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚVWXYZ1234567890- ';//Caracteres validos
+                var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890- ';//Caracteres validos
 
                 for (var i = 0; i < string.length; i++) {
                     if (filtro.indexOf(string.charAt(i)) != -1) {
