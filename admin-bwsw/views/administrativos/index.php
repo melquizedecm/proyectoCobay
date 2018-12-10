@@ -21,7 +21,7 @@ description:
     ?>
 
     <script type="text/javascript">
-        var usuario, contraseña, cargo, nombre;
+        var usuarioact, contraseñaact, cargoact, nombreact;
         $(document).ready(function () {
 
             ///////DATABLES ////////
@@ -36,10 +36,10 @@ description:
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
-                        '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword" ></td>' +
-                        '<td><input type="text" class="form-control" name="inputCargo" id="inputCargo"></td>' +
-                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
+                        '<td><input type="text" style="text-transform:uppercase" class="form-control" name="inputMatricula" id="inputMatricula"  onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
+                        '<td><input type="text"  class="form-control" name="inputPassword" id="inputPassword" ></td>' +
+                        '<td><input type="text" style="text-transform:uppercase" class="form-control" name="inputCargo" id="inputCargo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
+                        '<td><input type="text" style="text-transform:uppercase" class="form-control" name="inputNombre" id="inputNombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -65,20 +65,27 @@ description:
             $(document).on("click", ".add", function () {
                 ////////GUARDAR LOS DATOS//////
                 ///1. OBTENER LOS VALORES/////
+                
                 var matricula = document.getElementById("inputMatricula").value;
+                                var comp = NumText(matricula);
+
                 var password = document.getElementById("inputPassword").value;
+                var comp2 = NumText(password);
+
                 var cargo = document.getElementById("inputCargo").value;
                 var nombre = document.getElementById("inputNombre").value;
-                var comp = NumText(matricula);
-                var comp2 = Numtext(password);
-                if (comp === "alerta" && comp2 === "alerta") {
+
+                if (comp === "alerta" || comp2==="alerta") {
                     alert("Solo se aceptan letras y números");
                     location.reload(true);
-                } else {
+                } 
+          
+                else {
                     if (matricula === "" || password === "" || cargo === "" || nombre === "") {
                         alert("No se aceptan campos vacios");
                         location.reload(true);
-                    } else {
+                    } 
+                    else {
                         if (confirm("¿Esta seguro de realizar los cambios?")) {
                             $.post("../../controllers/administrativoController.php",
                                     {
@@ -100,8 +107,8 @@ description:
                                     });
                         }
                     }
-                }
-                }
+                }   
+                
                 ///2. ENVIAR POR POST    /////
 
                 //3. REFRESCAR LOS VALORES///
@@ -127,22 +134,41 @@ description:
             });
             //var cont = 0;
 // Edit row on edit button click
+/*
+*  '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
+                        '<td><input type="text" class="form-control" name="inputPassword" id="inputPassword" ></td>' +
+                        '<td><input type="text" class="form-control" name="inputCargo" id="inputCargo"></td>' +
+                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre" ></td>' +
+ */
             $(document).on("click", ".edit", function () {
                 var cont = 0;
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
-                    $(this).html('<input name="input' + cont + '" id="input' + cont + '" value="' + $(this).text() + '" >');
+                    $(this).html('<input name="input' + cont + '" style="text-transform:uppercase" class="form-control" id="input' + cont + '" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" value="' + $(this).text() + '">');
                     cont = cont + 1;
                 });
+                 
+                usuarioact=document.getElementById("input0").value;
+                contraseñaact=document.getElementById("input1").value;
+                cargoact=document.getElementById("input2").value;
+                nombreact=document.getElementById("input3").value;
+                
+                alert("act"+ usuarioact+ contraseñaact+ cargoact+nombreact);
                 $(this).parents("tr").find(".edit").toggle();
-                $(".update").attr("disabled", "disabled");
+                $(".add-new").attr("disabled", "disabled");
+
+                
             });
+            
             //actualizar
             $(document).on("click", ".update", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                $(this).parents("tr").find("td:nth-child(4)").each(function () {
                     var matricula = document.getElementById("input0").value;
                     var password = document.getElementById("input1").value;
                     var cargo = document.getElementById("input2").value;
                     var nombre = document.getElementById("input3").value;
+                    
+                    alert("act"+ usuarioact+ contraseñaact+ cargoact+ nombreact+"\nnuevos "+matricula+password+cargo+nombre);
+
                     //
                     //    
                     //            var name = document.getElementById("input1").value;
@@ -154,6 +180,7 @@ description:
                                 inputPassword: password,
                                 inputCargo: cargo,
                                 inputNombre: nombre,
+                                input0:usuarioact,
                                 buttonUpdate: true
                             },
                             function (data) {
