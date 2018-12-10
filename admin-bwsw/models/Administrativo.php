@@ -26,9 +26,10 @@ class Administrativo {
     function read() {
         return getTabla("administrativos");
     }
+    function update($matricula, $password, $cargo, $nombre,$usuarioact) {
+        $sql = "UPDATE administrativos SET matricula=('" . $matricula . "'), password=('" . $password . "'), cargo=('" . $cargo . "'), nombre=('" . $nombre . "') WHERE matricula=('" .$usuarioact. "')";
 
-    function update($matricula, $password, $cargo, $nombre) {
-        $sql = "UPDATE  administrativos SET matricula=('" . $matricula . "'), password=('" . $password . "'), cargo=('" . $cargo . "'), nombre=('" . $nombre . "') WHERE matricula=('" . $matricula. "')";
+
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
