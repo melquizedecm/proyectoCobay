@@ -18,9 +18,12 @@ if (isset($_POST['buttonCreate'])) {
     $alumnos = new alumnosController();
     $alumnos->create();
 }
-///////Modificar Datos de alumno///////
+//Actualizar
 elseif (isset($_POST['buttonUpdate'])) {
-    alumnosUpdate();
+    require_once '../lib/links.php';
+    libnivel2();
+    $alumnos = new alumnosController();
+    $alumnos->AlumnoProceso();
 }
 ///////Consultar tabla de alumno///////
 elseif (isset($_POST['buttonRead'])) {
@@ -37,28 +40,21 @@ elseif (isset($_POST['buttonDelete'])) {
     libnivel2();
     $alumnos = new alumnosController();
     $alumnos->delete();
-}
-elseif (isset($_POST['buttonDesactivar'])) {
+} elseif (isset($_POST['buttonDesactivar'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $Des=new alumnosController();
+    $Des = new alumnosController();
     $Des->desactivar();
-    
-    
-}
-elseif (isset($_POST['buttonActivar'])) {
+} elseif (isset($_POST['buttonActivar'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $ac=new alumnosController();
+    $ac = new alumnosController();
     $ac->activar();
-    
-    
-}
-else {
+} else {
     return False;
 }
 
-class alumnosController {
+class alumnosController{
 
     function index() {
         $objetoAlumno = new Alumno();
@@ -100,7 +96,7 @@ class alumnosController {
         $result = array();
         if (!$response) {
             //$link->error;
-            echo "a".$response;
+            echo "a" . $response;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
@@ -126,9 +122,9 @@ class alumnosController {
             echo "-1";
         }
     }
-    
-    function desactivar(){
-        $matricula = $_POST['input_matricula']; 
+
+    function desactivar() {
+        $matricula = $_POST['input_matricula'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
@@ -140,9 +136,9 @@ class alumnosController {
             echo "-1";
         };
     }
-    
-       function activar(){
-        $matricula = $_POST['input_matricula']; 
+
+    function activar() {
+        $matricula = $_POST['input_matricula'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
@@ -153,8 +149,32 @@ class alumnosController {
         } else {
             echo "-1";
         };
+    }
+
+    ///AQUIIIIIIIIIIIIII
+    function AlumnoProceso() {
+       
+        ///1. recibir datos
         
-        
+        $AcualMatricula = $_POST['Matricula'];
+        $nuevaMatricula = $_POST['imputMatriculaNueva'];
+        $nuevoNombre = $_POST['inputNombreNuevo'];
+//2. guardar datos en el modelo
+        require_once '../lib/consultas.php';
+        require_once '../models/Alumnos.php';
+        $ObjetoMatricula = new Alumno();
+        $Res = $ObjetoMatricula->validarMatricula($nuevaMatricula);
+        if ($Res != " ") {
+            $response = $ObjetoMatricula->updateAlumno($AcualMatricula, $nuevaMatricula, $nuevoNombre);
+//3.  enviar una respuestaç
+            if ($response) {
+                $this->read();
+            } else {
+                echo "-1";
+            }
+        } else {
+            echo "-2";
+        }
     }
 
 }
