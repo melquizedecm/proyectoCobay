@@ -27,7 +27,7 @@ function imprimirMensaje($message, $valor) {
         //matricula profe
         ($valor == "5") ? $messageContent = "Error con la matricula maestro del excel" : '';
         //grupo
-        ($valor=="6")? $messageContent="Error con el grupo del excel":'';
+        ($valor == "6") ? $messageContent = "Error con el grupo del excel" : '';
         //matricula asignatura
         ($valor == "7") ? $messageContent = "Error con la clave de la asignatura del excel" : '';
         //nombre asignatura
@@ -37,7 +37,7 @@ function imprimirMensaje($message, $valor) {
         //nombre alumno
         ($valor == "10") ? $messageContent = "Error con el nombre del alumno del excel" : '';
         //periodo activo o inactivo
-        ($valor=="11")? $messageContent="Error el periodo no es activo":'';
+        ($valor == "11") ? $messageContent = "Error el periodo no es activo" : '';
 
         if ($messageType == "001") {
             $messageClass = "alert alert-success";
@@ -50,9 +50,13 @@ function imprimirMensaje($message, $valor) {
         }
         //echo "<p class=\"error\">" . "Mensaje: ". $message . "</p>";
         ?>
-        <div class="<?php echo $messageClass; ?> alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Nota:</strong> <?php echo $messageContent; ?>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="<?php echo $messageClass; ?> alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Nota:</strong> <?php echo $messageContent; ?>
+                </div>
+            </div>
         </div>
         <?php
     }

@@ -30,7 +30,7 @@ estilosPaginas();
             document.frmcargararchivo.excel.focus();
             return false;
         }
-
+        
         document.frmcargararchivo.action = "../../controllers/calificacionController.php";
         document.frmcargararchivo.submit();
     }
@@ -129,9 +129,9 @@ estilosPaginas();
     ?>
     <div class="container">
             <?php
-            if(isset($_GET['error'])){
+            /*if(isset($_GET['error'])){
                 echo "Hubo un error ".$_GET['error'];
-            }
+            }*/
             ?>
         <div class="table-wrapper">
             <div class="table-title">
