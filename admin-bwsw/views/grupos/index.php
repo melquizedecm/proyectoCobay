@@ -226,7 +226,6 @@ description:
                     /*alert($(this).parents("tr").find("td:first-child").html());*/
                     /*$(".add-new").removeAttr("disabled");*/
 
-
                     /////GUARDAR LOS DATOS/////
                     //1. OBTENER LOS VALORES//
 

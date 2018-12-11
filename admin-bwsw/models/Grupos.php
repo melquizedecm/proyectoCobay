@@ -98,7 +98,7 @@ class Grupos {
         $result = getFilaSql("grupos", "grupo", $grupo);
         $valor=$result['grupo'];
         return $valor;
-      
+     
     }
 
 }

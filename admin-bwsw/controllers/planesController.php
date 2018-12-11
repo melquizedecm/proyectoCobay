@@ -83,6 +83,9 @@ class PlanesController {
         require_once '../lib/consultas.php';
         require_once '../models/Planes.php';
         $objetoPlanes= new Planes();
+          $Res=$objetoPlanes->validarIdPlan($plan);
+        
+        if($Res!=$plan && $Res!=" "){
         $response = $objetoPlanes->create($id_plan, $plan);
 //3.  enviar una respuestaç
         if ($response) {
@@ -90,6 +93,10 @@ class PlanesController {
         } else {
             echo "-1";
         }
+    }
+    else{
+     echo "-2";   
+    }
     }
 
     function read() {
@@ -160,17 +167,17 @@ class PlanesController {
      ///1. recibir datos
           
        
-        $temp = $_POST['inputId_planactual'];
-        $id_plan = $_POST['inputId_plannuevo'];
+        $temp = $_POST['input_planactual'];
+        $nuevoplan = $_POST['input_plannuevo'];
        
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Planes.php';
         $objetoPlan = new Planes();
         
-        $Res = $objetoGrupo->validarIdGrupo($id_grupo);
-        if ($Res != $id_grupo && $Res != " ") {
-        $response = $objetoPlan->update($temp,$id_plan);
+        $Res = $objetoPlan->validarIdPlan($nuevoplan);
+        if ($Res != $nuevoplan && $Res != " ") {
+        $response = $objetoPlan->update($temp,$nuevoplan);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
        if ($response) {

@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  ALGORITMO PARA SUBIR LAS CALIFICACIONES
  * 
@@ -16,11 +15,10 @@ require_once '../lib/links.php';
 libnivel2();
 require_once '../lib/mensajes.php';
 require_once '../models/Calificaciones.php';
-
 ///////1. ABRIR ARCHIVO///////
-
 $objCalificaciones = new Calificaciones();
 $link = conectar();
+$error = "";
 if (substr($_FILES['excel']['name'], -3) == "csv") {
     $fecha = date("Y-m-d");
     $carpeta = "tmp_excel/";
@@ -34,17 +32,18 @@ if (substr($_FILES['excel']['name'], -3) == "csv") {
 }
 
 ///////2 Y 3. OBTENER LOS DATOS Y VALIDARLOS///////
-
+$retornoError="";
 while ($data = fgetcsv($fp, 1000, ",")) {
     //si la linea es igual a 1 no guardamos por que serian los titulos de la hoja del excel.
     if ($row != 1) {
-        $valor = $objCalificaciones->excelValido($data);
-        if ($valor != "") {
-            $mensaje = "004";
-            imprimirMensaje($mensaje, $valor);
+        $message = $objCalificaciones->excelValido($data);
+        if ($message != "") {
+            $type = "004";
+            header("Location: ../views/calificaciones/index.php?message=".$message."&type=".$type);
+            $retornoError = "1";
             break;
         } else {
-
+            $retornoError = "2";
             $id_plantel = $data[0];
             $periodo = $data[1];
             $plan = $data[2];
@@ -120,7 +119,7 @@ while ($data = fgetcsv($fp, 1000, ",")) {
 
 fclose($fp);
 
-echo "<div>La importacion de archivo subio satisfactoriamente</div >";
+    header("Location: ../views/calificaciones/index.php?action=".$retornoError);
 
 exit;
 ?>
