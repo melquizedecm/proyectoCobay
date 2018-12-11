@@ -8,7 +8,6 @@
  */
 
 //importamos los archivos del modelo y del controlador
-
 require_once ('../../lib/links.php');
 libnivel3();
 require_once ('../../controllers/consultarcalificacionController.php');
