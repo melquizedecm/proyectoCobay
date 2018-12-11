@@ -9,7 +9,7 @@
 class Planes {
 
     function create($id_plan, $plan) {
-        $sql2 = "INSERT INTO planes(id_plan,plan,id_status_plan) VALUES ('" . $id_plan . "','$plan" . "','.1.')";
+        $sql2 = "INSERT INTO planes(id_plan,plan,id_status_plan) VALUES ('" .NULL. "','" . $plan . "','.1.')";
         $response2 = getResultSQL($sql2);
         if (!$response2) {
             return false;
@@ -18,8 +18,8 @@ class Planes {
         }
     }
 
-    function update($temp, $id_plan) {
-        $sql = "UPDATE planes SET plan= ('" . $id_plan . "') WHERE plan=( '" . $temp . "' ) ";
+    function update($temp, $nuevoplan) {
+        $sql = "UPDATE planes SET plan= ('" . $nuevoplan . "') WHERE plan=( '" . $temp . "' ) ";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -64,6 +64,12 @@ class Planes {
         } else {
             return true;
         }
+    }
+    function validarIdPlan($plan) {
+        $result = getFilaSql("planes", "plan", $plan);
+        $valor=$result['plan'];
+        return $valor;
+      
     }
 
 }

@@ -36,6 +36,7 @@ require_once ('../../models/Periodos.php');
                 //GENERACION DEL CRUD EN LA TABLA
                 $('[data-toggle="tooltip"]').tooltip();
                 var actions = $("table td:last-child").html();
+               
 
                 //Append table with add row form on add new button click
                 $(".add-new").click(function ()
@@ -98,7 +99,7 @@ require_once ('../../models/Periodos.php');
                                     {
                                         if (data === "-1")
                                     {
-                                        alert("Error al guardar los datos, revisar la matricula");
+                                        alert("Error al guardar los datos, Periodo ya existe");
                                     } 
                                     else
                                     {
@@ -149,6 +150,7 @@ require_once ('../../models/Periodos.php');
                     });
                     $(this).parents("tr").find(".edit").toggle();
                     $(".add-new").attr("disabled", "disabled");
+                    $(".update").attr("style");
                 });
                 
                 //Actualizar datos de row en la base de datos
@@ -168,14 +170,15 @@ require_once ('../../models/Periodos.php');
                         //1. ENVIAR POR POTS//
                         $.post("../../controllers/periodosController.php",
                         {
+                            inputId:id,
                             inputPeriodo: periodo,
-                            buttonValidar: true
+                            buttonActualizar: true
                         },
                         function (data) 
                         {
                             if (data === "-1") 
                             {
-                                alert("Error al intentar activar el periodo");
+                                alert("No se pudo actualizar, Periodo ya existe");
                             } 
                             else 
                             {
