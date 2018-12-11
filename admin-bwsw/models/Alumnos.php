@@ -11,7 +11,7 @@
  *
  * @author Brayan Cetina
  */
-class Alumno{
+class AlumnoAdmin {
 
     function create($matricula, $nombre, $status) {
         $sql = "INSERT INTO alumnos(matricula,nombre,id_status) VALUES ('" . $matricula . "','$nombre" . "','" . $status . "')";
@@ -59,21 +59,20 @@ class Alumno{
     }
 
     function validarMatricula($nuevaMatricula) {
-        /*$sql = "SELECT matricula FROM alumnos WHERE matricula=('" . $$nuevaMatricula . "')";
-        $response = getResultSQL($sql);
-        if (!$response) {
-            return false;
-        } else {
-            return true;
-        }*/
+        /* $sql = "SELECT matricula FROM alumnos WHERE matricula=('" . $$nuevaMatricula . "')";
+          $response = getResultSQL($sql);
+          if (!$response) {
+          return false;
+          } else {
+          return true;
+          } */
         $result = getFilaSql("alumnos", "matricula", $nuevaMatricula);
-        $valor=$result['matricula'];
+        $valor = $result['matricula'];
         return $valor;
     }
 
     function updateAlumno($ActualMatricula, $nuevaMatricula, $nuevoNombre) {
         $sql = "UPDATE  alumnos SET matricula= '" . $nuevaMatricula . "', nombre='" . $nuevoNombre . "' WHERE matricula= '" . $ActualMatricula . "' ";
-
         $response = getResultSQL($sql);
         alert($sql);
         if (!$response) {
