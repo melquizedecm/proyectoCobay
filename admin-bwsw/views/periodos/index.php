@@ -50,7 +50,7 @@ require_once ('../../models/Periodos.php');
                             '<td>' + actions + '</td>' +
                             '</tr>';
                     $("table").prepend(row);
-                    $("table tbody tr").eq(index + 0).find(".add").toggle();
+                    $("table tbody tr").eq(index + 0).find(".add, .update, .edit").toggle();
                     $('[data-toggle="tooltip"]').tooltip();
                 });
 
@@ -64,7 +64,7 @@ require_once ('../../models/Periodos.php');
                     var estatus = document.getElementById("inputEstatus").value;
                     
                     //Validacion de los campos
-                    if(periodo == "")
+                    if(periodo == null || periodo.length == 0 || /^\s+$/.test(periodo))
                     {
                         alert("Es nesesario ingresar un periodo!");
                     }
@@ -150,7 +150,7 @@ require_once ('../../models/Periodos.php');
                     });
                     $(this).parents("tr").find(".edit").toggle();
                     $(".add-new").attr("disabled", "disabled");
-                    $(".update").attr("style");
+                    //$(".update").attr("style");
                 });
                 
                 //Actualizar datos de row en la base de datos
@@ -161,7 +161,7 @@ require_once ('../../models/Periodos.php');
                     var periodo=document.getElementById("inputPeriodo").value;
                     
                     //Validacion de los campos
-                    if(periodo == "")
+                    if(periodo == null || periodo.length == 0 || /^\s+$/.test(periodo))
                     {
                         alert("Es nesesario ingresar un periodo!");
                     }
@@ -300,7 +300,8 @@ require_once ('../../models/Periodos.php');
                                 echo "<td><button class='btn-danger' id='btn-danger' onclick='activarPeriodo(this);'>" . $row->{'status_periodo'} . "</button></td>";
                             }
 
-                            echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
+                            echo "<td>"
+                               . "<a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                                . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                                . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                                . "</td></tr>";
