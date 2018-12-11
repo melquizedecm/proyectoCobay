@@ -50,14 +50,12 @@ function imprimirMensaje($message, $valor) {
         }
         //echo "<p class=\"error\">" . "Mensaje: ". $message . "</p>";
         ?>
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+
                 <div class="<?php echo $messageClass; ?> alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Nota:</strong> <?php echo $messageContent; ?>
                 </div>
-            </div>
-        </div>
+
         <?php
     }
 }
