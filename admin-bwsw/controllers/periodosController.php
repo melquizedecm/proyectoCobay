@@ -49,7 +49,7 @@ elseif (isset($_POST['buttonDelete'])) {
     libnivel2();
     $periodos = new PeriodosController();
     $periodos->periodoactivo();
-} elseif (isset($_POST['periodoActualizado'])) {
+} elseif (isset($_POST['buttonActualizar'])) {
     require_once '../lib/links.php';
     libnivel2();
     $periodos = new PeriodosController();
@@ -201,11 +201,10 @@ class PeriodosController {
         require_once '../models/Periodos.php';
         $objetoPeriodo = new Periodos();
         $response = $objetoPeriodo->validar($periodo);
-
         if ($response) {
-            return true;
+            return false;
         } else {
-            $this->read();
+            return true;
         }
     }
 

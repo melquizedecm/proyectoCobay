@@ -99,7 +99,7 @@ require_once ('../../models/Periodos.php');
                                     {
                                         if (data === "-1")
                                     {
-                                        alert("Error al guardar los datos, revisar la matricula");
+                                        alert("Error al guardar los datos, Periodo ya existe");
                                     } 
                                     else
                                     {
@@ -170,14 +170,15 @@ require_once ('../../models/Periodos.php');
                         //1. ENVIAR POR POTS//
                         $.post("../../controllers/periodosController.php",
                         {
+                            inputId:id,
                             inputPeriodo: periodo,
-                            buttonValidar: true
+                            buttonActualizar: true
                         },
                         function (data) 
                         {
                             if (data === "-1") 
                             {
-                                alert("Error al intentar activar el periodo");
+                                alert("No se pudo actualizar, Periodo ya existe");
                             } 
                             else 
                             {
@@ -301,7 +302,7 @@ require_once ('../../models/Periodos.php');
 
                             echo "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                                . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
-                               . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip' style='display:None'><i class = 'material-icons'>&#xE863;</i></a>"
+                               . "<a class = 'update' title = 'Actualizar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE863;</i></a>"
                                . "</td></tr>";
                         }
                         
