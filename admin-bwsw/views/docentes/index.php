@@ -35,6 +35,7 @@ require_once ('../../models/Docentes.php');
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
+                        //'<td><input type="text" class="form-control" name="inputEstado" id="inputEsatdo"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
@@ -47,12 +48,15 @@ require_once ('../../models/Docentes.php');
                 //1. OBTENER LOS VALORES//
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
+                //var estado = document.getElementById("inputEstado").value;
+
                 //2. ENVIAR POR POTS//
                 //$.post("url", variables, response);
                 $.post("../../controllers/docentesController.php",
                         {
                             inputMatricula: matricula,
                             inputNombre: nombre,
+                            inputEstado: estado,
                             buttonCreate: true
                         },
                 function (data) {
@@ -124,7 +128,7 @@ require_once ('../../models/Docentes.php');
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();
-                /alert($(this).parents("tr").html());/
+                //alert($(this).parents("tr").html());/
                 var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
                 $(".add-new").removeAttr("disabled");
                 // pongo el nuevo codigo
@@ -136,9 +140,9 @@ require_once ('../../models/Docentes.php');
                 function (data) {
                     if (data === "-1") {
                         alert("Error al borrar el dato");
-                        
+
                     } else {
-                        alert(data);
+                        //alert(data);
                         alert("Registro eliminado");
                         location.reload(true);
                     }
@@ -167,7 +171,7 @@ require_once ('../../models/Docentes.php');
                     <tr>
                         <th>Matricula</th>
                         <th>Nombre</th>
-                        <th></th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -180,8 +184,10 @@ require_once ('../../models/Docentes.php');
                     $cont = 0;
                     foreach ($datosTabla as $row) {
                         $cont++;
-                        echo "<tr  data-fila=" . $cont . "><td id='mat" . $cont . "'>" . $row->{'matricula_maestro'} . "</td>"
+                        echo "<tr  data-fila=" . $cont . ">"
+                        . "<td id='mat" . $cont . "'>" . $row->{'matricula_maestro'} . "</td>"
                         . "<td id='name" . $cont . "'>" . $row->{'nombre'} . "</td>"
+                         //"<td id='name" . $cont . "'>" . $row->{'estado'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
@@ -209,4 +215,4 @@ require_once ('../../models/Docentes.php');
     getFooter();
     ?>
 </body>
-</html>   
+</html>
