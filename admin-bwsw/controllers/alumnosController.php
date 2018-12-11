@@ -54,10 +54,10 @@ elseif (isset($_POST['buttonDelete'])) {
     return False;
 }
 
-class alumnosController{
+class alumnosController {
 
     function index() {
-        $objetoAlumno = new Alumno();
+        $objetoAlumno = new AlumnoAdmin();
         $response = $objetoAlumno->read();
         $result = array();
         if (!$response) {
@@ -80,7 +80,7 @@ class alumnosController{
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
-        $objetoAlumno = new Alumno();
+        $objetoAlumno = new AlumnoAdmin();
         $response = $objetoAlumno->create($matricula, $nombre, $status);
 //3.  enviar una respuesta
         if ($response) {
@@ -91,7 +91,7 @@ class alumnosController{
     }
 
     function read() {
-        $objetoAlumno = new Alumno();
+        $objetoAlumno = new AlumnoAdmin();
         $response = $objetoAlumno->read();
         $result = array();
         if (!$response) {
@@ -113,7 +113,7 @@ class alumnosController{
         //llamar lib
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
-        $objetoAlumno = new Alumno();
+        $objetoAlumno = new AlumnoAdmin();
         $response = $objetoAlumno->Alumnodelete($matricula);
 //3.  enviar una respuesta
         if ($response) {
@@ -128,7 +128,7 @@ class alumnosController{
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
-        $objetoAviso = new Alumno();
+        $objetoAviso = new AlumnoAdmin();
         $response = $objetoAviso->desactivar($matricula);
         if ($response) {
             $this->read();
@@ -142,7 +142,7 @@ class alumnosController{
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
-        $objetoAviso = new Alumno();
+        $objetoAviso = new AlumnoAdmin();
         $response = $objetoAviso->activar($matricula);
         if ($response) {
             $this->read();
@@ -153,27 +153,36 @@ class alumnosController{
 
     ///AQUIIIIIIIIIIIIII
     function AlumnoProceso() {
-       
+
         ///1. recibir datos
-        
+
         $AcualMatricula = $_POST['Matricula'];
         $nuevaMatricula = $_POST['imputMatriculaNueva'];
         $nuevoNombre = $_POST['inputNombreNuevo'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
-        $ObjetoMatricula = new Alumno();
-        $Res = $ObjetoMatricula->validarMatricula($nuevaMatricula);
-        if ($Res != " ") {
+        $ObjetoMatricula = new AlumnoAdmin();
+
+        if ($AcualMatricula === $nuevaMatricula) {
             $response = $ObjetoMatricula->updateAlumno($AcualMatricula, $nuevaMatricula, $nuevoNombre);
-//3.  enviar una respuestaç
             if ($response) {
                 $this->read();
             } else {
                 echo "-1";
             }
         } else {
-            echo "-2";
+            $Res = $ObjetoMatricula->validarMatricula($nuevaMatricula);
+            if ($Res != " " && $Res != $nuevaMatricula) {
+                $response = $ObjetoMatricula->updateAlumno($AcualMatricula, $nuevaMatricula, $nuevoNombre);
+                if ($response) {
+                    $this->read();
+                } else {
+                    echo "-1";
+                }
+            } else {
+                echo "-2";
+            }
         }
     }
 

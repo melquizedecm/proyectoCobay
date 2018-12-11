@@ -60,12 +60,13 @@ class Periodos {
     }
 
     function validar($periodo) {
-        $sql = "SELECT periodos FROM periodos WHERE periodo=('" . $periodo . "')";
+        $sql = "SELECT periodo FROM periodos WHERE periodo=('" . $periodo . "')";
         $response = getResultSQL($sql);
-        if (!$response == $periodo) {
-            return false;
-        } else {
+        if ($response->num_rows >0) 
+        {
             return true;
+        } else {
+            return false;
         }
     }
 

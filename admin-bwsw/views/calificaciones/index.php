@@ -129,9 +129,25 @@ estilosPaginas();
     ?>
     <div class="container">
             <?php
-            /*if(isset($_GET['error'])){
-                echo "Hubo un error ".$_GET['error'];
-            }*/
+            if(isset($_GET['message'])){
+                imprimirMensaje($_GET['type'], $_GET['message']);
+            }
+            if(isset($_GET['action']) && $_GET['action']=="2"){
+                ?>
+                 <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Nota:</strong> El archivo se subio exitosamente
+                </div>
+                <?php
+            }
+            if(isset($_GET['action']) && $_GET['action']=="1"){
+                ?>
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Nota:</strong> El archivo no se ha subido
+                </div>
+                <?php
+            }
             ?>
         <div class="table-wrapper">
             <div class="table-title">
