@@ -25,7 +25,6 @@
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="../Menu/">Home</a></li>
-                            <li><a href="../perfil/">Perfil</a></li>
                             <li><a href="../calificaciones/">Subir Calificaciones</a></li>
                             <li><a href="../administrativos/">Usuarios</a></li>
                         </ul>
@@ -38,3 +37,6 @@
         </header>
         <?php
     }
+    
+    
+   
