@@ -76,18 +76,21 @@ class alumnosController {
 ///1. recibir datos
         $matricula = $_POST['inputMatricula'];
         $nombre = $_POST['inputNombre'];
-        $status = "1";
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
         $objetoAlumno = new AlumnoAdmin();
-        $response = $objetoAlumno->create($matricula, $nombre, $status);
-//3.  enviar una respuesta
-        if ($response) {
-            $this->read();
-        } else {
-            echo "-1";
-        }
+        $Res = $ObjetoMatricula->validarMatricula($matricula);
+            if ($Res != " " && $Res != $matricula) {
+                $response = $objetoAlumno->create($matricula, $nombre);
+                if ($response) {
+                    $this->read();
+                } else {
+                    echo "-1";
+                }
+            } else {
+                echo "-2";
+            }
     }
 
     function read() {

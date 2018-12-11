@@ -26,22 +26,23 @@ description:
 
             ///////DATABLES ////////
             $('#tableAlumnos').DataTable();
-
             ///////GENERACION DEL CRUD EN LA TABLA////// 
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
+            
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
-                        '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
+                        '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula" ></td>' +
                         '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
-                        '<td><input type="text" class="form-control" name="inputEstatus" id="inputEstatus"></td>' +
+                        '<td><input type="text" class="form-control" name="inputEstatus" id="inputEstatus" placeholder="Automatico" readonly "></td>' +
+                        '<td><input type="text" class="form-control" name="aviso" id="aviso" placeholder="Automatico" readonly "></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
                 $("table").prepend(row);
-                $("table tbody tr").eq(index + 0).find(".add, .delete , .update").toggle();
+                $("table tbody tr").eq(index + 0).find(".add , .update, .delete, .update, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
             // Add row on add button click (Agregar base de datos)
@@ -50,20 +51,19 @@ description:
                 //1. OBTENER LOS VALORES//
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
-                var estatus = document.getElementById("inputEstatus").value;
                 //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
                 $.post("../../controllers/alumnosController.php",
                         {
                             inputMatricula: matricula,
                             inputNombre: nombre,
-                            inputEstatus: estatus,
                             buttonCreate: true
                         },
                         function (data) {
                             if (data === "-1") {
                                 alert("Error al guardar los datos, revisar la matricula");
-                            } else {
+                            }else if (data === "-2"){
+                                alert("Matricula ya existente: " + matricula)
+                            }else {
                                 alert("Registro Guardado con éxito");
                                 location.reload(true);
                             }
@@ -158,7 +158,7 @@ description:
             });
             ActualMatricula = document.getElementById("Matricula").value;
             ActualNombre = document.getElementById("Nombre").value;
-            $(this).parents("tr").find(".edit").toggle();
+            $(this).parents("tr").find(".edit, .delete").toggle();
             $(".add-new").attr("disabled", "disabled");
 
         });
