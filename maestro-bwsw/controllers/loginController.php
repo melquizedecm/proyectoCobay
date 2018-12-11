@@ -18,9 +18,9 @@ $filas = mysqli_num_rows($resultado);
 
 if ($filas > 0) {
     $_SESSION['username3'] = $matricula;
-    header("location:http://localhost/proyectoCobay/maestro-bwsw/views/docentes/");
+    header('Location: ../views/docentes/');
 } else {
-    header("location:http://localhost/proyectoCobay/maestro-bwsw/views/login/index.php?fallo=true");
+    header('Location: ../views/login/index.php?fallo=true');
     exit();
 }
 mysqli_free_result($resultado);
