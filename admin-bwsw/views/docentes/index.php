@@ -42,12 +42,35 @@ require_once ('../../models/Docentes.php');
                 $("table tbody tr").eq(index + 0).find(".add, .delete , .update").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
+            
+           function NumText(string) {//solo letras y numeros
+                var out = '';
+                //Se añaden las letras validas
+                var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+
+                for (var i = 0; i < string.length; i++) {
+                    if (filtro.indexOf(string.charAt(i)) != -1) {
+                        out += string.charAt(i);
+                    } else {
+                        out = "alerta"
+                        return out;
+                    }
+                }
+                return out;
+            }
             // Add row on add button click (Agregar base de datos)
             $(document).on("click", ".add", function () {
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
+                var comp = NumText (nombre);
+                if (comp==="alerta"){
+                    alert("solo se puede ingresar Números o Letras");
+      
+                    location.reload(true);
+                } else
+                {
                 //var estado = document.getElementById("inputEstado").value;
 
                 //2. ENVIAR POR POTS//
@@ -56,7 +79,7 @@ require_once ('../../models/Docentes.php');
                         {
                             inputMatricula: matricula,
                             inputNombre: nombre,
-                            inputEstado: estado,
+                            //inputEstado: estado,
                             buttonCreate: true
                         },
                 function (data) {
@@ -67,6 +90,7 @@ require_once ('../../models/Docentes.php');
                         location.reload(true);
                     }
                 });
+                }
             });
             //3. REFRESCAR LOS VALORES///
             var empty = false;
@@ -127,6 +151,7 @@ require_once ('../../models/Docentes.php');
             });
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
+                if (confirm("¿Seguro que desea ELIMINAR este docente?")) {
                 $(this).parents("tr").remove();
                 //alert($(this).parents("tr").html());/
                 var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
@@ -147,6 +172,7 @@ require_once ('../../models/Docentes.php');
                         location.reload(true);
                     }
                 });
+            }
             });
         });
     </script>
