@@ -25,9 +25,8 @@
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="../Menu/">Home</a></li>
-                            <li><a href="../perfil/">Perfil</a></li>
                             <li><a href="../calificaciones/">Subir Calificaciones</a></li>
-                            <li><a href="../administrativos/">Usuarios</a></li>
+                      
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="../login/logout.php"><span class="glyphicon glyphicon-user"></span> Cerrar Sesion</a></li>

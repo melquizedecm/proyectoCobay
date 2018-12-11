@@ -194,7 +194,7 @@ require_once ('../../models/Docentes.php');
 </head>
 <body>
     <?php
-    getHeaderDocentes();
+    getHeader();
     ?>
 
     <div class="container">

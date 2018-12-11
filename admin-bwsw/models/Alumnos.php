@@ -13,8 +13,8 @@
  */
 class AlumnoAdmin {
 
-    function create($matricula, $nombre, $status) {
-        $sql = "INSERT INTO alumnos(matricula,nombre,id_status) VALUES ('" . $matricula . "','$nombre" . "','" . $status . "')";
+    function create($matricula, $nombre) {
+        $sql = "INSERT INTO alumnos(matricula,nombre,id_status,id_avisos) VALUES ('" . $matricula . "','$nombre" . "','" . 1 . "','" . 0 . "')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
