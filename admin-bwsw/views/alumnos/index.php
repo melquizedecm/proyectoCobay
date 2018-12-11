@@ -164,25 +164,38 @@ description:
         });
 
         /*Actualizar*/
-            $(document).on("click", ".update", function () {
+        $(document).on("click", ".update", function () {
             var nuevaMatricula = document.getElementById("Matricula").value;
             var nuevoNombre = document.getElementById("Nombre").value;
-            if (confirm("Se modificaran los datos, esta seguro de esto?")) {
-                $.post("../../controllers/alumnosController.php",
-                        {
-                            Matricula: ActualMatricula,
-                            imputMatriculaNueva: nuevaMatricula,
-                            inputNombreNuevo: nuevoNombre,
-                            buttonUpdate: true
-                        },
-                        function (data) {
-                            if (data === "-1") {
-                                alert("Error al guardar los datos, revisar la matricula");
-                            } else {
-                                alert("Registro Guardado con éxito");
-                                location.reload(true);
-                            }
-                        });
+            if (nuevoNombre != "" && nuevaMatricula != "") {
+                if (nuevaMatricula.length <20) {
+                    if (confirm("Se modificaran los datos, esta seguro de esto?")) {
+                        $.post("../../controllers/alumnosController.php",
+                                {
+                                    Matricula: ActualMatricula,
+                                    imputMatriculaNueva: nuevaMatricula,
+                                    inputNombreNuevo: nuevoNombre,
+                                    buttonUpdate: true
+                                },
+                                function (data) {
+                                    if (data === "-1") {
+                                        alert("Error al guardar los datos, revisar la matricula");
+                                    } else if (data === "-2")
+                                    {
+                                        alert("Error, Nueva matricula exitente");
+
+                                    } else {
+                                        alert("Registro Guardado con éxito");
+                                        location.reload(true);
+                                    }
+                                });
+                    }
+                } else {
+                    alert("Tamaño de la matricula erronea");
+                }
+            } else {
+                location.reload(true);
+                alert("llene los campos");
             }
         });
         //fin cambiar estado grupo
