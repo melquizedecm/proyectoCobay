@@ -14,15 +14,14 @@
 
 
 class consultarcalificacionController {
-    //Variable global
-   
+ 
 
         function ObtenerNombre($matricula) {
         $objeto = new Consulta();
         $response = $objeto->read($matricula);
         $result = array();
         if (!$response) {
-            $link->error;
+             $response->error;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
@@ -38,7 +37,7 @@ class consultarcalificacionController {
         $response = $objeto->leerSemestre($matricula);
         $result = array();
         if (!$response) {
-            $link->error;
+            $response->error;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
@@ -53,7 +52,7 @@ class consultarcalificacionController {
         $response = $objeto->leerGrupo($matricula);
         $result = array();
         if (!$response) {
-            $link->error;
+             $response->error;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
@@ -69,7 +68,7 @@ class consultarcalificacionController {
         $response = $objeto->llenarTabla($matricula);
         $result = array();
         if (!$response) {
-            $link->error;
+            $response->error;
         } else {
             $i = 0;
             while ($row = $response->fetch_assoc()) {
