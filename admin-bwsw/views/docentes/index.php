@@ -34,7 +34,7 @@ require_once ('../../models/Docentes.php');
                 var index = $("table tbody tr:first-child").index();
                 var row = '<tr>' +
                         '<td><input type="text" class="form-control" name="inputMatricula" id="inputMatricula"></td>' +
-                        '<td><input type="text" class="form-control" name="inputNombre" id="inputNombre"></td>' +
+                        '<td><input type="text" class="form-control" style="text-transform:uppercase" name="inputNombre" id="inputNombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"></td>' +
                         //'<td><input type="text" class="form-control" name="inputEstado" id="inputEsatdo"></td>' +
                         '<td>' + actions + '</td>' +
                         '</tr>';
@@ -47,10 +47,24 @@ require_once ('../../models/Docentes.php');
                 var out = '';
                 //Se añaden las letras validas
                 var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
-
                 for (var i = 0; i < string.length; i++) {
                     if (filtro.indexOf(string.charAt(i)) != -1) {
                         out += string.charAt(i);
+                    } else {
+                        out = "alerta"
+                        return out;
+                    }
+                }
+                return out;
+            }
+            
+           function Num(int) {//solo letras y numeros
+                var out = '';
+                //Se añaden las letras validas
+                var filtro2 = '1234567890';//Caracteres validos
+                for (var i = 0; i < int.length; i++) {
+                    if (filtro2.indexOf(int.charAt(i)) != -1) {
+                        out += int.charAt(i);
                     } else {
                         out = "alerta"
                         return out;
@@ -65,7 +79,8 @@ require_once ('../../models/Docentes.php');
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
                 var comp = NumText (nombre);
-                if (comp==="alerta"){
+                var num= Num(matricula);
+                if (comp==="alerta" || num==="alerta"){
                     alert("solo se puede ingresar Números o Letras");
       
                     location.reload(true);
