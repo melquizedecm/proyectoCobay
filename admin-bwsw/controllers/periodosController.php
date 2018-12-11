@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Program:     periodosController.php
  * Author:      Miguel Ángel García Uc
