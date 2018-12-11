@@ -151,7 +151,7 @@ $EsRegular;
                     </div>
                     <h4>ALUMNO: 
                         <?php
-                        //          $json = $alumno->obtenerEstatus("17B003000061");
+                        //  
                         //mostramos el nombre del alumno
                         $json = $alumno->ObtenerNombre($recibir); //$usuario que es la variable extraida del login
                         $datosTabla = json_decode($json);
@@ -174,15 +174,15 @@ $EsRegular;
                         if ($json) {
                             $datosTabla = json_decode($json);
                             foreach ($datosTabla as $row) {
-                                if ($row->{'id_status'} != 1) { //Si el alumno es irregular
-                                echo '<br><h3><b> Favor de pasar a subdirección</b></h3></br>';
+                                if ($row->{'id_status'} != 1) { //Si el alumno es irregular  
+                                echo "<div style='color:red'><h3><B> FAVOR DE PASAR A SUBDIRECCIÓN </B></h3> </div>";
                                     $EsRegular = false;
                                 } else {
                                     $EsRegular=true;
                                 }
                             }
                         } else {
-                            echo 'Ha ocurrido un error';
+                            echo "Ha ocurrido un error";
                         }
                         ?>
                     </h4>
