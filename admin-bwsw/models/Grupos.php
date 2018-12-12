@@ -13,19 +13,17 @@
  */
 class Grupos {
 
-    function create($id_grupo,$grupo, $status) {
+    function create($grupo, $status) {
         //falta comprobar si ya existe, el codigo siguiente se supone lo hace pero me esta creando un conflicto $respose al decir que es diferente a $grupo
       
         /* comprobar si existe, si no existe ingresarlo, una vez ingresado insertar todo a latabla principal */
 
         /* if ($response===($grupo)) { */
-        $sql2 = "INSERT INTO grupos(id_grupo,grupo,id_status_grupo) VALUES ('" . NULL . "','" . $grupo . "','.1.')"; /* agregar lo de values */
+        $sql2 = "INSERT INTO grupos(grupo,id_status_grupo) VALUES ('" . $grupo . "','1')"; /* agregar lo de values */
         $response2 = getResultSQL($sql2);
-
         if (!$response2) {
             return false;
         } else {
-
             return true;
         }
         /* } else {
@@ -55,10 +53,6 @@ class Grupos {
     function delete($id_grupo) {
         /* $sql = "DELETE grupos(id_grupo,grupo) VALUES ('" . $id_grupo ."')"; DELETE FROM grupos WHERE grupos.id_grupo=19 /*agregar lo de values */
         $sql = "DELETE  FROM grupos WHERE grupos.id_grupo = ( " . $id_grupo . " )";
-
-
-
-
         $response = getResultSQL($sql);
         if (!$response) {
             return false;

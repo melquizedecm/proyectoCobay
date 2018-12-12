@@ -1,4 +1,5 @@
 <?php
+
 //require_once '../core/config.php';
 /*
  * Program:     GruposController.php
@@ -14,19 +15,19 @@
 if (isset($_POST['buttonCreate'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $grupos=new GruposController();
+    $grupos = new GruposController();
     $grupos->create();
 }
 ///////Modificar Datos de Docente///////
 elseif (isset($_POST['buttonUpdate'])) {
     require_once '../lib/links.php';
     libnivel2();
-     $grupos=new GruposController();
-      $grupos->gruposUpdate();
+    $grupos = new GruposController();
+    $grupos->gruposUpdate();
 }
 ///////Consultar tabla de Docente///////
 elseif (isset($_POST['buttonRead'])) {
-    $grupos=new GruposController();
+    $grupos = new GruposController();
     $grupos->read();
 }
 ///////Consultar tabla de Docente por Id///////
@@ -37,32 +38,24 @@ elseif (isset($_POST['buttonReadId'])) {
 elseif (isset($_POST['buttonDelete'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $grupos=new GruposController();
+    $grupos = new GruposController();
     $grupos->delete();
-    
-    
-}
-elseif (isset($_POST['buttonDesactivar'])) {
+} elseif (isset($_POST['buttonDesactivar'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $grupos=new GruposController();
+    $grupos = new GruposController();
     $grupos->desactivar();
-    
-    
-}
-elseif (isset($_POST['buttonActivar'])) {
+} elseif (isset($_POST['buttonActivar'])) {
     require_once '../lib/links.php';
     libnivel2();
-    $grupos=new GruposController();
+    $grupos = new GruposController();
     $grupos->activar();
-    
-    
-}
-else {
+} else {
     return False;
 }
 
 class GruposController {
+
     function index() {
         $objetoGrupo = new Grupos();
         $response = $objetoGrupo->read();
@@ -80,29 +73,24 @@ class GruposController {
     }
 
     function create() {
-///1. recibir datos
-      
-        $id_grupo = $_POST['inputId_grupo'];
-        $grupo=$_POST['inputGrupo'];
-        $status=$_POST['inputStatus'];
-        
+///1. recibir datos  
+        $grupo = $_POST['inputGrupo'];
+        $status = $_POST['inputStatus'];
+
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
         $objetoGrupo = new Grupos();
-        $Res=$objetoGrupo->validarIdGrupo($grupo);
-        
-        if($Res!=$grupo && $Res!=" "){
-               $response = $objetoGrupo->create($id_grupo,$grupo,$status);
-        if ($response) {
-            $this->read();
+        $Res = $objetoGrupo->validarIdGrupo($grupo);
+        if ($Res != $grupo && $Res != "") {
+            $response = $objetoGrupo->create($grupo, $status);
+            if ($response) {
+                $this->read();
+            } else {
+                echo "-1";
+            }
         } else {
-            echo "-1";
-        }
-      
-        }
-        else {
-     echo "-2";
+            echo "-2";
         }
     }
 
@@ -121,11 +109,12 @@ class GruposController {
             return json_encode($result);
         }
     }
-    function delete(){
-    ///1. recibir datos
+
+    function delete() {
+        ///1. recibir datos
         $id_grupo = $_POST['Id_grupo'];
-       
-        
+
+
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
@@ -138,10 +127,10 @@ class GruposController {
         } else {
             echo "-1";
         };
-        
     }
-    function desactivar(){
-        $id_grupo = $_POST['inputId_grupo']; 
+
+    function desactivar() {
+        $id_grupo = $_POST['inputId_grupo'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
@@ -154,11 +143,10 @@ class GruposController {
         } else {
             echo "-1";
         };
-        
-        
     }
-    function activar(){
-        $id_grupo = $_POST['inputId_grupo']; 
+
+    function activar() {
+        $id_grupo = $_POST['inputId_grupo'];
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';
@@ -171,16 +159,15 @@ class GruposController {
         } else {
             echo "-1";
         };
-        
-        
     }
-      function gruposUpdate(){
-     ///1. recibir datos
-          
-       
+
+    function gruposUpdate() {
+        ///1. recibir datos
+
+
         $temp = $_POST['inputGrupoactual'];
         $grupo = $_POST['inputGruponuevo'];
-       
+
 //2. guardar datos en el modelo
         require_once '../lib/consultas.php';
         require_once '../models/Grupos.php';

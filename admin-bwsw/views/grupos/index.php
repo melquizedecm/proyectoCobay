@@ -77,7 +77,7 @@ description:
                 /////GUARDAR LOS DATOS/////
                 //1. OBTENER LOS VALORES//
 
-                var id_grupo = document.getElementById("inputId_grupo").value;
+                
                 var grupo = document.getElementById("inputGrupo").value;
                 var status = document.getElementById("inputStatus").value;
                 var comp = NumText(grupo);
@@ -105,7 +105,6 @@ description:
                             if (confirm("Esta por agregar el grupo " + grupo + "\n¿Los datos son correctos?")) {
                                 $.post("../../controllers/gruposController.php",
                                         {
-                                            inputId_grupo: id_grupo,
                                             inputGrupo: grupo,
                                             inputStatus: status,
                                             buttonCreate: true
