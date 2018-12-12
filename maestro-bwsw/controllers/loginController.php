@@ -1,28 +1,37 @@
 <?php
+////////// LIBRERIAS /////////
+require_once '../lib/consultas.php';
+require_once '../core/config.php';
 
+///// RECEPCION DE  DATOS ////////
 session_start();
 $matricula = addslashes($_POST['inputMatricula']);
-$contraseña = addslashes($_POST['inputPassword']);
+$password = addslashes($_POST['inputPassword']);
 
+////////CONSULTA DE DATOS ////////
+$consulta = "SELECT * FROM maestros WHERE matricula_maestro='" . $matricula . "' and password='" . $password . "'";
+$link = conectar();
 
+//////// VALIDAR CONEXION ///////
+if (!$link) {
+    echo "Error: Unable to connect to MySQL." . PHP_EOL;
+    echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+}
 
-//Conectando a la base de datos
-$conexion = mysqli_connect("localhost", "root", "", "proyecto_cobay");
-//Consulta
+//////////VERIFICAR RESULTADOS //////
+$result = $link->query($consulta);
+if (!$result){
+    echo $link->error;
+}
+if (!mysqli_query($link, $consulta)) {
+    printf("Errormessage: %s\n", mysqli_error($link));
+}
 
-
-$consulta = "SELECT * FROM maestros WHERE matricula_maestro='" . $matricula . "' and password='" . $contraseña . "'";
-
-$resultado = mysqli_query($conexion, $consulta);
-$filas = mysqli_num_rows($resultado);
-
-if ($filas > 0) {
-    $_SESSION['username3'] = $matricula;
+//////////  REDIRECCIONAMIENTO /////////
+if (mysqli_num_rows($result) > 0) {
+    $$_SESSION['username3'] = $matricula;
     header('Location: ../views/docentes/');
 } else {
     header('Location: ../views/login/index.php?fallo=true');
-    exit();
 }
-mysqli_free_result($resultado);
-mysqli_close($conexion);
-?>

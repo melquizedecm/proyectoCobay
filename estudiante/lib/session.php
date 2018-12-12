@@ -10,4 +10,3 @@ session_start();
 if (!isset($_SESSION['username2'])) {
     header("location: ../login/");
 }
-?>
