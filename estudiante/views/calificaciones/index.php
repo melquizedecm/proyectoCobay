@@ -200,7 +200,6 @@ $EsRegular;
                     <tbody>
                         <?php
                         if ($EsRegular) {
-
                             $json = $alumno->llenarTabla( $recibir);
                             if ($json){
                             $datosTabla = json_decode($json);

@@ -65,7 +65,7 @@ class consultarcalificacionController {
     function llenarTabla($matricula)
     {
         $objeto = new Consulta();
-        $response = $objeto->obtenerEstatus($matricula);
+        $response = $objeto->llenarTabla($matricula);
         $result = array();
         if ($response->num_rows>0) {
             $i = 0;

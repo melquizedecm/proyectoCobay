@@ -41,11 +41,7 @@ class Consulta{
     }
 
     function llenarTabla($matricula) {
-        /**
-          SELECT asignaturas.asignatura, calificaciones.parcial_uno,calificaciones.parcial_dos,calificaciones.ordinario FROM asignaturas,calificaciones,excel_asignatura,excel,alumnos WHERE alumnos.matricula='17B003000004' and alumnos.matricula=excel.matricula and excel_asignatura.id_excel=excel.id_excel
-
-         * asignaturas.id_asignatura= excel_asignatura.id_asignatura and calificaciones.id_calificaciones=excel_asignatura.id_calificaciones
-         *  */
+    
         $sql = "SELECT asignaturas.asignatura, calificaciones.parcial_uno,calificaciones.parcial_dos,calificaciones.ordinario "
                 . "FROM asignaturas,calificaciones,excel_asignatura,excel,alumnos "
                 . "WHERE alumnos.matricula='" . $matricula . "' and alumnos.matricula=excel.matricula "
