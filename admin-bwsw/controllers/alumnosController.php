@@ -80,7 +80,7 @@ class alumnosController {
         require_once '../lib/consultas.php';
         require_once '../models/Alumnos.php';
         $objetoAlumno = new AlumnoAdmin();
-        $Res = $ObjetoMatricula->validarMatricula($matricula);
+        $Res = $objetoAlumno->validarMatricula($matricula);
             if ($Res != " " && $Res != $matricula) {
                 $response = $objetoAlumno->create($matricula, $nombre);
                 if ($response) {
