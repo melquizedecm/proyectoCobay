@@ -22,7 +22,7 @@ $EsRegular;
         <?php
         getMeta("Tabla de calificaciones");
         estilosPaginas();
-                $recibir=$_SESSION['username2'];
+        $recibir=$_SESSION['username2'];
         ?>
         <style type="text/css">
 
@@ -201,8 +201,8 @@ $EsRegular;
                         <?php
                         if ($EsRegular) {
 
-
                             $json = $alumno->llenarTabla( $recibir);
+                            if ($json){
                             $datosTabla = json_decode($json);
                             $numeric = 0;
                             foreach ($datosTabla as $row) {
@@ -229,8 +229,9 @@ $EsRegular;
                                     }
                                 }
                             }
-                        } else {
-                            
+                            }else{
+                                echo "<h3> Ha ocurrido un error al cargar los datos </h3>";
+                            }
                         }
                         ?>
                     </tbody>
