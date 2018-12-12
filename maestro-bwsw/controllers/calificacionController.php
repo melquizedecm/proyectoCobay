@@ -33,13 +33,17 @@ if (substr($_FILES['excel']['name'], -3) == "csv") {
 
 ///////2 Y 3. OBTENER LOS DATOS Y VALIDARLOS///////
 $retornoError="";
+$message2="";
+$type2="";
 while ($data = fgetcsv($fp, 1000, ",")) {
     //si la linea es igual a 1 no guardamos por que serian los titulos de la hoja del excel.
     if ($row != 1) {
         $message = $objCalificaciones->excelValido($data);
         if ($message != "") {
             $type = "004";
-            header("Location: ../views/calificaciones/index.php?message=".$message."&type=".$type);
+            //header("Location: ../views/calificaciones/index.php?message=".$message."&type=".$type);
+            $message2=$message;
+            $type2=$type;
             $retornoError = "1";
             break;
         } else {
@@ -119,7 +123,11 @@ while ($data = fgetcsv($fp, 1000, ",")) {
 
 fclose($fp);
 
-    header("Location: ../views/calificaciones/index.php?action=".$retornoError);
+    header("Location: ../views/calificaciones/index.php?message=".$message2."&type=".$type2."&action=".$retornoError);
 
 exit;
 ?>
+
+
+
+
