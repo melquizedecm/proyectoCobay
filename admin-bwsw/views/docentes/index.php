@@ -42,8 +42,8 @@ require_once ('../../models/Docentes.php');
                 $("table tbody tr").eq(index + 0).find(".add, .delete , .update").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
-            
-           function NumText(string) {//solo letras y numeros
+
+            function NumText(string) {//solo letras y numeros
                 var out = '';
                 //Se añaden las letras validas
                 var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
@@ -57,8 +57,8 @@ require_once ('../../models/Docentes.php');
                 }
                 return out;
             }
-            
-           function Num(int) {//solo letras y numeros
+
+            function Num(int) {//solo letras y numeros
                 var out = '';
                 //Se añaden las letras validas
                 var filtro2 = '1234567890';//Caracteres validos
@@ -78,33 +78,33 @@ require_once ('../../models/Docentes.php');
                 //1. OBTENER LOS VALORES//
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
-                var comp = NumText (nombre);
-                var num= Num(matricula);
-                if (comp==="alerta" || num==="alerta"){
+                var comp = NumText(nombre);
+                var num = Num(matricula);
+                if (comp === "alerta" || num === "alerta") {
                     alert("solo se puede ingresar Números o Letras");
-      
+
                     location.reload(true);
                 } else
                 {
-                //var estado = document.getElementById("inputEstado").value;
+                    //var estado = document.getElementById("inputEstado").value;
 
-                //2. ENVIAR POR POTS//
-                //$.post("url", variables, response);
-                $.post("../../controllers/docentesController.php",
-                        {
-                            inputMatricula: matricula,
-                            inputNombre: nombre,
-                            //inputEstado: estado,
-                            buttonCreate: true
-                        },
-                function (data) {
-                    if (data === "-1") {
-                        alert("Error al guardar los datos, revisar la matricula");
-                    } else {
-                        alert("Registro Guardado con éxito");
-                        location.reload(true);
-                    }
-                });
+                    //2. ENVIAR POR POTS//
+                    //$.post("url", variables, response);
+                    $.post("../../controllers/docentesController.php",
+                            {
+                                inputMatricula: matricula,
+                                inputNombre: nombre,
+                                //inputEstado: estado,
+                                buttonCreate: true
+                            },
+                    function (data) {
+                        if (data === "-1") {
+                            alert("Error al guardar los datos, revisar la matricula");
+                        } else {
+                            alert("Registro Guardado con éxito");
+                            location.reload(true);
+                        }
+                    });
                 }
             });
             //3. REFRESCAR LOS VALORES///
@@ -140,9 +140,9 @@ require_once ('../../models/Docentes.php');
             });
             //actualizar
             $(document).on("click", ".update", function () {
-                $(this).parents("tr").find("td:not(:last-child)").each(function () {
+                $(this).parents("tr").find("td:nth-child(2)").each(function () {
                     var matricula = document.getElementById("input0").value;
-                    var nombre = document.getElementById("input1").value;
+                    var nombre = document.getElementById("input1").value.toUpperCase();
                     //
                     //    
                     //            var name = document.getElementById("input1").value;
@@ -167,34 +167,34 @@ require_once ('../../models/Docentes.php');
             // Delete row on delete button click
             $(document).on("click", ".delete", function () {
                 if (confirm("¿Seguro que desea ELIMINAR este docente?")) {
-                $(this).parents("tr").remove();
-                //alert($(this).parents("tr").html());/
-                var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
-                $(".add-new").removeAttr("disabled");
-                // pongo el nuevo codigo
-                $.post("../../controllers/docentesController.php",
-                        {
-                            matricula_maestro: matriculaMaestro,
-                            buttonDelete: true
-                        },
-                function (data) {
-                    if (data === "-1") {
-                        alert("Error al borrar el dato");
+                    $(this).parents("tr").remove();
+                    //alert($(this).parents("tr").html());/
+                    var matriculaMaestro = ($(this).parents("tr").find("td:first-child").html());
+                    $(".add-new").removeAttr("disabled");
+                    // pongo el nuevo codigo
+                    $.post("../../controllers/docentesController.php",
+                            {
+                                matricula_maestro: matriculaMaestro,
+                                buttonDelete: true
+                            },
+                    function (data) {
+                        if (data === "-1") {
+                            alert("Error al borrar el dato");
 
-                    } else {
-                        //alert(data);
-                        alert("Registro eliminado");
-                        location.reload(true);
-                    }
-                });
-            }
+                        } else {
+                            //alert(data);
+                            alert("Registro eliminado");
+                            location.reload(true);
+                        }
+                    });
+                }
             });
         });
     </script>
 </head>
 <body>
     <?php
-    getHeader();
+    getHeaderDocentes();
     ?>
 
     <div class="container">
@@ -228,7 +228,7 @@ require_once ('../../models/Docentes.php');
                         echo "<tr  data-fila=" . $cont . ">"
                         . "<td id='mat" . $cont . "'>" . $row->{'matricula_maestro'} . "</td>"
                         . "<td id='name" . $cont . "'>" . $row->{'nombre'} . "</td>"
-                         //"<td id='name" . $cont . "'>" . $row->{'estado'} . "</td>"
+                        //"<td id='name" . $cont . "'>" . $row->{'estado'} . "</td>"
                         . "<td><a class = 'add' title = 'Agregar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE03B;</i></a>"
                         . "<a class = 'edit' title = 'Editar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE254;</i></a>"
                         . "<a class = 'delete' title = 'Eliminar' data-toggle = 'tooltip'><i class = 'material-icons'>&#xE872;</i></a>"
@@ -257,3 +257,5 @@ require_once ('../../models/Docentes.php');
     ?>
 </body>
 </html>
+
+

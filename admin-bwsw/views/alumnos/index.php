@@ -52,6 +52,7 @@ description:
                 var matricula = document.getElementById("inputMatricula").value; //(JALAR EL VALOR INGRESADO)
                 var nombre = document.getElementById("inputNombre").value;
                 //2. ENVIAR POR POTS//
+                if(matricula != "" || nombre != ""){
                 $.post("../../controllers/alumnosController.php",
                         {
                             inputMatricula: matricula,
@@ -68,6 +69,7 @@ description:
                                 location.reload(true);
                             }
                         });
+                    }else{ alert("Porfavor llene los todo los campos");}
             });
             //3. REFRESCAR LOS VALORES///
             var empty = false;
@@ -126,7 +128,6 @@ description:
             }
         });
         //fin cambiar estado grupo
-
         //activar grupo 
         $(document).on("click", ".btn-danger", function () {
             if (confirm("¿Esta seguro de la Acción?")) {
@@ -160,9 +161,7 @@ description:
             ActualNombre = document.getElementById("Nombre").value;
             $(this).parents("tr").find(".edit, .delete").toggle();
             $(".add-new").attr("disabled", "disabled");
-
         });
-
         /*Actualizar*/
         $(document).on("click", ".update", function () {
             var nuevaMatricula = document.getElementById("Matricula").value;
