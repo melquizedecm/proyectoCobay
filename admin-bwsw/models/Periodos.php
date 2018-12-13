@@ -20,7 +20,7 @@ class Periodos {
     }
 
     function periodoactivo() {
-        $sql = "UPDATE periodos SET id_status_periodo= (" . 0 . ") WHERE id_status_periodo=( " . 1 . " ) ";
+        $sql = "UPDATE periodos SET id_status_periodo='0' WHERE id_status_periodo='1'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -30,7 +30,7 @@ class Periodos {
     }
 
     function desactivar($id_grupo) {
-        $sql = "UPDATE  periodos SET id_status_periodo= (" . 0 . ") WHERE id_periodo=( " . $id_grupo . " ) ";
+        $sql = "UPDATE  periodos SET id_status_periodo='0' WHERE id_periodo='".$id_grupo."' ";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -40,7 +40,7 @@ class Periodos {
     }
 
     function activar($id_grupo) {
-        $sql = "UPDATE periodos SET id_status_periodo= (" . 1 . ") WHERE id_periodo=( " . $id_grupo . " ) ";
+        $sql = "UPDATE periodos SET id_status_periodo='1' WHERE id_periodo='".$id_grupo."'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -50,7 +50,7 @@ class Periodos {
     }
 
     function actualizar($id, $periodo) {
-        $sql = "UPDATE periodos SET periodo=('" . $periodo . "') WHERE id_periodo=('" . $id . "')";
+        $sql = "UPDATE periodos SET periodo='" . $periodo . "' WHERE id_periodo='" . $id . "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -60,7 +60,7 @@ class Periodos {
     }
 
     function validar($periodo) {
-        $sql = "SELECT periodo FROM periodos WHERE periodo=('" . $periodo . "')";
+        $sql = "SELECT periodo FROM periodos WHERE periodo='" . $periodo . "'";
         $response = getResultSQL($sql);
         if ($response->num_rows >0) 
         {

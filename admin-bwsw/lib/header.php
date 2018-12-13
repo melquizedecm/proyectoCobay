@@ -1,4 +1,4 @@
-<?php
+    <?php
     function getHeader() {
         ?>
 <body style="background-color:#66CDAA;">

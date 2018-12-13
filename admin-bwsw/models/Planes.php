@@ -9,7 +9,7 @@
 class Planes {
 
     function create($id_plan, $plan) {
-        $sql2 = "INSERT INTO planes(id_plan,plan,id_status_plan) VALUES ('" .NULL. "','" . $plan . "','.1.')";
+        $sql2 = "INSERT INTO planes(plan,id_status_plan) VALUES ('" . $plan . "','1')";
         $response2 = getResultSQL($sql2);
         if (!$response2) {
             return false;
@@ -19,7 +19,7 @@ class Planes {
     }
 
     function update($temp, $nuevoplan) {
-        $sql = "UPDATE planes SET plan= ('" . $nuevoplan . "') WHERE plan=( '" . $temp . "' ) ";
+        $sql = "UPDATE planes SET plan='" . $nuevoplan . "' WHERE plan='" . $temp . "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -36,7 +36,7 @@ class Planes {
 
     function delete($id_plan) {
         /* $sql = "DELETE grupos(id_grupo,grupo) VALUES ('" . $id_grupo ."')"; DELETE FROM grupos WHERE grupos.id_grupo=19 /*agregar lo de values */
-        $sql = "DELETE  FROM planes WHERE planes.id_plan = ( " . $id_plan . " )";
+        $sql = "DELETE  FROM planes WHERE planes.id_plan ='" . $id_plan . "'";
 
         $response = getResultSQL($sql);
         if (!$response) {
@@ -47,7 +47,7 @@ class Planes {
     }
 
     function desactivar($id_plan) {
-        $sql = "UPDATE  planes SET id_status_plan= (" . 0 . ") WHERE id_plan=( '" . $id_plan . "' ) ";
+        $sql = "UPDATE  planes SET id_status_plan='0' WHERE id_plan='" . $id_plan . "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -57,7 +57,7 @@ class Planes {
     }
 
     function activar($id_plan) {
-        $sql = "UPDATE  planes SET id_status_plan= (" . 1 . ") WHERE id_plan=( '" . $id_plan . "' ) ";
+        $sql = "UPDATE  planes SET id_status_plan='1' WHERE id_plan='" . $id_plan . "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;

@@ -10,7 +10,7 @@ class Asignaturas {
     
 
     function create($clave, $nombre,$status) {
-        $sql = "INSERT INTO asignaturas(id_asignatura,asignatura,id_status_asignatura) VALUES ('" . $clave . "','" . $nombre . "','.1.')";
+        $sql = "INSERT INTO asignaturas(id_asignatura,asignatura,id_status_asignatura) VALUES ('" . $clave . "','" . $nombre . "','1')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;

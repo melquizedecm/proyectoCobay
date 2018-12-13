@@ -79,9 +79,9 @@ class AsignaturasController {
         require_once '../models/Asignaturas.php';
         $objetoAsignaturas = new Asignaturas();
 
-        $Res = $objetoAsignaturas->validarIdAsignatura($clave);
-        $Res2 = $objetoAsignaturas->validarAsignatura($nombre);
-        if ($Res != $clave && $Res != " " && $Res2 != $nombre && $Res2 != " ") {
+     //   $Res = $objetoAsignaturas->validarIdAsignatura($clave);
+     //   $Res2 = $objetoAsignaturas->validarAsignatura($nombre);
+    //    if ($Res != $clave && $Res != "" && $Res2 != $nombre && $Res2 != "") {
             $response = $objetoAsignaturas->create($clave, $nombre, $status);
 //$response=$objetoDocente->create($matricula,$nombre,$status);
 //3.  enviar una respuestaç
@@ -90,9 +90,9 @@ class AsignaturasController {
             } else {
                 echo "-1";
             }
-        } else {
-            echo "-2";
-        }
+     //   } else {
+     //       echo "-2";
+      //  }
     }
 
     function read() {

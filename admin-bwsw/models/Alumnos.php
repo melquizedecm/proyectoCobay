@@ -14,7 +14,7 @@
 class AlumnoAdmin {
 
     function create($matricula, $nombre) {
-        $sql = "INSERT INTO alumnos(matricula,nombre,id_status,id_avisos) VALUES ('" . $matricula . "','$nombre" . "','" . 1 . "','" . 0 . "')";
+        $sql = "INSERT INTO alumnos(matricula,nombre,id_status,id_avisos) VALUES ('" . $matricula . "','$nombre" . "','1','0')";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -24,7 +24,7 @@ class AlumnoAdmin {
     }
 
     function Alumnodelete($matricula) {
-        $sql = "UPDATE alumnos SET id_status = (" . 0 . ") WHERE matricula = '" . $matricula . "'";
+        $sql = "UPDATE alumnos SET id_status ='0' WHERE matricula = '" . $matricula . "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -39,7 +39,7 @@ class AlumnoAdmin {
     }
 
     function desactivar($matricula) {
-        $sql = "UPDATE  alumnos SET id_avisos= (" . 1 . ") WHERE matricula=( '" . $matricula . "' ) ";
+        $sql = "UPDATE  alumnos SET id_avisos='1' WHERE matricula='" . $matricula . "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;
@@ -49,7 +49,7 @@ class AlumnoAdmin {
     }
 
     function activar($matricula) {
-        $sql = "UPDATE  alumnos SET id_avisos= (" . 0 . ") WHERE matricula=( '" . $matricula . "' ) ";
+        $sql = "UPDATE  alumnos SET id_avisos='0' WHERE matricula='" . $matricula . "'";
         $response = getResultSQL($sql);
         if (!$response) {
             return false;

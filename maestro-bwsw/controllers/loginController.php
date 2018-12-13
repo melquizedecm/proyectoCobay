@@ -30,7 +30,7 @@ if (!mysqli_query($link, $consulta)) {
 
 //////////  REDIRECCIONAMIENTO /////////
 if (mysqli_num_rows($result) > 0) {
-    $$_SESSION['username3'] = $matricula;
+    $_SESSION['username3'] = $matricula;
     header('Location: ../views/docentes/');
 } else {
     header('Location: ../views/login/index.php?fallo=true');
