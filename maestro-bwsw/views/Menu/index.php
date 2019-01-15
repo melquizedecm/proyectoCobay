@@ -28,7 +28,7 @@ libnivel3();
                                 <div class="panel-body">
                                     <a href="../alumnos/">   <img src="https://image.flaticon.com/icons/svg/562/562135.svg" class="img-responsive " style="width:100%" alt="Image"></a>
                                 </div>
-                                <div class="panel-footer" style="background: #808080"><h5 style="color: #808080">Buy 50 mobiles and g</h5></div>
+                                <div class="panel-footer" style="background: #808080"><h5 style="color: #808080">..................</h5></div>
                             </button>
                         </div>
 
@@ -38,7 +38,7 @@ libnivel3();
                                 <div class="panel-heading">DOCENTES</div>
                                 <div class="panel-body">
                                     <a href="../docentes/"><img src="https://image.flaticon.com/icons/svg/562/562129.svg" class="img-responsive" style="width:100%" alt="Image"></a></div>
-                                <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">Buy 50 mobiles and g</h5></div>
+                                <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">.....................</h5></div>
                             </button>
                         </div>
 
@@ -48,7 +48,7 @@ libnivel3();
                             <button type="button" class="btn btn-primary btn-lg" style="background:#808080">
                                 <div class="panel-heading">ASIGNATURAS</div>
                                 <a href="../asignaturas/"style="color:#FFFFFF">  <div class="panel-body"><img src="https://image.flaticon.com/icons/svg/906/906343.svg" class="img-responsive" style="width:100%" alt="Image"></div>
-                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">Buy 50 mobiles and g</h5></div>
+                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">.....................</h5></div>
                             </button>
                         </div>
 
@@ -57,7 +57,7 @@ libnivel3();
                             <button type="button" class="btn btn-primary btn-lg" style="background:#808080">
                                 <div class="panel-heading">GRUPOS</div>
                                 <a href="../grupos/"style="color:#FFFFFF">  <div class="panel-body"><img src="https://image.flaticon.com/icons/svg/562/562142.svg" class="img-responsive" style="width:100%" alt="Image"></div>
-                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">Buy 50 mobiles and g</h5></div>
+                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">.....................</h5></div>
                             </button>
                         </div>
 
@@ -67,7 +67,7 @@ libnivel3();
                             <button type="button" class="btn btn-primary btn-lg" style="background:#808080">
                                 <div class="panel-heading">PERIODO</div>
                                 <a href="../periodos/" style="color:#FFFFFF">  <div class="panel-body"><img src="https://image.flaticon.com/icons/svg/305/305139.svg" class="img-responsive" style="width:100%" alt="Image"></div>
-                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">Buy 50 mobiles and g</h5></div>
+                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">.....................</h5></div>
                             </button>
                         </div>
 
@@ -77,7 +77,7 @@ libnivel3();
                             <button type="button" class="btn btn-primary btn-lg" style="background:#808080">
                                 <div class="panel-heading">PLAN</div>
                                 <a href="../planes/">  <div class="panel-body"><img src="https://image.flaticon.com/icons/svg/855/855579.svg" class="img-responsive" style="width:100%" alt="Image"></div>
-                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">Buy 50 mobiles and g</h5></div>
+                                    <div class="panel-footer" style="background:#808080"><h5 style="color:#808080">.....................</h5></div>
                             </button>
                         </div>
                     </div>
